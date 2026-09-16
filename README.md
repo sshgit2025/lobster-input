@@ -29,6 +29,10 @@ Created and open-sourced by **shaohua.sun, yaqiong.xu, and xun.li**.
 
 **QQ community group: 925395991**. Join the group or contact us by email for feedback and collaboration. Use GitHub Issues for reproducible bugs and feature requests. Report security issues privately as described in [SECURITY.md](SECURITY.md).
 
+## AI-assisted development
+
+Approximately **99.9%** of this project was developed using **Claude 4.6** and **GPT-5.5**. Claude accounted for approximately **95%** of the development work, while GPT-5.5 was primarily responsible for writing prompts for large language models. **Manual adjustments accounted for less than 0.1%.**
+
 ## Repository layout
 
 | Directory | Purpose | Stack |
