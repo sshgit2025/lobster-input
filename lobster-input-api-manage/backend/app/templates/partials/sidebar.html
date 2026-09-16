@@ -1,0 +1,24 @@
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <span class="logo-icon">🔑</span>
+    <span class="logo-text">API Pool</span>
+  </div>
+  <nav class="sidebar-nav">
+    <a href="{{ base_url }}/dashboard" class="nav-item {% if active=='dashboard' %}active{% endif %}">
+      <span class="nav-icon">📊</span><span>仪表盘</span>
+    </a>
+    <a href="{{ base_url }}/keys" class="nav-item {% if active=='keys' %}active{% endif %}">
+      <span class="nav-icon">🔑</span><span>Key 管理</span>
+    </a>
+    <a href="{{ base_url }}/usage" class="nav-item {% if active=='usage' %}active{% endif %}">
+      <span class="nav-icon">📋</span><span>消费明细</span>
+    </a>
+    <a href="{{ base_url }}/account" class="nav-item {% if active=='account' %}active{% endif %}">
+      <span class="nav-icon">🔐</span><span>账号安全</span>
+    </a>
+  </nav>
+  <div class="sidebar-footer">
+    <span class="admin-name">管理员</span>
+    <button class="btn-logout" onclick="logout()">退出</button>
+  </div>
+</aside>

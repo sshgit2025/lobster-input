@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 桌面图标名:随系统 locale 国际化,未支持语言回落英文(见 values-* 目录) -->
+    <string name="app_name">Lobster Input</string>
+    <!-- 系统输入法设置/切换列表展示名:随系统 locale 国际化,未支持语言回落英文(见 values-* 目录) -->
+    <string name="ime_name">Lobster Input</string>
+    
+    <!-- 通用 -->
+    <string name="ok">确定</string>
+    <string name="cancel">取消</string>
+    <string name="save">保存</string>
+    <string name="delete">删除</string>
+    <string name="edit">编辑</string>
+    <string name="add">添加</string>
+    <string name="confirm">确认</string>
+    <string name="loading">加载中…</string>
+    <string name="retry">重试</string>
+    <string name="error">错误</string>
+    <string name="success">成功</string>
+    
+    <!-- 登录 -->
+    <string name="login_title">登录龙虾输入法</string>
+    <string name="email_hint">请输入邮箱</string>
+    <string name="send_code">发送验证码</string>
+    <string name="code_hint">请输入验证码</string>
+    <string name="login">登录</string>
+    <string name="invite_code_hint">请输入邀请码</string>
+    <string name="verify_invite">验证邀请码</string>
+    
+    <!-- 主界面 -->
+    <string name="tab_home">首页</string>
+    <string name="tab_dictionary">热词</string>
+    <string name="tab_persona">人设</string>
+    <string name="tab_account">账户</string>
+    
+    <!-- 首页 -->
+    <string name="credits_remaining">剩余积分</string>
+    <string name="tier">套餐</string>
+    <string name="usage_stats">使用统计</string>
+    
+    <!-- 热词 -->
+    <string name="dictionary_title">热词管理</string>
+    <string name="add_hotword">添加热词</string>
+    <string name="hotword_hint">输入热词</string>
+    <string name="delete_hotword">删除热词</string>
+    
+    <!-- 人设 -->
+    <string name="persona_title">人设配置</string>
+    <string name="add_persona">添加人设</string>
+    <string name="persona_name">人设名称</string>
+    <string name="persona_desc">人设描述</string>
+    <string name="transcribe_prompt">转写提示词</string>
+    <string name="rewrite_prompt">改写提示词</string>
+    <string name="intent_hint">意图提示</string>
+    <string name="active_persona">激活人设</string>
+    
+    <!-- 账户 -->
+    <string name="account_title">账户信息</string>
+    <string name="email">邮箱</string>
+    <string name="logout">退出登录</string>
+    <string name="my_invite_codes">我的邀请码</string>
+    <string name="agreements">用户协议</string>
+    
+    <!-- 输入法 -->
+    <string name="ime_not_enabled">请先启用龙虾输入法</string>
+    <string name="ime_not_selected">请选择龙虾输入法</string>
+    <string name="go_to_settings">前往设置</string>
+    <string name="recording">录音中…</string>
+    <string name="processing">处理中…</string>
+    <string name="insert_text">插入</string>
+    <string name="copy_text">复制</string>
+    <string name="rewrite_text">改写</string>
+    <string name="switch_keyboard">切换键盘</string>
+    
+    <!-- 权限 -->
+    <string name="permission_record_audio">需要录音权限才能使用语音输入</string>
+    <string name="permission_denied">权限被拒绝</string>
+    
+    <!-- 错误提示 -->
+    <string name="error_network">网络连接失败</string>
+    <string name="error_login_required">请先登录</string>
+    <string name="error_invalid_email">邮箱格式不正确</string>
+    <string name="error_invalid_code">验证码不正确</string>
+    <string name="error_credits_exhausted">积分已用完</string>
+    <string name="error_recording_failed">录音失败</string>
+    <string name="error_upload_failed">上传失败</string>
+</resources>

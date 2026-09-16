@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
+    <channel>
+        <title>龙虾输入法 Standard UAT Updates</title>
+        <link>https://downloads.example.com/uat/mac/appcast-standard.xml</link>
+        <description>龙虾输入法 standard 正式版更新（uat 公测环境）</description>
+        <language>zh-CN</language>
+        <item>
+            <title>版本 0.0.1 (Build 220)</title>
+            <pubDate>Wed, 15 Jul 2026 02:59:53 -0700</pubDate>
+            <sparkle:version>220</sparkle:version>
+            <sparkle:shortVersionString>0.0.1</sparkle:shortVersionString>
+            <description><![CDATA[
+                <h3>0.0.1 更新内容 (Build 220)</h3>
+                <ul>
+  <li>正式版渠道上线：本次更新后应用切换为正式版，版本号体系重置为 0.0.1，账号与数据不受影响。</li>
+  <li>后续更新将通过正式版通道自动推送。</li>
+  <li>更新语音快捷键默认值（转写=Fn 单键 / 改写=Fn+⇧ / 智能体=Fn+Space）。</li>
+  <li>教程体验步骤支持跳过，设置页新增「重新观看教程」入口。</li>
+  <li>套餐支持补差价升级与多语言文案。</li>
+</ul>
+            ]]></description>
+            <enclosure
+                url="https://downloads.example.com/uat/mac/voice-input-0.0.1-b220.zip"
+                sparkle:edSignature="HrDnJdENGYR2L3vEHEBl+ahth2rKXJS2QBZvqHJ3JpnctZI0KwuAvpEv1LtNuOMgr7knp1z9S1Na1K8JECxLBA=="
+                length="6047022"
+                type="application/octet-stream"/>
+        </item>
+    </channel>
+</rss>

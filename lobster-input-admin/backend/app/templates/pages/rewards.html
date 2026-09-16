@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+{% block title %}积分奖励明细 - Lobster Admin{% endblock %}
+{% block body %}
+<div class="layout">
+  {% include "partials/sidebar.html" %}
+  <main class="main">
+    <div class="page-title">🎁 积分奖励明细</div>
+
+    <!-- 筛选栏 -->
+    <div class="card" style="margin-bottom:16px;padding:16px 20px">
+      <div class="search-bar" style="margin-bottom:0">
+        <input id="f-email" class="form-input" placeholder="用户邮箱" style="max-width:220px">
+        <select id="f-operation" class="form-select" style="max-width:180px">
+          <option value="">全部奖励类型</option>
+          <option value="admin_grant">管理员赠送</option>
+          <option value="registration_reward">注册积分奖励</option>
+          <option value="invite_reward">邀请码注册奖励</option>
+        </select>
+        <input id="f-date-from" class="form-input" type="date" style="max-width:148px">
+        <span style="color:var(--text-muted);line-height:36px">至</span>
+        <input id="f-date-to" class="form-input" type="date" style="max-width:148px">
+        <button class="btn btn-primary" onclick="applyFilter()">搜索</button>
+        <button class="btn btn-ghost" onclick="resetFilter()">重置</button>
+      </div>
+    </div>
+
+    <!-- 汇总指标卡 -->
+    <div class="stat-grid" style="grid-template-columns:repeat(3,1fr);max-width:640px;margin-bottom:16px">
+      <div class="stat-card">
+        <div class="stat-label">管理员赠送</div>
+        <div class="stat-value" style="color:#3b82f6" id="s-admin-grant">-</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">注册积分奖励</div>
+        <div class="stat-value" style="color:#22c55e" id="s-reg-reward">-</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">邀请码注册奖励</div>
+        <div class="stat-value" style="color:#f59e0b" id="s-invite-reward">-</div>
+      </div>
+    </div>
+
+    <!-- 明细表格 -->
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>用户邮箱</th>
+              <th>日期</th>
+              <th>奖励类型</th>
+              <th>积分</th>
+              <th>备注</th>
+              <th>操作管理员</th>
+            </tr>
+          </thead>
+          <tbody id="rewards-tbody">
+            <tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:24px">加载中...</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="pagination" id="rewards-pager"></div>
+    </div>
+
+  </main>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+let currentPage = 1;
+
+const OP_CONFIG = {
+  admin_grant:           { label: "管理员赠送",    color: "#3b82f6", badge: "badge-info" },
+  registration_reward:   { label: "注册积分奖励",  color: "#22c55e", badge: "badge-success" },
+  invite_reward:         { label: "邀请码注册奖励", color: "#f59e0b", badge: "badge-warning" },
+};
+
+function getFilterParams() {
+  const p = new URLSearchParams();
+  const email = document.getElementById("f-email").value.trim();
+  const op = document.getElementById("f-operation").value;
+  const from = document.getElementById("f-date-from").value;
+  const to = document.getElementById("f-date-to").value;
+  if (email) p.set("user_email", email);
+  if (op) p.set("operation", op);
+  if (from) p.set("date_from", from);
+  if (to) p.set("date_to", to);
+  return p;
+}
+
+function resetFilter() {
+  document.getElementById("f-email").value = "";
+  document.getElementById("f-operation").value = "";
+  document.getElementById("f-date-from").value = "";
+  document.getElementById("f-date-to").value = "";
+  applyFilter();
+}
+
+function applyFilter() {
+  currentPage = 1;
+  loadSummary();
+  loadRewards();
+}
+
+function fmtNum(n) {
+  if (!n && n !== 0) return "-";
+  return Number(n).toLocaleString();
+}
+
+async function loadSummary() {
+  const ops = ["admin_grant", "registration_reward", "invite_reward"];
+  const ids = ["s-admin-grant", "s-reg-reward", "s-invite-reward"];
+  const base = getFilterParams();
+  await Promise.all(ops.map(async (op, i) => {
+    try {
+      const p = new URLSearchParams(base);
+      p.set("operation", op);
+      p.set("client_platform", "system");
+      const data = await api("GET", `/api/v1/ledger/summary?${p}`);
+      document.getElementById(ids[i]).textContent = fmtNum(data.total_credits);
+    } catch(e) { document.getElementById(ids[i]).textContent = "0"; }
+  }));
+}
+
+async function loadRewards(page) {
+  if (page) currentPage = page;
+  const p = getFilterParams();
+  p.set("client_platform", "system");
+  p.set("page", currentPage);
+  p.set("page_size", 20);
+  try {
+    const data = await api("GET", `/api/v1/ledger?${p}`);
+    const tbody = document.getElementById("rewards-tbody");
+    if (!data.items || data.items.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:24px">暂无数据</td></tr>';
+    } else {
+      tbody.innerHTML = data.items.map(item => {
+        const cfg = OP_CONFIG[item.operation] || { label: item.operation, color: "#6b7280", badge: "" };
+        const remark = item.remark || "-";
+        const adminEmail = item.admin_email || "-";
+        return `<tr>
+          <td>${item.user_email}</td>
+          <td>${item.date}</td>
+          <td>
+            <span style="background:${cfg.color}22;color:${cfg.color};border:1px solid ${cfg.color}44;
+              border-radius:4px;padding:2px 10px;font-size:12px;font-weight:600">${cfg.label}</span>
+          </td>
+          <td><strong style="color:#22c55e;font-size:15px">+${fmtNum(item.total_credits)}</strong></td>
+          <td style="font-size:12px;color:var(--text-muted)">${remark}</td>
+          <td style="font-size:12px;color:var(--text-muted)">${adminEmail}</td>
+        </tr>`;
+      }).join('');
+    }
+    renderPager(data.total, data.page, data.page_size);
+  } catch(e) { console.error("loadRewards", e); }
+}
+
+function renderPager(total, page, pageSize) {
+  const totalPages = Math.ceil(total / pageSize);
+  const pager = document.getElementById("rewards-pager");
+  if (totalPages <= 1) { pager.innerHTML = ''; return; }
+  let html = `<span style="color:var(--text-muted);font-size:13px">共 ${total} 条</span>`;
+  if (page > 1) html += `<button class="btn btn-ghost" style="padding:4px 10px;font-size:13px" onclick="loadRewards(${page-1})">上一页</button>`;
+  html += `<span style="font-size:13px;color:var(--text-muted)">${page} / ${totalPages}</span>`;
+  if (page < totalPages) html += `<button class="btn btn-ghost" style="padding:4px 10px;font-size:13px" onclick="loadRewards(${page+1})">下一页</button>`;
+  pager.innerHTML = html;
+}
+
+loadSummary();
+loadRewards();
+</script>
+{% endblock %}

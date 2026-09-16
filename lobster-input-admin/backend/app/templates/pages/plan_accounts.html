@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+{% block title %}套餐账号 - Lobster Admin{% endblock %}
+{% block body %}
+<div class="layout">
+  {% include "partials/sidebar.html" %}
+  <main class="main">
+    <div class="page-title">🧾 套餐账号</div>
+    <div class="card">
+      <div class="search-bar">
+        <input id="f-email" class="form-input" placeholder="邮箱搜索" style="max-width:240px">
+        <select id="f-plan" class="form-select" style="max-width:150px">
+          <option value="">全部套餐</option>
+        </select>
+        <button class="btn btn-primary" onclick="loadAccounts(1)">搜索</button>
+        <button class="btn btn-ghost" onclick="resetFilter()">重置</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>邮箱</th><th>套餐</th><th>支付方式</th><th>自动续费</th><th>订阅开始</th><th>订阅到期</th><th>周期结束</th><th>套餐积分</th><th>待生效</th><th>操作</th></tr></thead>
+          <tbody id="accounts-tbody"></tbody>
+        </table>
+      </div>
+      <div class="pagination" id="accounts-pager"></div>
+    </div>
+  </main>
+</div>
+
+<div class="modal-overlay" id="detail-modal">
+  <div class="modal" style="max-width:760px">
+    <div class="modal-title">套餐详情</div>
+    <div class="modal-body">
+      <div id="detail-current" style="font-size:13px;color:var(--text-muted);line-height:1.8"></div>
+      <div class="card-title" style="margin-top:16px">套餐历史</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>时间</th><th>事件</th><th>前套餐</th><th>后套餐</th><th>操作人</th></tr></thead>
+          <tbody id="history-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('detail-modal')">关闭</button>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+let currentPage = 1;
+let planConfigs = {};
+function esc(s) {
+  return String(s ?? "").replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+}
+function money(cents) {
+  return ((parseInt(cents) || 0) / 100).toFixed(2);
+}
+function chargeTypeLabel(value) {
+  const labels = {
+    manual_purchase: "手动支付",
+    auto_renewal: "自动续费",
+    scheduled_downgrade: "到期降级扣费",
+  };
+  return labels[value] || value || "-";
+}
+function pendingSummary(row) {
+  if (!row.pending_plan_code) return "-";
+  const payment = row.pending_requires_payment
+    ? `${row.pending_payment_status || "scheduled"} / ${chargeTypeLabel(row.pending_payment_charge_type)} / ￥${money(row.pending_payment_amount_cents)}`
+    : "无需扣费";
+  return `${esc(row.pending_plan_code)} ${esc(row.pending_billing_cycle || "")}<br><span style="color:var(--text-muted)">${esc(payment)}</span>`;
+}
+function pendingDetail(row) {
+  if (!row.pending_plan_code) return "待生效：<code>-</code>";
+  const bits = [
+    `待生效：<code>${esc(row.pending_plan_code)}</code> ${esc(row.pending_billing_cycle || "")} ${row.pending_effective_at ? fmtTime(row.pending_effective_at) : ""}`,
+    `待扣费：${row.pending_requires_payment ? `${row.pending_payment_status || "scheduled"} / ${chargeTypeLabel(row.pending_payment_charge_type)} / ￥${money(row.pending_payment_amount_cents)}` : "无需扣费"}`,
+  ];
+  if (row.pending_payment_blocked_reason) bits.push(`阻断：${row.pending_payment_blocked_reason}`);
+  return bits.join("<br>");
+}
+async function loadPlanFilter() {
+  const data = await api("GET", "/api/v1/plans/config");
+  planConfigs = data.plan_configs || {};
+  const codes = Object.keys(planConfigs).sort((a, b) => {
+    const pa = planConfigs[a] || {};
+    const pb = planConfigs[b] || {};
+    return (parseInt(pa.sort_order) || 0) - (parseInt(pb.sort_order) || 0)
+      || (parseInt(pa.rank) || 0) - (parseInt(pb.rank) || 0)
+      || a.localeCompare(b);
+  });
+  document.getElementById("f-plan").innerHTML = `<option value="">全部套餐</option>` +
+    codes.map(code => `<option value="${esc(code)}">${esc(code)}</option>`).join("");
+}
+function closeModal(id) { document.getElementById(id).classList.remove("show"); }
+function resetFilter() {
+  document.getElementById("f-email").value = "";
+  document.getElementById("f-plan").value = "";
+  loadAccounts(1);
+}
+function resetLabel(row) {
+  return row.plan_current_period_note || fmtTime(row.plan_current_period_end);
+}
+async function loadAccounts(page) {
+  currentPage = page;
+  const params = new URLSearchParams({ page, page_size: 20 });
+  const email = document.getElementById("f-email").value.trim();
+  const plan = document.getElementById("f-plan").value;
+  if (email) params.set("email", email);
+  if (plan) params.set("plan_code", plan);
+  try {
+    const data = await api("GET", `/api/v1/plans/accounts?${params}`);
+    document.getElementById("accounts-tbody").innerHTML = data.items.map(row => `
+      <tr>
+        <td>${row.email}</td>
+        <td><span class="badge badge-info">${row.plan_code || "-"}</span></td>
+        <td>${row.subscription_billing_cycle || "-"}</td>
+        <td>${row.subscription_auto_renew ? "开" : "关"}</td>
+        <td>${fmtTime(row.subscription_started_at)}</td>
+        <td>${row.subscription_expires_at ? fmtTime(row.subscription_expires_at) : "永久/无"}</td>
+        <td>${resetLabel(row)}</td>
+        <td>${row.plan_credits_used || 0}/${row.plan_credits_total || 0}</td>
+        <td>${pendingSummary(row)}</td>
+        <td><button class="btn btn-ghost btn-sm" onclick="openDetail('${row.email}')">详情</button></td>
+      </tr>`).join("");
+    const totalPages = Math.ceil(data.total / 20) || 1;
+    document.getElementById("accounts-pager").innerHTML = `
+      <span class="page-info">共 ${data.total} 条，第 ${page}/${totalPages} 页</span>
+      <button class="btn btn-ghost btn-sm" onclick="loadAccounts(${page-1})" ${page<=1?"disabled":""}>上一页</button>
+      <button class="btn btn-ghost btn-sm" onclick="loadAccounts(${page+1})" ${page>=totalPages?"disabled":""}>下一页</button>`;
+  } catch(e) { showToast(e.message, "error"); }
+}
+async function openDetail(email) {
+  try {
+    const data = await api("GET", `/api/v1/plans/accounts/detail?email=${encodeURIComponent(email)}`);
+    const c = data.current;
+    document.getElementById("detail-current").innerHTML =
+      `邮箱：<code>${c.email}</code><br>当前套餐：<code>${c.plan_code || "-"}</code>，支付方式：<code>${c.subscription_billing_cycle || "-"}</code>，自动续费：${c.subscription_auto_renew ? "开" : "关"}<br>` +
+      `订阅开始：${fmtTime(c.subscription_started_at)}，订阅到期：${c.subscription_expires_at ? fmtTime(c.subscription_expires_at) : "永久/无"}<br>` +
+      `周期结束：${resetLabel(c)}，套餐积分：${c.plan_credits_used || 0}/${c.plan_credits_total || 0}<br>` +
+      `${pendingDetail(c)}<br>` +
+      `最近自动扣费：${c.last_auto_charge_status || "-"} / ${chargeTypeLabel(c.last_auto_charge_type)} / ${c.last_auto_charge_at ? fmtTime(c.last_auto_charge_at) : "-"}`;
+    document.getElementById("history-tbody").innerHTML = (data.history || []).map(e => `
+      <tr>
+        <td>${fmtTime(e.created_at)}</td>
+        <td>${e.event_type || "-"}</td>
+        <td>${e.from_plan_code || e.before?.plan_code || "-"}</td>
+        <td>${e.to_plan_code || e.after?.plan_code || e.plan_code || "-"}</td>
+        <td>${e.admin_email || e.operator || "-"}</td>
+      </tr>`).join("");
+    document.getElementById("detail-modal").classList.add("show");
+  } catch(e) { showToast(e.message, "error"); }
+}
+loadPlanFilter().finally(() => loadAccounts(1));
+</script>
+{% endblock %}

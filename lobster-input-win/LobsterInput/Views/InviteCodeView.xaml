@@ -1,0 +1,112 @@
+<UserControl x:Class="LobsterInput.Views.InviteCodeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignWidth="680" d:DesignHeight="642"
+             Background="{DynamicResource DsBgBrush}">
+
+    <Grid>
+        <StackPanel Width="420" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Border Width="64"
+                    Height="64"
+                    HorizontalAlignment="Center"
+                    Margin="0,0,0,20"
+                    Background="{DynamicResource DsAccentSoftBrush}"
+                    BorderBrush="{DynamicResource DsAccentRingBrush}"
+                    BorderThickness="1"
+                    CornerRadius="{StaticResource RadiusXl}">
+                <TextBlock Text="&#xE72E;"
+                           FontFamily="{StaticResource IconFont}"
+                           FontSize="26"
+                           Foreground="{DynamicResource DsAccentBrush}"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+            </Border>
+
+            <TextBlock x:Name="PageSubtitle"
+                       HorizontalAlignment="Center"
+                       FontFamily="{StaticResource AppFont}"
+                       FontSize="22"
+                       FontWeight="{StaticResource FontWeightSemiBold}"
+                       Foreground="{DynamicResource DsFgBrush}" />
+            <TextBlock x:Name="PageTitle"
+                       HorizontalAlignment="Center"
+                       TextAlignment="Center"
+                       TextWrapping="Wrap"
+                       Margin="0,8,0,24"
+                       FontFamily="{StaticResource AppFont}"
+                       FontSize="{StaticResource FontSizeDescription}"
+                       Foreground="{DynamicResource DsFgMutedBrush}" />
+
+            <Border Style="{StaticResource DsCardStyle}" Padding="18" Margin="0,0,0,18">
+                <StackPanel>
+                    <TextBlock x:Name="WelcomeHeading"
+                               FontSize="{StaticResource FontSizeBody}"
+                               FontWeight="{StaticResource FontWeightSemiBold}"
+                               Foreground="{DynamicResource DsFgBrush}"
+                               Margin="0,0,0,8"/>
+                    <TextBlock x:Name="BodyLine1"
+                               FontSize="{StaticResource FontSizeDescription}"
+                               Foreground="{DynamicResource DsFgMutedBrush}"
+                               TextWrapping="Wrap"
+                               LineHeight="20"
+                               Margin="0,0,0,8"/>
+                    <TextBlock x:Name="BodyLine2"
+                               FontSize="{StaticResource FontSizeSubtle}"
+                               Foreground="{DynamicResource DsWarningBrush}"
+                               TextWrapping="Wrap"/>
+                </StackPanel>
+            </Border>
+
+            <TextBox x:Name="InviteCodeBox"
+                     Text="{Binding InviteCode, UpdateSourceTrigger=PropertyChanged}"
+                     Style="{StaticResource DsInputTextBoxStyle}"
+                     FontFamily="{StaticResource MonoFont}"
+                     FontSize="18"
+                     MaxLength="9"
+                     IsEnabled="{Binding IsLoading, Converter={StaticResource InverseBoolConverter}}"
+                     HorizontalContentAlignment="Center"
+                     Margin="0,0,0,14"/>
+
+            <Border Visibility="{Binding ErrorMessage, Converter={StaticResource NullToCollapsed}}"
+                    Margin="0,0,0,14"
+                    Padding="12,10"
+                    Background="{DynamicResource DsDangerSoftBrush}"
+                    BorderBrush="{DynamicResource DsDangerRingBrush}"
+                    BorderThickness="1"
+                    CornerRadius="{StaticResource RadiusMd}">
+                <TextBlock Text="{Binding ErrorMessage}"
+                           FontSize="{StaticResource FontSizeDescription}"
+                           Foreground="{DynamicResource DsDangerBrush}"
+                           TextWrapping="Wrap"/>
+            </Border>
+
+            <Button x:Name="SubmitBtn"
+                    Style="{StaticResource DsButtonPrimaryStyle}"
+                    Command="{Binding SubmitCommand}"
+                    HorizontalAlignment="Stretch"
+                    Height="40"
+                    Margin="0,0,0,10">
+                <Grid>
+                    <TextBlock x:Name="SubmitBtnText"
+                               HorizontalAlignment="Center"
+                               FontWeight="{StaticResource FontWeightSemiBold}"
+                               Visibility="{Binding IsLoading, Converter={StaticResource InverseBoolToVisibility}}"/>
+                    <ProgressBar IsIndeterminate="True"
+                                 Style="{StaticResource DsIndeterminateSpinnerStyle}"
+                                 Width="24"
+                                 Height="24"
+                                 Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibility}}"/>
+                </Grid>
+            </Button>
+
+            <Button x:Name="BackBtn"
+                    Style="{StaticResource DsButtonGhostStyle}"
+                    Command="{Binding GoBackCommand}"
+                    HorizontalAlignment="Center"
+                    IsEnabled="{Binding IsLoading, Converter={StaticResource InverseBoolConverter}}"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

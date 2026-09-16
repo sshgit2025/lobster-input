@@ -1,0 +1,14 @@
+{
+  "name": "lobster-note-front",
+  "version": "0.1.0",
+  "description": "龙虾笔记 Electron 前端",
+  "main": "src/main.js",
+  "private": true,
+  "scripts": {
+    "dev": "electron .",
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "42.5.0"
+  }
+}

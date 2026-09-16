@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}Lobster Admin{% endblock %}</title>
+<link rel="stylesheet" href="{{ base_url }}/static/css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<!-- 全局告警横幅：仅在存在未处理告警时显示 -->
+<div id="global-alert-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9999;
+  background:linear-gradient(90deg,#b91c1c,#ef4444);color:#fff;padding:10px 20px;
+  display:none;align-items:center;gap:12px;box-shadow:0 2px 8px rgba(0,0,0,.3)">
+  <span style="font-size:18px">🚨</span>
+  <span style="font-weight:700;font-size:13px">未处理告警：</span>
+  <span id="global-alert-title" style="font-size:13px;flex:1"></span>
+  <span id="global-alert-time" style="font-size:12px;opacity:.85"></span>
+  <a id="global-alert-link" style="background:rgba(255,255,255,.2);color:#fff;
+    padding:4px 12px;border-radius:4px;font-size:12px;text-decoration:none;
+    white-space:nowrap">查看全部告警 →</a>
+  <button onclick="dismissBanner()" style="background:none;border:none;color:#fff;
+    cursor:pointer;font-size:16px;opacity:.8;padding:0 4px">✕</button>
+</div>
+{% block body %}{% endblock %}
+<script>window.__BASE_URL__ = "{{ base_url }}";</script>
+<script src="{{ base_url }}/static/js/main.js"></script>
+<script>
+(function(){
+  const BASE = "{{ base_url }}";
+  const COOKIE = "{{ auth_cookie_name }}";
+  const DISMISSED_KEY = "alert_banner_dismissed";
+
+  function getCookieVal(name) {
+    const p = name + "=";
+    return document.cookie.split(';').map(c=>c.trim())
+      .find(c=>c.startsWith(p))?.slice(p.length) || '';
+  }
+
+  async function checkPendingAlert() {
+    if (!getCookieVal(COOKIE)) return;
+    try {
+      const r = await fetch(BASE + "/api/v1/alerts/latest-pending", {credentials:'include'});
+      if (!r.ok) return;
+      const data = await r.json();
+      const alert = data.alert;
+      const badge = document.getElementById('nav-alert-badge');
+      if (!alert) {
+        if (badge) badge.style.display = 'none';
+        return;
+      }
+      if (badge) { badge.textContent = '!'; badge.style.display = 'inline'; }
+      const dismissed = sessionStorage.getItem(DISMISSED_KEY);
+      if (dismissed === alert.id) return;
+      const banner = document.getElementById('global-alert-banner');
+      if (!banner) return;
+      document.getElementById('global-alert-title').textContent =
+        '[' + (alert.level==='critical'?'严重':alert.level==='warning'?'警告':'信息') + '] ' + alert.title;
+      document.getElementById('global-alert-time').textContent =
+        (alert.created_at||'').replace('T',' ').substring(0,19);
+      document.getElementById('global-alert-link').href = BASE + '/alerts';
+      banner.style.display = 'flex';
+      document.body.style.paddingTop = '44px';
+    } catch(e) {}
+  }
+
+  function dismissBanner() {
+    const banner = document.getElementById('global-alert-banner');
+    const title = document.getElementById('global-alert-title').textContent;
+    if (banner) { banner.style.display = 'none'; document.body.style.paddingTop = ''; }
+  }
+
+  window.dismissBanner = dismissBanner;
+  checkPendingAlert();
+})();
+</script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,32 @@
+{
+  "string": [
+    {
+      "name": "app_name",
+      "value": "龙虾输入法"
+    },
+    {
+      "name": "module_desc",
+      "value": "龙虾输入法主模块"
+    },
+    {
+      "name": "ability_desc",
+      "value": "龙虾输入法设置"
+    },
+    {
+      "name": "ime_desc",
+      "value": "龙虾语音输入法"
+    },
+    {
+      "name": "ime_subtype_zh_cn",
+      "value": "龙虾中文"
+    },
+    {
+      "name": "ime_subtype_en_us",
+      "value": "Lobster English"
+    },
+    {
+      "name": "mic_permission_reason",
+      "value": "语音输入需要使用麦克风采集声音"
+    }
+  ]
+}

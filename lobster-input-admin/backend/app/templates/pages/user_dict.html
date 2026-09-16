@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+{% block title %}用户词典 - Lobster Admin{% endblock %}
+{% block body %}
+<div class="layout">
+  {% include "partials/sidebar.html" %}
+  <main class="main">
+    <div class="page-title">📖 用户级词典管理</div>
+
+    <div class="card">
+      <div class="search-bar">
+        <input id="f-email" class="form-input" placeholder="用户邮箱（精准筛选）" style="max-width:280px">
+        <button class="btn btn-primary" onclick="loadList(1)">搜索</button>
+        <button class="btn btn-ghost" onclick="resetFilter()">重置</button>
+        <span id="total-tip" style="margin-left:12px;color:var(--text-muted);font-size:13px"></span>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th style="width:220px">用户邮箱</th>
+            <th>词汇</th>
+            <th style="width:180px">创建时间</th>
+            <th style="width:80px">操作</th>
+          </tr></thead>
+          <tbody id="dict-tbody">
+            <tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:40px">加载中…</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pagination" id="dict-pager"></div>
+    </div>
+  </main>
+</div>
+
+<script>
+const BASE = '{{ base_url }}';
+let _page = 1;
+let _pageSize = 20;
+let _total = 0;
+
+function resetFilter() {
+  document.getElementById('f-email').value = '';
+  loadList(1);
+}
+
+async function loadList(page) {
+  _page = page;
+  const email = document.getElementById('f-email').value.trim();
+  const params = new URLSearchParams({ page, page_size: _pageSize });
+  if (email) params.set('user_email', email);
+
+  const tbody = document.getElementById('dict-tbody');
+  tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:40px">加载中…</td></tr>';
+
+  try {
+    const resp = await fetch(`${BASE}/api/v1/user-dict?${params}`);
+    if (!resp.ok) throw new Error(await resp.text());
+    const data = await resp.json();
+    _total = data.total;
+
+    document.getElementById('total-tip').textContent = `共 ${data.total} 条`;
+
+    if (!data.items || data.items.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:40px">暂无数据</td></tr>';
+      document.getElementById('dict-pager').innerHTML = '';
+      return;
+    }
+
+    tbody.innerHTML = data.items.map(item => `
+      <tr>
+        <td style="font-size:13px">${escHtml(item.user_email)}</td>
+        <td><span style="background:var(--bg-hover);padding:2px 8px;border-radius:4px;
+            font-family:monospace;font-size:13px">${escHtml(item.word)}</span></td>
+        <td style="font-size:12px;color:var(--text-muted)">${fmtTime(item.created_at)}</td>
+        <td>
+          <button class="btn btn-ghost" style="color:#ef4444;padding:2px 10px;font-size:12px"
+            onclick="delItem('${escJs(item.id)}', '${escJs(item.user_email)}', '${escJs(item.word)}')">删除</button>
+        </td>
+      </tr>
+    `).join('');
+
+    renderPager(data.page, data.total_pages);
+  } catch (e) {
+    tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:#ef4444;padding:40px">加载失败：${e.message}</td></tr>`;
+  }
+}
+
+function renderPager(current, totalPages) {
+  const el = document.getElementById('dict-pager');
+  if (totalPages <= 1) { el.innerHTML = ''; return; }
+
+  const pages = [];
+  const delta = 2;
+  for (let i = 1; i <= totalPages; i++) {
+    if (i === 1 || i === totalPages || (i >= current - delta && i <= current + delta)) {
+      pages.push(i);
+    } else if (pages[pages.length - 1] !== '…') {
+      pages.push('…');
+    }
+  }
+
+  el.innerHTML = pages.map(p => {
+    if (p === '…') return `<span class="page-ellipsis">…</span>`;
+    return `<button class="page-btn ${p === current ? 'active' : ''}"
+      onclick="loadList(${p})">${p}</button>`;
+  }).join('');
+}
+
+async function delItem(id, userEmail, word) {
+  if (!confirm(`确认删除词汇「${word}」？此操作不可恢复。`)) return;
+  try {
+    const params = new URLSearchParams({ user_email: userEmail });
+    const resp = await fetch(`${BASE}/api/v1/user-dict/${id}?${params}`, { method: 'DELETE' });
+    if (!resp.ok) throw new Error(await resp.text());
+    loadList(_page);
+  } catch (e) {
+    alert('删除失败：' + e.message);
+  }
+}
+
+function escHtml(s) {
+  return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function escJs(s) {
+  return String(s || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '\\"');
+}
+
+function fmtTime(raw) {
+  if (!raw) return '-';
+  try {
+    const d = new Date(raw);
+    return d.toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai',
+      year:'numeric', month:'2-digit', day:'2-digit',
+      hour:'2-digit', minute:'2-digit' });
+  } catch { return raw; }
+}
+
+loadList(1);
+</script>
+{% endblock %}

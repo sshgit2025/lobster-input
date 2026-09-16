@@ -1,0 +1,137 @@
+{
+  "identifier" : "A1B2C3D4-0000-4000-8000-0A1B2C3D4E5F",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "6.00",
+      "familyShareable" : false,
+      "internalID" : "F0000001-0000-4000-8000-000000000001",
+      "localizations" : [
+        {
+          "description" : "套餐积分用尽后的加购积分包",
+          "displayName" : "积分加购包",
+          "locale" : "zh_CN"
+        },
+        {
+          "description" : "Credit top-up after plan credits are exhausted",
+          "displayName" : "Credit Top-up",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "lobster.credits.topup",
+      "referenceName" : "Credits Topup",
+      "type" : "Consumable"
+    }
+  ],
+  "settings" : {
+    "_locale" : "zh_CN",
+    "_storefront" : "CHN"
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "21000001",
+      "localizations" : [
+
+      ],
+      "name" : "Lobster Plans",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "9.00",
+          "familyShareable" : false,
+          "groupNumber" : 3,
+          "internalID" : "F0000001-0000-4000-8000-000000000011",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Lite 套餐 · 月付",
+              "displayName" : "Lite 月付",
+              "locale" : "zh_CN"
+            },
+            {
+              "description" : "Lite plan, billed monthly",
+              "displayName" : "Lite Monthly",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "lobster.sub.lite.monthly",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Lite Monthly",
+          "subscriptionGroupID" : "21000001",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "28.00",
+          "familyShareable" : false,
+          "groupNumber" : 2,
+          "internalID" : "F0000001-0000-4000-8000-000000000012",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Standard 套餐 · 月付",
+              "displayName" : "Standard 月付",
+              "locale" : "zh_CN"
+            },
+            {
+              "description" : "Standard plan, billed monthly",
+              "displayName" : "Standard Monthly",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "lobster.sub.standard.monthly",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Standard Monthly",
+          "subscriptionGroupID" : "21000001",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "68.00",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "F0000001-0000-4000-8000-000000000013",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Pro 套餐 · 月付",
+              "displayName" : "Pro 月付",
+              "locale" : "zh_CN"
+            },
+            {
+              "description" : "Pro plan, billed monthly",
+              "displayName" : "Pro Monthly",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "lobster.sub.pro.monthly",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Pro Monthly",
+          "subscriptionGroupID" : "21000001",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 3,
+    "minor" : 0
+  }
+}

@@ -1,0 +1,440 @@
+{% extends "base.html" %}
+{% block title %}积分账本 - Lobster Admin{% endblock %}
+{% block body %}
+<div class="layout">
+  {% include "partials/sidebar.html" %}
+  <main class="main">
+    <div class="page-title">💳 积分账本</div>
+
+    <!-- 筛选栏 -->
+    <div class="card" style="margin-bottom:16px;padding:16px 20px">
+      <div class="search-bar" style="margin-bottom:0">
+        <input id="f-email" class="form-input" placeholder="用户邮箱" style="max-width:220px">
+        <select id="f-operation" class="form-select" style="max-width:150px">
+          <option value="">全部操作</option>
+          <option value="transcribe">transcribe</option>
+          <option value="rewrite">rewrite</option>
+          <option value="agent">agent</option>
+        </select>
+        <select id="f-client-platform" class="form-select" style="max-width:170px">
+          <option value="">全部客户端</option>
+          <option value="macos">macos</option>
+          <option value="windows">windows</option>
+          <option value="ios">ios</option>
+          <option value="android">android</option>
+        </select>
+        <input id="f-date-from" class="form-input" type="date" style="max-width:148px">
+        <span style="color:var(--text-muted);line-height:36px">至</span>
+        <input id="f-date-to" class="form-input" type="date" style="max-width:148px">
+        <button class="btn btn-primary" onclick="applyFilter()">搜索</button>
+        <button class="btn btn-ghost" onclick="resetFilter()">重置</button>
+      </div>
+      <div id="filter-tip" style="margin-top:8px;font-size:12px;color:var(--primary);display:none">
+        ⚡ 当前为筛选结果，平台占比和 Top 用户已按条件过滤；趋势图为全量数据
+      </div>
+    </div>
+
+    <!-- 汇总指标卡 -->
+    <div class="stat-grid" style="grid-template-columns:repeat(2,1fr);max-width:480px;margin-bottom:16px">
+      <div class="stat-card">
+        <div class="stat-label">总积分消耗</div>
+        <div class="stat-value" style="color:var(--danger)" id="s-credits">-</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">总记录数</div>
+        <div class="stat-value primary" id="s-records">-</div>
+      </div>
+    </div>
+
+    <!-- Tab 切换 -->
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab('overview', this)">仪表盘</button>
+      <button class="tab-btn" onclick="switchTab('detail', this)">明细查询</button>
+    </div>
+
+    <!-- Tab: 仪表盘 -->
+    <div id="tab-overview">
+      <div class="chart-grid">
+        <div class="card">
+          <div class="card-title">近30天积分消耗趋势</div>
+          <div class="chart-wrap"><canvas id="chart-daily"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-title">各平台积分占比</div>
+          <div class="chart-wrap"><canvas id="chart-platform"></canvas></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Top 10 用户（按积分消耗）</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>邮箱</th><th>总积分消耗</th><th>请求次数</th></tr></thead>
+            <tbody id="top-tbody"><tr><td colspan="3" style="text-align:center;color:var(--text-muted);padding:24px">加载中...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab: 明细查询 -->
+    <div id="tab-detail" style="display:none">
+      <div class="card">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>邮箱</th>
+                <th>日期</th>
+                <th>操作</th>
+                <th>客户端</th>
+                <th>总积分</th>
+                <th style="width:80px;text-align:center">明细</th>
+              </tr>
+            </thead>
+            <tbody id="ledger-tbody">
+              <tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:24px">加载中...</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination" id="ledger-pager"></div>
+      </div>
+    </div>
+
+    <!-- 平台明细 Modal -->
+    <div id="bd-modal" style="display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.7);align-items:center;justify-content:center">
+      <div style="background:#1a1d27;border:1px solid #2a2d3e;border-radius:14px;width:520px;max-width:94vw;max-height:80vh;overflow-y:auto;box-shadow:0 24px 60px rgba(0,0,0,.6);position:relative">
+        <!-- Modal 头部 -->
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px 16px;border-bottom:1px solid #2a2d3e;position:sticky;top:0;background:#1a1d27;z-index:1">
+          <div style="font-size:15px;font-weight:700;letter-spacing:.3px">平台消耗明细</div>
+          <button onclick="closeBd()" style="background:#2a2d3e;border:none;color:#8892a4;font-size:16px;cursor:pointer;width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;transition:background .15s" onmouseover="this.style.background='#3a3d4e'" onmouseout="this.style.background='#2a2d3e'">×</button>
+        </div>
+        <!-- 请求信息 -->
+        <div id="bd-meta" style="padding:12px 24px;background:#0f1117;border-bottom:1px solid #2a2d3e;font-size:12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center"></div>
+        <!-- 明细列表 -->
+        <div id="bd-body" style="padding:8px 24px 20px"></div>
+      </div>
+    </div>
+
+  </main>
+</div>
+{% endblock %}
+{% block scripts %}
+<style>
+.tab-bar {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0;
+}
+.tab-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 14px;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: all 0.15s;
+}
+.tab-btn:hover { color: var(--text); }
+.tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); font-weight: 600; }
+.bd-btn {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 3px 10px;
+  font-size: 12px;
+  color: var(--primary);
+  cursor: pointer;
+  transition: background .15s;
+}
+.bd-btn:hover { background: var(--border); }
+.bd-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid #2a2d3e;
+}
+.bd-row:last-child { border-bottom: none; }
+.bd-icon {
+  width: 42px; height: 42px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 800; color: #fff;
+  flex-shrink: 0; letter-spacing: -.5px;
+}
+.bd-info { flex: 1; min-width: 0; }
+.bd-name { font-size: 13px; font-weight: 600; margin-bottom: 3px; color: #e2e8f0; }
+.bd-credits-wrap { display: flex; align-items: baseline; gap: 4px; }
+.bd-credits { color: #ef4444; font-size: 22px; font-weight: 800; line-height: 1; }
+.bd-credits-unit { font-size: 12px; color: #8892a4; }
+.bd-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 7px; }
+.bd-tag {
+  background: #0f1117;
+  border: 1px solid #2a2d3e;
+  border-radius: 5px;
+  padding: 2px 8px;
+  font-size: 11px;
+  color: #8892a4;
+}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+const COLORS = ["#e85d2f","#3b82f6","#22c55e","#f59e0b","#8b5cf6","#ec4899","#14b8a6","#f97316"];
+let currentPage = 1;
+let dailyChart = null, platformChart = null;
+
+function getFilterParams() {
+  const p = new URLSearchParams();
+  const email = document.getElementById("f-email").value.trim();
+  const op = document.getElementById("f-operation").value;
+  const cp = document.getElementById("f-client-platform").value;
+  const from = document.getElementById("f-date-from").value;
+  const to = document.getElementById("f-date-to").value;
+  if (email) p.set("user_email", email);
+  if (op) p.set("operation", op);
+  if (cp) p.set("client_platform", cp);
+  if (from) p.set("date_from", from);
+  if (to) p.set("date_to", to);
+  return p;
+}
+
+function hasFilter() { return getFilterParams().toString() !== ""; }
+
+function resetFilter() {
+  document.getElementById("f-email").value = "";
+  document.getElementById("f-operation").value = "";
+  document.getElementById("f-client-platform").value = "";
+  document.getElementById("f-date-from").value = "";
+  document.getElementById("f-date-to").value = "";
+  applyFilter();
+}
+
+function applyFilter() {
+  currentPage = 1;
+  document.getElementById("filter-tip").style.display = hasFilter() ? "block" : "none";
+  loadSummary();
+  loadCharts();
+  loadLedger();
+}
+
+function switchTab(name, btn) {
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  document.getElementById("tab-overview").style.display = name === "overview" ? "" : "none";
+  document.getElementById("tab-detail").style.display = name === "detail" ? "" : "none";
+}
+
+function fmtNum(n) {
+  if (!n && n !== 0) return "-";
+  return Number(n).toLocaleString();
+}
+
+// 存储当前所有行的 breakdown 数据，供 Modal 读取
+const _bdStore = {};
+
+function openBd(idx) {
+  const item = _bdStore[idx];
+  if (!item) return;
+
+  const opColor = {transcribe:"#3b82f6", rewrite:"#8b5cf6", agent:"#f59e0b"}[item.operation] || "#6b7280";
+  document.getElementById("bd-meta").innerHTML =
+    `<span style="color:#8892a4">📧</span> <span style="color:#e2e8f0">${item.user_email}</span>` +
+    `<span style="color:#2a2d3e;margin:0 4px">|</span>` +
+    `<span style="color:#8892a4">📅</span> <span style="color:#e2e8f0">${item.date}</span>` +
+    `<span style="color:#2a2d3e;margin:0 4px">|</span>` +
+    `<span style="background:${opColor}22;color:${opColor};border:1px solid ${opColor}44;border-radius:4px;padding:1px 8px;font-size:11px;font-weight:600">${item.operation}</span>` +
+    `<span style="background:#2a2d3e;color:#8892a4;border-radius:4px;padding:1px 8px;font-size:11px">${item.client_platform || '-'}</span>` +
+    `<span style="margin-left:auto;color:#ef4444;font-weight:700;font-size:13px">共扣 ${fmtNum(item.total_credits)} 积分</span>`;
+
+  const PLATFORM_COLORS = {
+    groq_whisper: "#f97316", openai_whisper: "#3b82f6",
+    openai_llm: "#8b5cf6", anthropic_llm: "#ec4899",
+    deepseek_llm: "#14b8a6", groq_llm: "#f59e0b",
+    default: "#6b7280",
+  };
+
+  const bd = item.breakdown || [];
+  if (bd.length === 0) {
+    document.getElementById("bd-body").innerHTML =
+      '<div style="color:#8892a4;text-align:center;padding:32px 0">暂无明细数据</div>';
+  } else {
+    document.getElementById("bd-body").innerHTML = bd.map((b, i) => {
+      const tags = [];
+      if (b.input_tokens > 0)  tags.push(`输入 ${fmtNum(b.input_tokens)} tokens`);
+      if (b.output_tokens > 0) tags.push(`输出 ${fmtNum(b.output_tokens)} tokens`);
+      if (b.audio_duration_sec > 0) tags.push(`音频 ${b.audio_duration_sec.toFixed(1)}s`);
+      if (b.audio_chars > 0)   tags.push(`识别 ${fmtNum(b.audio_chars)} 字符`);
+      if (b.search_count > 0)  tags.push(`搜索 ${b.search_count} 次`);
+      const color = PLATFORM_COLORS[b.platform] || PLATFORM_COLORS.default;
+      const abbr  = b.platform.split("_").map(w => w[0].toUpperCase()).join("");
+      const pct   = item.total_credits > 0 ? Math.round(b.credits / item.total_credits * 100) : 0;
+      return `<div class="bd-row">
+        <div class="bd-icon" style="background:${color}22;border:1.5px solid ${color}55">
+          <span style="color:${color};font-size:11px;font-weight:800">${abbr}</span>
+        </div>
+        <div class="bd-info">
+          <div class="bd-name">${b.platform}</div>
+          <div class="bd-credits-wrap">
+            <span class="bd-credits">${fmtNum(b.credits)}</span>
+            <span class="bd-credits-unit">积分</span>
+            <span style="font-size:11px;color:#8892a4;margin-left:6px">(占比 ${pct}%)</span>
+          </div>
+          ${tags.length ? `<div class="bd-tags">${tags.map(t => `<span class="bd-tag">${t}</span>`).join('')}</div>` : ''}
+        </div>
+        <div style="flex-shrink:0;width:52px">
+          <div style="height:4px;background:#2a2d3e;border-radius:2px;overflow:hidden">
+            <div style="height:100%;width:${pct}%;background:${color};border-radius:2px;transition:width .4s"></div>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  document.getElementById("bd-modal").style.display = "flex";
+}
+
+function closeBd() {
+  document.getElementById("bd-modal").style.display = "none";
+}
+
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeBd(); });
+document.getElementById("bd-modal").addEventListener("click", function(e) {
+  if (e.target === this) closeBd();
+});
+
+async function loadSummary() {
+  const p = getFilterParams();
+  try {
+    const data = await api("GET", `/api/v1/ledger/summary?${p}`);
+    document.getElementById("s-credits").textContent = fmtNum(data.total_credits);
+    document.getElementById("s-records").textContent = fmtNum(data.total_records);
+  } catch (e) { console.error("loadSummary", e); }
+}
+
+async function loadCharts() {
+  const p = getFilterParams();
+  try {
+    const [daily, platform, topUsers] = await Promise.all([
+      api("GET", "/api/v1/ledger/daily?days=30"),
+      api("GET", `/api/v1/ledger/platform-breakdown?${p}`),
+      api("GET", `/api/v1/ledger/top-users?limit=10&${p}`),
+    ]);
+
+    // 趋势折线图（全量，不受筛选影响）
+    const sorted = daily.sort((a, b) => a.date > b.date ? 1 : -1);
+    if (dailyChart) dailyChart.destroy();
+    dailyChart = new Chart(document.getElementById("chart-daily"), {
+      type: "line",
+      data: {
+        labels: sorted.map(d => d.date),
+        datasets: [{
+          label: "积分消耗",
+          data: sorted.map(d => d.total_credits),
+          borderColor: "#e85d2f",
+          backgroundColor: "rgba(232,93,47,.1)",
+          tension: 0.3,
+          fill: true,
+          pointRadius: 3,
+        }],
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: { y: { beginAtZero: true } },
+      },
+    });
+
+    // 平台占比饼图（跟随筛选）
+    if (platformChart) platformChart.destroy();
+    if (platform.length > 0) {
+      platformChart = new Chart(document.getElementById("chart-platform"), {
+        type: "doughnut",
+        data: {
+          labels: platform.map(d => d.platform),
+          datasets: [{
+            data: platform.map(d => d.total_credits),
+            backgroundColor: COLORS.slice(0, platform.length),
+            borderWidth: 2,
+          }],
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          plugins: {
+            legend: { position: "right", labels: { font: { size: 12 } } },
+            tooltip: {
+              callbacks: {
+                label: ctx => ` ${ctx.label}: ${ctx.parsed.toLocaleString()} 积分`,
+              },
+            },
+          },
+        },
+      });
+    } else {
+      const ctx = document.getElementById("chart-platform").getContext("2d");
+      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    }
+
+    // Top 用户表格（跟随筛选）
+    document.getElementById("top-tbody").innerHTML = topUsers.length
+      ? topUsers.map((u, i) => `
+        <tr>
+          <td>
+            <span style="display:inline-block;width:20px;height:20px;border-radius:50%;
+              background:${COLORS[i % COLORS.length]};color:#fff;font-size:11px;
+              text-align:center;line-height:20px;margin-right:6px">${i+1}</span>
+            ${u.email}
+          </td>
+          <td><strong style="color:var(--danger)">${fmtNum(u.total_credits)}</strong></td>
+          <td>${fmtNum(u.record_count)}</td>
+        </tr>`).join("")
+      : '<tr><td colspan="3" style="text-align:center;color:var(--text-muted);padding:24px">暂无数据</td></tr>';
+
+  } catch (e) { console.error("loadCharts", e); }
+}
+
+async function loadLedger(page) {
+  if (page) currentPage = page;
+  const p = getFilterParams();
+  p.set("page", currentPage);
+  p.set("page_size", 20);
+  try {
+    const data = await api("GET", `/api/v1/ledger?${p}`);
+    const tbody = document.getElementById("ledger-tbody");
+    if (!data.items || data.items.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:24px">暂无数据</td></tr>';
+    } else {
+      data.items.forEach((item, i) => { _bdStore[i] = item; });
+      tbody.innerHTML = data.items.map((item, i) => `
+        <tr>
+          <td>${item.user_email}</td>
+          <td>${item.date}</td>
+          <td><span class="badge badge-info">${item.operation}</span></td>
+          <td><span style="font-size:12px;color:var(--text-muted)">${item.client_platform || '-'}</span></td>
+          <td><strong style="color:var(--danger);font-size:15px">${fmtNum(item.total_credits)}</strong></td>
+          <td style="text-align:center">
+            <button class="bd-btn" onclick="openBd(${i})">查看 ${(item.breakdown||[]).length} 项</button>
+          </td>
+        </tr>`).join('');
+    }
+    renderPager(data.total, data.page, data.page_size);
+  } catch (e) { console.error("loadLedger", e); }
+}
+
+function renderPager(total, page, pageSize) {
+  const totalPages = Math.ceil(total / pageSize);
+  const pager = document.getElementById("ledger-pager");
+  if (totalPages <= 1) { pager.innerHTML = ''; return; }
+  let html = `<span style="color:var(--text-muted);font-size:13px">共 ${total} 条</span>`;
+  if (page > 1) html += `<button class="btn btn-ghost" style="padding:4px 10px;font-size:13px" onclick="loadLedger(${page-1})">上一页</button>`;
+  html += `<span style="font-size:13px;color:var(--text-muted)">${page} / ${totalPages}</span>`;
+  if (page < totalPages) html += `<button class="btn btn-ghost" style="padding:4px 10px;font-size:13px" onclick="loadLedger(${page+1})">下一页</button>`;
+  pager.innerHTML = html;
+}
+
+loadSummary();
+loadCharts();
+loadLedger();
+</script>
+{% endblock %}

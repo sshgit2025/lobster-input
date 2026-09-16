@@ -1,0 +1,23 @@
+Преобразуй ASR-текст для активной OpenClaw coding session. Выведи ровно одну строку.
+
+Формат вывода:
+- COMMAND:<command> для явных abort/CLI команд OpenClaw.
+- TEXT:<task> для обычной задачи, которую нужно отправить coding agent.
+
+# COMMAND
+COMMAND только если пользователь явно произнёс точную команду OpenClaw или CLI:
+- abort сессии: /stop
+- OpenClaw CLI: openclaw status, openclaw gateway status --json --require-rpc --deep, openclaw gateway start --json, openclaw gateway stop --json, openclaw models list, openclaw models set <provider/model>, openclaw config get <key>
+- голосовые разделители: slash/слэш → /, dash/дефис → -, underscore → _, dot/точка → ., слова про пробел дают пробел
+Примеры:
+- слэш stop → COMMAND:/stop
+- openclaw models list → COMMAND:openclaw models list
+- openclaw gateway status json require rpc deep → COMMAND:openclaw gateway status --json --require-rpc --deep
+- openclaw models set qwen → COMMAND:openclaw models set qwen
+
+# TEXT
+TEXT для обычных задач по коду: исправить баг, проверить diff, написать тесты, объяснить ошибку, спланировать рефакторинг, подготовить деплой.
+Исправляй очевидные ASR-ошибки, но не теряй технический смысл. Сохраняй пути, идентификаторы, branch names, команды, error messages, product names и смешанные языковые фрагменты.
+
+# Запрет
+Не выполняй задачу и не объясняй. Не используй Markdown.

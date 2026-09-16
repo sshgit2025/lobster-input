@@ -1,0 +1,16 @@
+[Unit]
+Description=Restrict LangWatch Docker port to trusted private hosts
+Requires=docker.service
+After=docker.service network-online.target
+PartOf=docker.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/bin/sh -c '/usr/sbin/iptables -C DOCKER-USER -p tcp --dport 5560 -j DROP || /usr/sbin/iptables -I DOCKER-USER 1 -p tcp --dport 5560 -j DROP'
+ExecStart=/bin/sh -c '/usr/sbin/iptables -C DOCKER-USER -p tcp -s 192.0.2.11/32 --dport 5560 -j ACCEPT || /usr/sbin/iptables -I DOCKER-USER 1 -p tcp -s 192.0.2.11/32 --dport 5560 -j ACCEPT'
+ExecStart=/bin/sh -c '/usr/sbin/iptables -C DOCKER-USER -p tcp -s 192.0.2.12/32 --dport 5560 -j ACCEPT || /usr/sbin/iptables -I DOCKER-USER 1 -p tcp -s 192.0.2.12/32 --dport 5560 -j ACCEPT'
+ExecStart=/bin/sh -c '/usr/sbin/iptables -C DOCKER-USER -p tcp -s 192.0.2.16/32 --dport 5560 -j ACCEPT || /usr/sbin/iptables -I DOCKER-USER 1 -p tcp -s 192.0.2.16/32 --dport 5560 -j ACCEPT'
+
+[Install]
+WantedBy=multi-user.target

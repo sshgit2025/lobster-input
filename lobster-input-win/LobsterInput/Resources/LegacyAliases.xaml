@@ -1,0 +1,79 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Historical Color/SolidColorBrush keys. Light + sand placeholders, rewritten by ThemeManager. -->
+    <Color x:Key="BgDeep">#FFF4EFE7</Color>
+    <Color x:Key="BgDark">#FFF4EFE7</Color>
+    <Color x:Key="BgPanel">#FFFBF8F2</Color>
+    <Color x:Key="BgSidebar">#FFECE5D8</Color>
+    <Color x:Key="BgCard">#FFFBF8F2</Color>
+    <Color x:Key="BgInput">#FFFBF8F2</Color>
+    <Color x:Key="BgHover">#0D5C4428</Color>
+    <Color x:Key="BgActive">#145C4428</Color>
+
+    <Color x:Key="AccentColor">#FF9C7D5B</Color>
+    <Color x:Key="AccentSoft">#1A9C7D5B</Color>
+    <Color x:Key="AccentRing">#389C7D5B</Color>
+
+    <Color x:Key="DangerColor">#FFDC2626</Color>
+    <Color x:Key="WarningColor">#FFD97706</Color>
+    <Color x:Key="SuccessColor">#FF16A34A</Color>
+
+    <Color x:Key="NeonGreen">#FF9C7D5B</Color>
+    <Color x:Key="NeonCyan">#FF9C7D5B</Color>
+    <Color x:Key="NeonPurple">#FF9C7D5B</Color>
+    <Color x:Key="NeonRed">#FFDC2626</Color>
+    <Color x:Key="NeonOrange">#FFD97706</Color>
+    <Color x:Key="NeonYellow">#FFD97706</Color>
+
+    <Color x:Key="TextBright">#FF2C2620</Color>
+    <Color x:Key="TextDim">#FF6B5F50</Color>
+    <Color x:Key="TextGhost">#FFA89C87</Color>
+    <Color x:Key="TextMuted">#FFD8CFBE</Color>
+    <Color x:Key="BorderDim">#1A5C4428</Color>
+    <Color x:Key="DividerColor">#1A5C4428</Color>
+
+    <Color x:Key="CyberNeonCyanColor">#FF9C7D5B</Color>
+    <Color x:Key="CyberNeonRedColor">#FFDC2626</Color>
+
+    <SolidColorBrush x:Key="BgDeepBrush" Color="{DynamicResource BgDeep}" />
+    <SolidColorBrush x:Key="BgDarkBrush" Color="{DynamicResource BgDark}" />
+    <SolidColorBrush x:Key="BgPanelBrush" Color="{DynamicResource BgPanel}" />
+    <SolidColorBrush x:Key="BgSidebarBrush" Color="{DynamicResource BgSidebar}" />
+    <SolidColorBrush x:Key="BgCardBrush" Color="{DynamicResource BgCard}" />
+    <SolidColorBrush x:Key="BgInputBrush" Color="{DynamicResource BgInput}" />
+    <SolidColorBrush x:Key="BgHoverBrush" Color="{DynamicResource BgHover}" />
+    <SolidColorBrush x:Key="BgActiveBrush" Color="{DynamicResource BgActive}" />
+
+    <SolidColorBrush x:Key="AccentBrush" Color="{DynamicResource AccentColor}" />
+    <SolidColorBrush x:Key="AccentSoftBrush" Color="{DynamicResource AccentSoft}" />
+    <SolidColorBrush x:Key="AccentRingBrush" Color="{DynamicResource AccentRing}" />
+
+    <SolidColorBrush x:Key="DangerBrush" Color="{DynamicResource DangerColor}" />
+    <SolidColorBrush x:Key="WarningBrush" Color="{DynamicResource WarningColor}" />
+    <SolidColorBrush x:Key="SuccessBrush" Color="{DynamicResource SuccessColor}" />
+
+    <SolidColorBrush x:Key="NeonGreenBrush" Color="{DynamicResource NeonGreen}" />
+    <SolidColorBrush x:Key="NeonCyanBrush" Color="{DynamicResource NeonCyan}" />
+    <SolidColorBrush x:Key="NeonPurpleBrush" Color="{DynamicResource NeonPurple}" />
+    <SolidColorBrush x:Key="NeonRedBrush" Color="{DynamicResource NeonRed}" />
+    <SolidColorBrush x:Key="NeonOrangeBrush" Color="{DynamicResource NeonOrange}" />
+    <SolidColorBrush x:Key="NeonYellowBrush" Color="{DynamicResource NeonYellow}" />
+
+    <SolidColorBrush x:Key="TextBrightBrush" Color="{DynamicResource TextBright}" />
+    <SolidColorBrush x:Key="TextDimBrush" Color="{DynamicResource TextDim}" />
+    <SolidColorBrush x:Key="TextGhostBrush" Color="{DynamicResource TextGhost}" />
+    <SolidColorBrush x:Key="TextMutedBrush" Color="{DynamicResource TextMuted}" />
+    <SolidColorBrush x:Key="BorderDimBrush" Color="{DynamicResource BorderDim}" />
+    <SolidColorBrush x:Key="DividerBrush" Color="{DynamicResource DividerColor}" />
+
+    <SolidColorBrush x:Key="CyberBgPrimary" Color="{DynamicResource BgDeep}" />
+    <SolidColorBrush x:Key="CyberTextPrimary" Color="{DynamicResource TextBright}" />
+    <SolidColorBrush x:Key="CyberTextDim" Color="{DynamicResource TextDim}" />
+    <SolidColorBrush x:Key="CyberTextGhost" Color="{DynamicResource TextGhost}" />
+    <SolidColorBrush x:Key="CyberNeonCyan" Color="{DynamicResource NeonCyan}" />
+    <SolidColorBrush x:Key="CyberNeonGreen" Color="{DynamicResource NeonGreen}" />
+    <SolidColorBrush x:Key="CyberNeonRed" Color="{DynamicResource NeonRed}" />
+    <SolidColorBrush x:Key="CyberNeonYellow" Color="{DynamicResource NeonYellow}" />
+
+</ResourceDictionary>

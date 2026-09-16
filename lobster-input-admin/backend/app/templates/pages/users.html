@@ -1,0 +1,309 @@
+{% extends "base.html" %}
+{% block title %}用户管理 - Lobster Admin{% endblock %}
+{% block body %}
+<div class="layout">
+  {% include "partials/sidebar.html" %}
+  <main class="main">
+    <div class="page-title">👥 用户管理</div>
+    <div class="card">
+      <div class="search-bar">
+        <input id="f-email" class="form-input" placeholder="邮箱搜索" style="max-width:220px">
+        <input id="f-ip" class="form-input" placeholder="IP 搜索" style="max-width:160px">
+        <input id="f-device" class="form-input" placeholder="设备ID" style="max-width:200px">
+        <select id="f-plan" class="form-select" style="max-width:120px">
+          <option value="">全部套餐</option>
+        </select>
+        <select id="f-active" class="form-select" style="max-width:120px">
+          <option value="">全部状态</option>
+          <option value="true">正常</option>
+          <option value="false">已禁用</option>
+        </select>
+        <button class="btn btn-primary" onclick="loadUsers(1)">搜索</button>
+        <button class="btn btn-ghost" onclick="resetFilter()">重置</button>
+        <button class="btn btn-warning" onclick="openGrantModal()">赠送积分</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th>邮箱</th><th>套餐</th><th>状态</th><th>注册IP</th><th>邀请人</th><th>注册时间</th><th>操作</th>
+          </tr></thead>
+          <tbody id="user-tbody"></tbody>
+        </table>
+      </div>
+      <div class="pagination" id="user-pager"></div>
+    </div>
+  </main>
+</div>
+
+<div class="modal-overlay" id="credits-modal">
+  <div class="modal modal-wide">
+    <div class="modal-title">积分详情</div>
+    <div class="modal-body">
+      <div class="modal-grid">
+        <div class="form-group"><label class="form-label">邮箱</label><input id="cr-email" class="form-input" readonly></div>
+        <div class="form-group"><label class="form-label">套餐</label><input id="cr-plan" class="form-input" readonly></div>
+        <div class="form-group"><label class="form-label">总积分</label><input id="cr-total" class="form-input" readonly></div>
+        <div class="form-group"><label class="form-label">已使用</label><input id="cr-used" class="form-input" readonly></div>
+        <div class="form-group"><label class="form-label">奖励积分剩余</label><input id="cr-bonus" class="form-input" readonly></div>
+        <div class="form-group"><label class="form-label">付费加购积分剩余</label><input id="cr-paid-topup" class="form-input" readonly></div>
+        <div class="form-group"><label class="form-label">剩余</label><input id="cr-remain" class="form-input" readonly></div>
+        <div class="form-group"><label class="form-label">下次重置</label><input id="cr-reset" class="form-input" readonly></div>
+        <div class="form-group"><label class="form-label">订阅到期</label><input id="cr-sub-expire" class="form-input" readonly></div>
+        <div class="form-group"><label class="form-label">待生效套餐</label><input id="cr-pending" class="form-input" readonly></div>
+      </div>
+      <div class="card-title" style="margin-top:14px">非套餐积分批次</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>类型</th><th>来源</th><th>总量</th><th>已用</th><th>剩余</th><th>有效期</th></tr></thead>
+          <tbody id="cr-grants"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('credits-modal')">关闭</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="grant-modal">
+  <div class="modal">
+    <div class="modal-title">赠送积分</div>
+    <div class="modal-body">
+      <div class="modal-grid">
+        <div class="form-group"><label class="form-label">邮箱</label><input id="gr-email" class="form-input" placeholder="用户邮箱"></div>
+        <div class="form-group"><label class="form-label">数量</label><input id="gr-amount" class="form-input" type="number" min="1" placeholder="赠送积分数量"></div>
+      </div>
+      <div class="form-group"><label class="form-label">原因</label><input id="gr-reason" class="form-input" placeholder="赠送原因（必填）"></div>
+      <label style="display:flex;gap:8px;align-items:center;font-size:13px;color:var(--text-muted);margin-bottom:10px">
+        <input id="gr-follow-subscription" type="checkbox" onchange="toggleGrantExpiryMode()"> 随套餐失效
+      </label>
+      <div class="form-group"><label class="form-label">有效期至</label><input id="gr-expires" class="form-input" type="date"></div>
+      <div class="modal-help" id="gr-expiry-hint">管理员赠送积分是奖励批次；勾选后会绑定订阅生命周期，试用/付费套餐续期或切换会顺延，确认回到免费套餐后失效。</div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('grant-modal')">取消</button>
+      <button class="btn btn-primary" onclick="doGrantCredits()">确认赠送</button>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+let currentPage = 1;
+let planConfigs = {};
+let grantSubscriptionExpiresAt = null;
+let grantCanFollowSubscription = false;
+
+function esc(s) {
+  return String(s ?? "").replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+}
+
+async function loadPlanFilter() {
+  const data = await api("GET", "/api/v1/plans/config");
+  planConfigs = data.plan_configs || {};
+  const codes = Object.keys(planConfigs).sort((a, b) => {
+    const pa = planConfigs[a] || {};
+    const pb = planConfigs[b] || {};
+    return (parseInt(pa.sort_order) || 0) - (parseInt(pb.sort_order) || 0)
+      || (parseInt(pa.rank) || 0) - (parseInt(pb.rank) || 0)
+      || a.localeCompare(b);
+  });
+  document.getElementById("f-plan").innerHTML = `<option value="">全部套餐</option>` +
+    codes.map(code => `<option value="${esc(code)}">${esc(code)}</option>`).join("");
+}
+
+function resetFilter() {
+  ["f-email","f-ip","f-device"].forEach(id => document.getElementById(id).value = "");
+  document.getElementById("f-plan").value = "";
+  document.getElementById("f-active").value = "";
+  loadUsers(1);
+}
+
+function closeModal(id) { document.getElementById(id).classList.remove("show"); }
+
+function planCanFollowGrantExpiry(data) {
+  return data
+    && data.plan_code
+    && data.plan_code !== "free"
+    && !!data.subscription_expires_at
+    && new Date(data.subscription_expires_at).getTime() > Date.now();
+}
+
+async function loadUsers(page) {
+  currentPage = page;
+  const params = new URLSearchParams({ page, page_size: 20 });
+  const email = document.getElementById("f-email").value.trim();
+  const ip = document.getElementById("f-ip").value.trim();
+  const device = document.getElementById("f-device").value.trim();
+  const plan = document.getElementById("f-plan").value;
+  const active = document.getElementById("f-active").value;
+  if (email) params.set("email", email);
+  if (ip) params.set("ip", ip);
+  if (device) params.set("device_id", device);
+  if (plan) params.set("plan_code", plan);
+  if (active !== "") params.set("is_active", active);
+  try {
+    const data = await api("GET", `/api/v1/users?${params}`);
+    const tbody = document.getElementById("user-tbody");
+    tbody.innerHTML = data.items.map(u => `
+      <tr>
+        <td>${u.email}</td>
+        <td><span class="badge ${planConfigs[u.plan_code]?.paid ? 'badge-warning':'badge-info'}">${u.plan_code || '-'}</span></td>
+        <td><span class="badge ${u.is_active?'badge-success':'badge-danger'}">${u.is_active?'正常':'禁用'}</span></td>
+        <td>${u.reg_ip||'-'}</td>
+        <td>${u.invited_by||'-'}</td>
+        <td>${fmtTime(u.created_at)}</td>
+        <td style="display:flex;gap:6px;flex-wrap:wrap">
+          <button class="btn btn-ghost btn-sm" onclick="openCreditsModal('${u.email}')">积分</button>
+          <button class="btn btn-warning btn-sm" onclick="openGrantModal('${u.email}')">赠送</button>
+          ${u.is_active
+            ? `<button class="btn btn-danger btn-sm" onclick="doBan('${u.email}')">禁用</button>`
+            : `<button class="btn btn-primary btn-sm" onclick="doUnban('${u.email}')">解封</button>`
+          }
+        </td>
+      </tr>`).join("");
+    const pager = document.getElementById("user-pager");
+    const total = data.total, totalPages = Math.ceil(total/20)||1;
+    pager.innerHTML = `
+      <span class="page-info">共 ${total} 条，第 ${page}/${totalPages} 页</span>
+      <button class="btn btn-ghost btn-sm" onclick="loadUsers(${page-1})" ${page<=1?"disabled":""}>上一页</button>
+      <button class="btn btn-ghost btn-sm" onclick="loadUsers(${page+1})" ${page>=totalPages?"disabled":""}>下一页</button>`;
+  } catch(e) { showToast(e.message, "error"); }
+}
+
+async function doBan(email) {
+  if (!confirm(`确认禁用用户 ${email}？`)) return;
+  try {
+    await api("POST", "/api/v1/users/ban", { email });
+    showToast("已禁用");
+    loadUsers(currentPage);
+  } catch(e) { showToast(e.message, "error"); }
+}
+
+async function doUnban(email) {
+  try {
+    await api("POST", "/api/v1/users/unban", { email });
+    showToast("已解封");
+    loadUsers(currentPage);
+  } catch(e) { showToast(e.message, "error"); }
+}
+
+async function openCreditsModal(email) {
+  try {
+    const d = await api("POST", "/api/v1/users/credits", { email });
+    document.getElementById("cr-email").value = d.email;
+    document.getElementById("cr-plan").value = d.plan_code;
+    document.getElementById("cr-total").value = d.credits_total;
+    document.getElementById("cr-used").value = d.credits_used;
+    document.getElementById("cr-bonus").value = d.bonus_credits_remaining || 0;
+    document.getElementById("cr-paid-topup").value = d.paid_topup_credits_remaining || 0;
+    document.getElementById("cr-remain").value = d.credits_remaining;
+    document.getElementById("cr-reset").value = d.credits_reset_note || (d.credits_reset_at ? fmtTime(d.credits_reset_at) : "-");
+    document.getElementById("cr-sub-expire").value = d.subscription_expires_at ? fmtTime(d.subscription_expires_at) : "永久/无";
+    document.getElementById("cr-pending").value = d.pending_plan_code ? `${d.pending_plan_code} @ ${fmtTime(d.pending_effective_at)}` : "-";
+    document.getElementById("cr-grants").innerHTML = (d.credit_grants || []).map(g => `
+      <tr>
+        <td>${g.credit_type === "paid_topup" ? "付费加购" : "奖励"}</td>
+        <td>${g.source || "-"}</td>
+        <td>${g.amount_total || 0}</td>
+        <td>${g.amount_used || 0}</td>
+        <td>${g.amount_remaining || 0}</td>
+        <td>${g.expires_at ? fmtTime(g.expires_at) : "永久有效"}</td>
+      </tr>`).join("") || `<tr><td colspan="6">暂无非套餐积分批次</td></tr>`;
+    document.getElementById("credits-modal").classList.add("show");
+  } catch(e) { showToast(e.message, "error"); }
+}
+
+function openGrantModal(email) {
+  document.getElementById("gr-email").value = email || "";
+  document.getElementById("gr-amount").value = "";
+  document.getElementById("gr-reason").value = "";
+  document.getElementById("gr-expires").value = defaultGrantDate();
+  document.getElementById("gr-follow-subscription").checked = false;
+  document.getElementById("gr-follow-subscription").disabled = true;
+  grantSubscriptionExpiresAt = null;
+  grantCanFollowSubscription = false;
+  setGrantHint("输入或选择用户后，可对试用/付费套餐用户勾选随套餐失效。免费套餐必须手动设置有效期。");
+  toggleGrantExpiryMode();
+  document.getElementById("grant-modal").classList.add("show");
+  if (email) loadGrantExpiryContext(email);
+}
+
+document.getElementById("gr-email").addEventListener("blur", () => {
+  const email = document.getElementById("gr-email").value.trim();
+  if (email) loadGrantExpiryContext(email);
+});
+
+function setGrantHint(text) {
+  document.getElementById("gr-expiry-hint").textContent = text;
+}
+
+async function loadGrantExpiryContext(email) {
+  try {
+    const data = await api("POST", "/api/v1/users/credits", { email });
+    grantCanFollowSubscription = planCanFollowGrantExpiry(data);
+    grantSubscriptionExpiresAt = data.subscription_expires_at || null;
+    const followEl = document.getElementById("gr-follow-subscription");
+    followEl.disabled = !grantCanFollowSubscription;
+    if (!grantCanFollowSubscription && followEl.checked) followEl.checked = false;
+    if (grantCanFollowSubscription) {
+      setGrantHint(`当前 ${data.plan_code} 套餐可选择随套餐失效，当前订阅到期：${fmtTime(data.subscription_expires_at)}`);
+    } else {
+      setGrantHint("当前用户没有有效的试用/付费套餐，赠送积分只能手动设置有效期。");
+    }
+    toggleGrantExpiryMode();
+  } catch(e) {
+    grantCanFollowSubscription = false;
+    grantSubscriptionExpiresAt = null;
+    document.getElementById("gr-follow-subscription").checked = false;
+    document.getElementById("gr-follow-subscription").disabled = true;
+    toggleGrantExpiryMode();
+    setGrantHint(e.message);
+  }
+}
+
+function toggleGrantExpiryMode() {
+  const follow = document.getElementById("gr-follow-subscription").checked && grantCanFollowSubscription;
+  const expiresEl = document.getElementById("gr-expires");
+  expiresEl.disabled = follow;
+  if (follow && grantSubscriptionExpiresAt) {
+    const d = new Date(grantSubscriptionExpiresAt);
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth() + 1).padStart(2, "0");
+    const dd = String(d.getDate()).padStart(2, "0");
+    expiresEl.value = `${yyyy}-${mm}-${dd}`;
+    setGrantHint(`赠送积分将绑定订阅生命周期，当前有效期参考：${fmtTime(grantSubscriptionExpiresAt)}`);
+  }
+}
+
+function defaultGrantDate() {
+  const d = new Date();
+  d.setFullYear(d.getFullYear() + 1);
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${d.getFullYear()}-${m}-${day}`;
+}
+
+async function doGrantCredits() {
+  const email = document.getElementById("gr-email").value.trim();
+  const amount = parseInt(document.getElementById("gr-amount").value);
+  const reason = document.getElementById("gr-reason").value.trim();
+  const expires = document.getElementById("gr-expires").value;
+  const follow = document.getElementById("gr-follow-subscription").checked && grantCanFollowSubscription;
+  if (!email) return showToast("请输入邮箱", "error");
+  if (!amount || amount <= 0) return showToast("积分数量必须大于0", "error");
+  if (!reason) return showToast("请填写赠送原因", "error");
+  if (!follow && !expires) return showToast("请选择有效期", "error");
+  try {
+    const body = { email, amount, reason, expires_at_mode: follow ? "subscription" : "manual" };
+    if (!follow) body.expires_at = new Date(`${expires}T23:59:59+08:00`).toISOString();
+    const d = await api("POST", "/api/v1/users/grant-credits", body);
+    showToast(d.message);
+    closeModal("grant-modal");
+    loadUsers(currentPage);
+  } catch(e) { showToast(e.message, "error"); }
+}
+
+loadPlanFilter().finally(() => loadUsers(1));
+</script>
+{% endblock %}

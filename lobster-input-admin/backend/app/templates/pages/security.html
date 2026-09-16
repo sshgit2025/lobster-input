@@ -1,0 +1,222 @@
+{% extends "base.html" %}
+{% block title %}安全风控 - Lobster Admin{% endblock %}
+{% block body %}
+<div class="layout">
+  {% include "partials/sidebar.html" %}
+  <main class="main">
+    <div class="page-title">安全风控</div>
+    <div class="card">
+      <div class="search-bar">
+        <input id="f-email" class="form-input" placeholder="账号邮箱" style="max-width:220px">
+        <input id="f-ip" class="form-input" placeholder="IP" style="max-width:160px">
+        <select id="f-status" class="form-select" style="max-width:150px">
+          <option value="active">仅风险中</option>
+          <option value="limited">限制中</option>
+          <option value="blocked">封禁中</option>
+          <option value="">全部</option>
+          <option value="normal">正常</option>
+        </select>
+        <select id="f-reason" class="form-select" style="max-width:190px">
+          <option value="">全部原因</option>
+          <option value="IP_RATE_LIMIT">IP 高频请求</option>
+          <option value="ACCOUNT_RATE_LIMIT">账号高频请求</option>
+          <option value="HIGH_COST_AUDIO_ABUSE">音频接口滥用</option>
+          <option value="HOTWORD_WRITE_ABUSE">词典写入滥用</option>
+          <option value="AUTH_ABUSE">认证异常</option>
+          <option value="PROBING_OR_SCAN">探测扫描</option>
+          <option value="MULTI_IP_ACCOUNT_ABUSE">多 IP 账号攻击</option>
+        </select>
+        <button class="btn btn-primary" onclick="loadIdentities(1)">筛选</button>
+        <button class="btn btn-ghost" onclick="resetFilter()">重置</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th>风险对象</th>
+            <th>状态</th>
+            <th>风险原因</th>
+            <th>风险分</th>
+            <th>限制到期</th>
+            <th>最近命中</th>
+            <th>操作</th>
+          </tr></thead>
+          <tbody id="identity-tbody"></tbody>
+        </table>
+      </div>
+      <div class="pagination" id="identity-pager"></div>
+    </div>
+
+    <div class="card detail-card" id="detail-card" style="display:none;margin-top:16px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <div>
+          <div class="card-title" id="detail-title">风险详情</div>
+          <div class="muted" id="detail-subtitle"></div>
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="closeDetail()">关闭</button>
+      </div>
+      <div class="detail-grid" id="detail-summary"></div>
+      <div class="table-wrap" style="margin-top:14px">
+        <table>
+          <thead><tr>
+            <th>时间</th>
+            <th>账号</th>
+            <th>IP</th>
+            <th>原因</th>
+            <th>动作</th>
+            <th>请求</th>
+            <th>次数/窗口</th>
+            <th>User-Agent</th>
+          </tr></thead>
+          <tbody id="event-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+let identityPage = 1;
+
+const STATUS_LABEL = {normal:"正常", limited:"限制中", blocked:"封禁中"};
+const STATUS_CLASS = {normal:"badge-success", limited:"badge-warning", blocked:"badge-danger"};
+const ACTION_LABEL = {observe:"观察", limited:"限制", blocked:"封禁", manual_clear:"手动解除"};
+const REASON_LABEL = {
+  IP_RATE_LIMIT:"IP 高频请求",
+  ACCOUNT_RATE_LIMIT:"账号高频请求",
+  HIGH_COST_AUDIO_ABUSE:"音频接口滥用",
+  HOTWORD_WRITE_ABUSE:"词典写入滥用",
+  AUTH_RATE_LIMIT:"认证接口高频访问",
+  AUTH_ABUSE:"认证异常",
+  PROBING_OR_SCAN:"探测扫描",
+  MULTI_IP_ACCOUNT_ABUSE:"多 IP 账号攻击"
+};
+
+function esc(v) {
+  return String(v ?? "").replace(/[&<>"']/g, s => ({
+    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
+  }[s]));
+}
+
+function badgeStatus(status) {
+  return `<span class="badge ${STATUS_CLASS[status] || "badge-info"}">${STATUS_LABEL[status] || status || "-"}</span>`;
+}
+
+function reasonList(reasons) {
+  const arr = Array.isArray(reasons) ? reasons : [];
+  if (!arr.length) return "-";
+  return arr.slice(0, 3).map(r => `<span class="badge badge-info" style="margin:1px">${REASON_LABEL[r] || r}</span>`).join("");
+}
+
+function resetFilter() {
+  ["f-email", "f-ip"].forEach(id => document.getElementById(id).value = "");
+  document.getElementById("f-status").value = "active";
+  document.getElementById("f-reason").value = "";
+  closeDetail();
+  loadIdentities(1);
+}
+
+function buildParams(page) {
+  const params = new URLSearchParams({page, page_size: 20});
+  const email = document.getElementById("f-email").value.trim();
+  const ip = document.getElementById("f-ip").value.trim();
+  const status = document.getElementById("f-status").value;
+  const reason = document.getElementById("f-reason").value;
+  if (email) params.set("email", email);
+  if (ip) params.set("ip", ip);
+  if (status) params.set("status", status);
+  if (reason) params.set("reason", reason);
+  return {params, activeOnly: status === "active"};
+}
+
+async function loadIdentities(page) {
+  identityPage = page;
+  try {
+    const {params} = buildParams(page);
+    const data = await api("GET", `/api/v1/security/identities?${params}`);
+    const items = data.items || [];
+    const tbody = document.getElementById("identity-tbody");
+    if (!items.length) {
+      tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:#888">暂无风险中对象</td></tr>`;
+    } else {
+      tbody.innerHTML = items.map(item => {
+        const target = item.identity_type === "account" ? item.identity_value : item.identity_value;
+        const until = item.blocked_until || item.limited_until;
+        return `<tr>
+          <td><b>${esc(item.identity_type === "account" ? "账号" : "IP")}</b><br><span class="muted">${esc(target)}</span></td>
+          <td>${badgeStatus(item.status)}</td>
+          <td>${reasonList(item.reasons)}</td>
+          <td>${item.risk_score || 0}</td>
+          <td class="muted">${fmtTime(until)}</td>
+          <td class="muted">${fmtTime(item.last_seen_at)}</td>
+          <td style="display:flex;gap:6px;flex-wrap:wrap">
+            <button class="btn btn-ghost btn-sm" onclick="showDetail('${item.id}')">详情</button>
+            ${item.status !== "normal" ? `<button class="btn btn-primary btn-sm" onclick="clearIdentity('${item.id}')">解除</button>` : ""}
+          </td>
+        </tr>`;
+      }).join("");
+    }
+    renderPager("identity-pager", data.total, data.page, data.page_size, "loadIdentities");
+  } catch(e) { showToast(e.message, "error"); }
+}
+
+async function showDetail(id) {
+  try {
+    const item = await api("GET", `/api/v1/security/identities/${id}`);
+    document.getElementById("detail-card").style.display = "block";
+    document.getElementById("detail-title").textContent = `${item.identity_type === "account" ? "账号" : "IP"}风险详情`;
+    document.getElementById("detail-subtitle").textContent = item.identity_value || "";
+    document.getElementById("detail-summary").innerHTML = `
+      <div><span>状态</span><b>${STATUS_LABEL[item.status] || item.status || "-"}</b></div>
+      <div><span>风险分</span><b>${item.risk_score || 0}</b></div>
+      <div><span>账号</span><b>${esc(item.user_email || (item.user_emails || []).join(", ") || "-")}</b></div>
+      <div><span>IP</span><b>${esc((item.ips || []).join(", ") || item.identity_value || "-")}</b></div>
+      <div><span>原因</span><b>${esc((item.reasons || []).map(r => REASON_LABEL[r] || r).join(" / ") || "-")}</b></div>
+      <div><span>User-Agent</span><b>${esc(item.last_user_agent || "-")}</b></div>`;
+    const rows = item.events || [];
+    document.getElementById("event-tbody").innerHTML = rows.length ? rows.map(e => `
+      <tr>
+        <td class="muted">${fmtTime(e.created_at)}</td>
+        <td>${esc(e.user_email || "-")}</td>
+        <td>${esc(e.ip || "-")}</td>
+        <td>${esc(REASON_LABEL[e.reason_code] || e.reason_code || "-")}</td>
+        <td><span class="badge ${e.action === "blocked" ? "badge-danger" : "badge-warning"}">${ACTION_LABEL[e.action] || e.action}</span></td>
+        <td class="muted">${esc(e.method)} ${esc(e.path)}</td>
+        <td>${e.request_count || 0}/${e.window_seconds || 0}s</td>
+        <td class="muted" style="max-width:260px">${esc((e.user_agent || "").slice(0, 120))}</td>
+      </tr>`).join("") : `<tr><td colspan="8" style="text-align:center;color:#888">暂无事件详情</td></tr>`;
+  } catch(e) { showToast(e.message, "error"); }
+}
+
+function closeDetail() {
+  document.getElementById("detail-card").style.display = "none";
+}
+
+async function clearIdentity(id) {
+  if (!confirm("确认解除该对象的限制/封禁？")) return;
+  try {
+    await api("POST", `/api/v1/security/identities/${id}/clear`);
+    showToast("已解除限制");
+    closeDetail();
+    loadIdentities(identityPage);
+  } catch(e) { showToast(e.message, "error"); }
+}
+
+function renderPager(id, total, page, pageSize, fn) {
+  const pages = Math.ceil(total / pageSize) || 1;
+  document.getElementById(id).innerHTML = `
+    <span class="page-info">共 ${total} 条，第 ${page}/${pages} 页</span>
+    <button class="btn btn-ghost btn-sm" onclick="${fn}(${page - 1})" ${page <= 1 ? "disabled" : ""}>上一页</button>
+    <button class="btn btn-ghost btn-sm" onclick="${fn}(${page + 1})" ${page >= pages ? "disabled" : ""}>下一页</button>`;
+}
+
+loadIdentities(1);
+</script>
+<style>
+.muted { color: var(--text-muted); font-size: 12px }
+.detail-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px }
+.detail-grid div { border:1px solid var(--border);border-radius:8px;padding:10px;background:rgba(255,255,255,.02) }
+.detail-grid span { display:block;color:var(--text-muted);font-size:12px;margin-bottom:4px }
+.detail-grid b { font-size:13px;word-break:break-all }
+</style>
+{% endblock %}

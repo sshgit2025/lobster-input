@@ -1,0 +1,353 @@
+{% extends "base.html" %}
+{% block title %}用量统计 - Lobster Admin{% endblock %}
+{% block body %}
+<div class="layout">
+  {% include "partials/sidebar.html" %}
+  <main class="main">
+    <div class="page-title">📈 用量统计</div>
+
+    <!-- 全局筛选栏 -->
+    <div class="card" style="margin-bottom:16px;padding:16px 20px">
+      <div class="search-bar" style="margin-bottom:0">
+        <input id="f-email" class="form-input" placeholder="用户邮箱" style="max-width:220px">
+        <select id="f-platform" class="form-select" style="max-width:150px">
+          <option value="">全部平台</option>
+          <option value="dashscope_asr">dashscope_asr</option>
+          <option value="aliyun_llm">aliyun_llm</option>
+          <option value="openai_llm">openai_llm</option>
+          <option value="groq_llm">groq_llm</option>
+          <option value="anthropic_llm">anthropic_llm</option>
+          <option value="deepseek_llm">deepseek_llm</option>
+          <option value="tavily">tavily</option>
+        </select>
+        <select id="f-operation" class="form-select" style="max-width:150px">
+          <option value="">全部操作</option>
+          <option value="transcribe">transcribe</option>
+          <option value="rewrite">rewrite</option>
+          <option value="agent">agent</option>
+          <option value="search">search</option>
+        </select>
+        <input id="f-date-from" class="form-input" type="date" style="max-width:148px">
+        <span style="color:var(--text-muted);line-height:36px">至</span>
+        <input id="f-date-to" class="form-input" type="date" style="max-width:148px">
+        <input id="f-apikey" class="form-input" placeholder="API Key (脱敏)" style="max-width:180px">
+        <button class="btn btn-primary" onclick="applyFilter()">搜索</button>
+        <button class="btn btn-ghost" onclick="resetFilter()">重置</button>
+      </div>
+      <div id="filter-tip" style="margin-top:8px;font-size:12px;color:var(--primary);display:none">
+        ⚡ 当前为筛选结果，指标卡和明细均已按条件过滤
+      </div>
+    </div>
+
+    <!-- 指标卡 -->
+    <div class="stat-grid">
+      <div class="stat-card"><div class="stat-label">总请求数</div><div class="stat-value primary" id="s-req">-</div></div>
+      <div class="stat-card"><div class="stat-label">输入 Token</div><div class="stat-value info" id="s-in">-</div></div>
+      <div class="stat-card"><div class="stat-label">输出 Token</div><div class="stat-value warning" id="s-out">-</div></div>
+      <div class="stat-card"><div class="stat-label">音频时长(秒)</div><div class="stat-value success" id="s-audio">-</div></div>
+      <div class="stat-card"><div class="stat-label">搜索次数</div><div class="stat-value" id="s-search">-</div></div>
+    </div>
+
+    <!-- Tab 切换 -->
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab('overview', this)">总览图表</button>
+      <button class="tab-btn" onclick="switchTab('detail', this)">明细查询</button>
+      <button class="tab-btn" onclick="switchTab('apikeys', this)">API Key 用量</button>
+    </div>
+
+    <!-- Tab: 总览图表 -->
+    <div id="tab-overview">
+      <div class="chart-grid">
+        <div class="card">
+          <div class="card-title">近30天请求趋势</div>
+          <div class="chart-wrap"><canvas id="chart-daily"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-title">平台分布</div>
+          <div class="chart-wrap"><canvas id="chart-platform"></canvas></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Top 10 用户（按请求数）</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>邮箱</th><th>总请求数</th><th>总 Token</th></tr></thead>
+            <tbody id="top-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab: 明细查询 -->
+    <div id="tab-detail" style="display:none">
+      <div class="card">
+        <div class="table-wrap">
+          <table>
+            <thead><tr>
+              <th>邮箱</th><th>时间</th><th>平台</th><th>操作</th>
+              <th>API Key</th><th>客户端</th><th>请求数</th><th>输入Token</th><th>输出Token</th><th>音频秒</th>
+            </tr></thead>
+            <tbody id="stats-tbody"></tbody>
+          </table>
+        </div>
+        <div class="pagination" id="stats-pager"></div>
+      </div>
+    </div>
+
+    <!-- Tab: API Key 用量 -->
+    <div id="tab-apikeys" style="display:none">
+      <div class="card">
+        <div class="card-title" style="display:flex;justify-content:space-between;align-items:center">
+          API Key 用量汇总
+          <span style="font-size:12px;color:var(--text-muted)">按 API Key 脱敏标识聚合，支持上方筛选条件过滤</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr>
+              <th>API Key (脱敏)</th><th>涉及用户数</th><th>总请求数</th>
+              <th>输入Token</th><th>输出Token</th><th>音频时长(秒)</th>
+              <th>搜索次数</th><th>平均延迟(ms)</th>
+            </tr></thead>
+            <tbody id="apikey-tbody"><tr><td colspan="8" style="text-align:center;color:var(--text-muted);padding:24px">加载中...</td></tr></tbody>
+          </table>
+        </div>
+        <div id="apikey-total" style="padding:12px 0 0;font-size:13px;color:var(--text-muted)"></div>
+      </div>
+    </div>
+
+  </main>
+</div>
+{% endblock %}
+{% block scripts %}
+<style>
+.tab-bar {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0;
+}
+.tab-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 14px;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: all 0.15s;
+}
+.tab-btn:hover { color: var(--text); }
+.tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); font-weight: 600; }
+</style>
+<script>
+const COLORS = ["#e85d2f","#3b82f6","#22c55e","#f59e0b","#8b5cf6","#ec4899","#14b8a6"];
+
+function fmtTime(t) {
+  if (!t) return '-';
+  const d = new Date(t);
+  return d.toLocaleString('zh-CN', { hour12: false, timeZone: 'Asia/Shanghai' });
+}
+
+const CLIENT_PLATFORM_LABEL = {
+  'macos': 'macOS',
+  'windows': 'Windows',
+  'android': 'Android',
+  'ios': 'iOS',
+  '': '未知',
+};
+let currentPage = 1;
+let dailyChart = null, platformChart = null;
+
+// ── 筛选参数收集 ──
+function getFilterParams() {
+  const p = new URLSearchParams();
+  const email = document.getElementById("f-email").value.trim();
+  const platform = document.getElementById("f-platform").value;
+  const operation = document.getElementById("f-operation").value;
+  const from = document.getElementById("f-date-from").value;
+  const to = document.getElementById("f-date-to").value;
+  const apikey = document.getElementById("f-apikey").value.trim();
+  if (email) p.set("user_email", email);
+  if (platform) p.set("platform", platform);
+  if (operation) p.set("operation", operation);
+  if (from) p.set("date_from", from);
+  if (to) p.set("date_to", to);
+  if (apikey) p.set("api_key_hint", apikey);
+  return p;
+}
+
+function hasFilter() {
+  const p = getFilterParams();
+  return p.toString() !== "";
+}
+
+function resetFilter() {
+  ["f-email","f-apikey"].forEach(id => document.getElementById(id).value = "");
+  ["f-platform","f-operation"].forEach(id => document.getElementById(id).value = "");
+  ["f-date-from","f-date-to"].forEach(id => document.getElementById(id).value = "");
+  applyFilter();
+}
+
+function applyFilter() {
+  const tip = document.getElementById("filter-tip");
+  tip.style.display = hasFilter() ? "block" : "none";
+  loadSummary();
+  loadStats(1);
+  loadApiKeys();
+}
+
+// ── Tab 切换 ──
+function switchTab(name, btn) {
+  ["overview","detail","apikeys"].forEach(t => {
+    document.getElementById("tab-" + t).style.display = t === name ? "" : "none";
+  });
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  if (name === "apikeys") loadApiKeys();
+}
+
+// ── 指标卡（跟随筛选） ──
+async function loadSummary() {
+  const p = getFilterParams();
+  try {
+    const d = await api("GET", `/api/v1/stats/summary?${p}`);
+    document.getElementById("s-req").textContent = fmtNum(d.total_requests);
+    document.getElementById("s-in").textContent = fmtNum(d.total_input_tokens);
+    document.getElementById("s-out").textContent = fmtNum(d.total_output_tokens);
+    document.getElementById("s-audio").textContent = fmtNum(Math.round(d.total_audio_sec || 0));
+    document.getElementById("s-search").textContent = fmtNum(d.total_search);
+  } catch(e) {}
+}
+
+// ── 总览图表（固定全量，不受筛选影响） ──
+async function loadCharts() {
+  try {
+    const [daily, platform] = await Promise.all([
+      api("GET", "/api/v1/stats/daily?days=30"),
+      api("GET", "/api/v1/stats/platform-distribution"),
+    ]);
+    const sorted = daily.sort((a,b) => a.date > b.date ? 1 : -1);
+    if (dailyChart) dailyChart.destroy();
+    dailyChart = new Chart(document.getElementById("chart-daily"), {
+      type: "line",
+      data: {
+        labels: sorted.map(d => d.date),
+        datasets: [{
+          label: "请求数", data: sorted.map(d => d.request_count),
+          borderColor: "#e85d2f", backgroundColor: "rgba(232,93,47,.1)",
+          fill: true, tension: 0.4, pointRadius: 3,
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { ticks: { color: "#8892a4", maxTicksLimit: 8 }, grid: { color: "#2a2d3e" } },
+          y: { ticks: { color: "#8892a4" }, grid: { color: "#2a2d3e" } }
+        }
+      }
+    });
+    if (platformChart) platformChart.destroy();
+    platformChart = new Chart(document.getElementById("chart-platform"), {
+      type: "doughnut",
+      data: {
+        labels: platform.map(d => d.platform),
+        datasets: [{ data: platform.map(d => d.count), backgroundColor: COLORS }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { labels: { color: "#8892a4", boxWidth: 12 } } }
+      }
+    });
+  } catch(e) {}
+}
+
+async function loadTopUsers() {
+  try {
+    const data = await api("GET", "/api/v1/stats/top-users?limit=10");
+    document.getElementById("top-tbody").innerHTML = data.map(u => `
+      <tr>
+        <td>${u.email}</td>
+        <td>${fmtNum(u.total_requests)}</td>
+        <td>${fmtNum(u.total_tokens)}</td>
+      </tr>`).join("") || '<tr><td colspan="3" style="text-align:center;color:var(--text-muted)">暂无数据</td></tr>';
+  } catch(e) {}
+}
+
+// ── 明细查询（跟随筛选） ──
+async function loadStats(page) {
+  currentPage = page;
+  const p = getFilterParams();
+  p.set("page", page);
+  p.set("page_size", 20);
+  try {
+    const data = await api("GET", `/api/v1/stats?${p}`);
+    document.getElementById("stats-tbody").innerHTML = data.items.length
+      ? data.items.map(s => {
+          const clientLabel = CLIENT_PLATFORM_LABEL[s.client_platform || ''] || (s.client_platform || '-');
+          const timeStr = s.created_at ? fmtTime(s.created_at) : s.date;
+          return `<tr>
+            <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${s.user_email}">${s.user_email}</td>
+            <td style="white-space:nowrap;font-size:12px">${timeStr}</td>
+            <td><span class="badge badge-info">${s.platform}</span></td>
+            <td>${s.operation}</td>
+            <td><code style="color:var(--primary);font-size:12px">${s.api_key_hint || '-'}</code></td>
+            <td style="font-size:12px;color:var(--text-muted)">${clientLabel}</td>
+            <td>${fmtNum(s.request_count)}</td>
+            <td>${fmtNum(s.input_tokens)}</td>
+            <td>${fmtNum(s.output_tokens)}</td>
+            <td>${(s.audio_duration_sec || 0).toFixed(1)}</td>
+          </tr>`;
+        }).join("")
+      : '<tr><td colspan="10" style="text-align:center;color:var(--text-muted);padding:24px">暂无数据</td></tr>';
+    const total = data.total, totalPages = Math.ceil(total / 20) || 1;
+    document.getElementById("stats-pager").innerHTML = `
+      <span class="page-info">共 ${total} 条，第 ${page}/${totalPages} 页</span>
+      <button class="btn btn-ghost btn-sm" onclick="loadStats(${page-1})" ${page<=1?"disabled":""}>上一页</button>
+      <button class="btn btn-ghost btn-sm" onclick="loadStats(${page+1})" ${page>=totalPages?"disabled":""}>下一页</button>`;
+  } catch(e) { showToast(e.message, "error"); }
+}
+
+// ── API Key 用量（跟随筛选） ──
+let _apiKeyLoaded = false;
+async function loadApiKeys() {
+  const p = getFilterParams();
+  try {
+    const data = await api("GET", `/api/v1/stats/api-keys?${p}`);
+    const tbody = document.getElementById("apikey-tbody");
+    if (!data.length) {
+      tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--text-muted);padding:24px">暂无数据</td></tr>';
+      document.getElementById("apikey-total").textContent = "";
+      return;
+    }
+    tbody.innerHTML = data.map(k => {
+      const avgLatency = k.total_requests > 0 ? Math.round(k.total_latency_ms / k.total_requests) : 0;
+      return `<tr>
+        <td><code style="color:var(--primary);font-size:13px">${k.api_key_hint || '-'}</code></td>
+        <td>${fmtNum(k.user_count)}</td>
+        <td><strong>${fmtNum(k.total_requests)}</strong></td>
+        <td>${fmtNum(k.total_input_tokens)}</td>
+        <td>${fmtNum(k.total_output_tokens)}</td>
+        <td>${(k.total_audio_sec || 0).toFixed(1)}</td>
+        <td>${fmtNum(k.total_search)}</td>
+        <td>${fmtNum(avgLatency)}</td>
+      </tr>`;
+    }).join("");
+    const totalReq = data.reduce((s, k) => s + k.total_requests, 0);
+    const totalIn = data.reduce((s, k) => s + k.total_input_tokens, 0);
+    const totalOut = data.reduce((s, k) => s + k.total_output_tokens, 0);
+    document.getElementById("apikey-total").innerHTML =
+      `共 <strong>${data.length}</strong> 个 API Key &nbsp;·&nbsp; 合计请求 <strong>${fmtNum(totalReq)}</strong> &nbsp;·&nbsp; 输入 Token <strong>${fmtNum(totalIn)}</strong> &nbsp;·&nbsp; 输出 Token <strong>${fmtNum(totalOut)}</strong>`;
+    _apiKeyLoaded = true;
+  } catch(e) { showToast(e.message, "error"); }
+}
+
+// 初始化
+loadSummary();
+loadCharts();
+loadTopUsers();
+loadStats(1);
+</script>
+{% endblock %}

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
+    <channel>
+        <title>龙虾输入法</title>
+        <item>
+            <title>版本 0.1.16</title>
+            <pubDate>Sat, 21 Mar 2026 23:06:00 +0800</pubDate>
+            <sparkle:version>17</sparkle:version>
+            <sparkle:shortVersionString>0.1.16</sparkle:shortVersionString>
+            <description><![CDATA[
+                <h3>0.1.16 更新内容</h3>
+                <ul>
+                    <li>修复邀请码页面背景异常，避免出现纯白页面</li>
+                    <li>修复引导页语音识别结果在页内输入框重复写入两次的问题</li>
+                </ul>
+            ]]></description>
+            <enclosure
+                url="https://downloads.example.com/standard/voice-input-0.1.16.zip"
+                sparkle:edSignature="u8t/HfwayFSW3F68eyC0ONhslbWL4T70l8+7EBLLmoDa3zQasqlFOY9qNxrQ054QrKjVMkiLddONZbLDZI0BBA=="
+                length="6164529"
+                type="application/octet-stream"/>
+        </item>
+    </channel>
+</rss>

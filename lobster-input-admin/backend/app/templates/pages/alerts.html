@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+{% block title %}告警管理 - Lobster Admin{% endblock %}
+{% block body %}
+<div class="layout">
+  {% include "partials/sidebar.html" %}
+  <main class="main">
+    <div class="page-title">🚨 告警管理</div>
+    <div class="card">
+      <div class="search-bar">
+        <select id="f-status" class="form-select" style="max-width:140px">
+          <option value="">全部状态</option>
+          <option value="pending">未处理</option>
+          <option value="resolved">已处理</option>
+        </select>
+        <button class="btn btn-primary" onclick="loadAlerts(1)">筛选</button>
+        <button class="btn btn-ghost" onclick="resetFilter()">重置</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th>时间</th>
+            <th>来源</th>
+            <th>级别</th>
+            <th>标题</th>
+            <th>内容</th>
+            <th>状态</th>
+            <th>操作</th>
+          </tr></thead>
+          <tbody id="alert-tbody"></tbody>
+        </table>
+      </div>
+      <div class="pagination" id="alert-pager"></div>
+    </div>
+  </main>
+</div>
+
+<div class="modal-overlay" id="resolve-modal">
+  <div class="modal" style="max-width:480px">
+    <div class="modal-title">标记为已处理</div>
+    <div class="modal-body">
+      <input type="hidden" id="resolve-id">
+      <div style="margin-bottom:12px">
+        <label style="color:#8892a4;font-size:13px;display:block;margin-bottom:6px">处理备注（可选）</label>
+        <textarea id="resolve-note" class="form-input" rows="3"
+          style="width:100%;resize:vertical" placeholder="说明处理方式或原因..."></textarea>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('resolve-modal')">取消</button>
+      <button class="btn btn-primary" onclick="submitResolve()">确认处理</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const base = "{{ base_url }}";
+let currentPage = 1;
+
+function getToken() {
+  const p = "{{ auth_cookie_name }}=";
+  return document.cookie.split(';').map(c=>c.trim()).find(c=>c.startsWith(p))?.slice(p.length) || '';
+}
+
+async function apiFetch(method, path, body) {
+  const opts = {
+    method,
+    headers: {'Content-Type':'application/json'},
+    credentials: 'include',
+  };
+  if (body) opts.body = JSON.stringify(body);
+  const r = await fetch(base + path, opts);
+  if (!r.ok) { const e = await r.json().catch(()=>({})); throw new Error(e.detail || r.status); }
+  return r.json();
+}
+
+const LEVEL_COLOR = {info:'#3b82f6', warning:'#f59e0b', critical:'#ef4444'};
+const LEVEL_LABEL = {info:'信息', warning:'警告', critical:'严重'};
+const SOURCE_LABEL = {backup:'备份', system:'系统', manual:'手动'};
+
+function levelBadge(level) {
+  const c = LEVEL_COLOR[level] || '#888';
+  const l = LEVEL_LABEL[level] || level;
+  return `<span style="background:${c};color:#fff;padding:2px 8px;border-radius:4px;font-size:12px">${l}</span>`;
+}
+
+function statusBadge(status) {
+  if (status === 'pending')
+    return `<span style="background:#f59e0b;color:#fff;padding:2px 8px;border-radius:4px;font-size:12px">未处理</span>`;
+  return `<span style="background:#22c55e;color:#fff;padding:2px 8px;border-radius:4px;font-size:12px">已处理</span>`;
+}
+
+async function loadAlerts(page) {
+  currentPage = page;
+  const st = document.getElementById('f-status').value;
+  let qs = `?page=${page}&page_size=20`;
+  if (st) qs += `&status=${st}`;
+  try {
+    const data = await apiFetch('GET', `/api/v1/alerts${qs}`);
+    const tbody = document.getElementById('alert-tbody');
+    if (!data.items.length) {
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#888">暂无告警</td></tr>';
+    } else {
+      tbody.innerHTML = data.items.map(item => {
+        const ts = (item.created_at||'').replace('T',' ').substring(0,19);
+        const msg = (item.message||'').substring(0,80) + ((item.message||'').length>80?'…':'');
+        const src = SOURCE_LABEL[item.source] || item.source;
+        const btn = item.status === 'pending'
+          ? `<button class="btn btn-ghost" style="padding:2px 10px;font-size:12px"
+               onclick="openResolve('${item.id}')">处理</button>`
+          : `<span style="color:#8892a4;font-size:12px">${(item.resolve_note||'已处理').substring(0,20)}</span>`;
+        return `<tr>
+          <td style="white-space:nowrap;font-size:12px">${ts}</td>
+          <td style="font-size:12px">${src}</td>
+          <td>${levelBadge(item.level)}</td>
+          <td style="font-size:13px;font-weight:500">${item.title||''}</td>
+          <td style="font-size:12px;color:#8892a4;max-width:260px">${msg}</td>
+          <td>${statusBadge(item.status)}</td>
+          <td>${btn}</td>
+        </tr>`;
+      }).join('');
+    }
+    renderPager(data.total, data.page, data.page_size);
+  } catch(e) {
+    document.getElementById('alert-tbody').innerHTML =
+      `<tr><td colspan="7" style="color:red">加载失败: ${e.message}</td></tr>`;
+  }
+}
+
+function renderPager(total, page, pageSize) {
+  const pages = Math.ceil(total / pageSize);
+  const el = document.getElementById('alert-pager');
+  if (pages <= 1) { el.innerHTML = `<span style="color:#888">共 ${total} 条</span>`; return; }
+  let html = `<span style="color:#888;margin-right:8px">共 ${total} 条</span>`;
+  if (page > 1) html += `<button class="btn btn-ghost" onclick="loadAlerts(${page-1})">上一页</button>`;
+  html += `<span style="margin:0 8px">${page} / ${pages}</span>`;
+  if (page < pages) html += `<button class="btn btn-ghost" onclick="loadAlerts(${page+1})">下一页</button>`;
+  el.innerHTML = html;
+}
+
+function openResolve(id) {
+  document.getElementById('resolve-id').value = id;
+  document.getElementById('resolve-note').value = '';
+  document.getElementById('resolve-modal').classList.add('show');
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('show');
+}
+
+async function submitResolve() {
+  const id = document.getElementById('resolve-id').value;
+  const note = document.getElementById('resolve-note').value.trim();
+  try {
+    await apiFetch('POST', `/api/v1/alerts/${id}/resolve`, {note});
+    closeModal('resolve-modal');
+    loadAlerts(currentPage);
+  } catch(e) {
+    alert('处理失败: ' + e.message);
+  }
+}
+
+function resetFilter() {
+  document.getElementById('f-status').value = '';
+  loadAlerts(1);
+}
+
+loadAlerts(1);
+</script>
+{% endblock %}

@@ -1,0 +1,279 @@
+﻿<UserControl x:Class="LobsterInput.Views.PersonaView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:LobsterInput.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignWidth="860" d:DesignHeight="720"
+             Background="Transparent">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Margin="{StaticResource MainPageHeaderMargin}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel VerticalAlignment="Top"
+                        Margin="{StaticResource MainPageTitleTopMargin}">
+                <TextBlock x:Name="PersonaPageTitle"
+                           Style="{DynamicResource DsPageTitleTextStyle}"
+                           />
+                <TextBlock x:Name="PageDesc"
+                           Style="{DynamicResource DsCaptionTextStyle}"
+                           Foreground="{DynamicResource DsFgSubtleBrush}"
+                           TextWrapping="Wrap"
+                           Margin="0,6,0,0"/>
+            </StackPanel>
+            <Button x:Name="CreateBtn"
+                    Grid.Column="1"
+                    Style="{DynamicResource DsButtonPrimaryStyle}"
+                    Padding="14,7"
+                    VerticalAlignment="Top"
+                    Margin="{StaticResource MainPageTitleTopMargin}"
+                    Click="OnCreateClick"/>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <TextBlock x:Name="LoadingText"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Style="{DynamicResource DsCaptionTextStyle}"
+                       Visibility="Collapsed"/>
+
+            <StackPanel x:Name="EmptyPanel"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        MaxWidth="420"
+                        Visibility="Collapsed">
+                <TextBlock Text="&#xE77B;"
+                           FontFamily="{DynamicResource IconFont}"
+                           FontSize="40"
+                           Foreground="{DynamicResource DsFgSubtleBrush}"
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,16"/>
+                <TextBlock x:Name="NoSelectionText"
+                           TextAlignment="Center"
+                           Style="{DynamicResource DsSectionTitleStyle}"
+                           Foreground="{DynamicResource DsFgSubtleBrush}"
+                           TextWrapping="Wrap"
+                           Margin="0,0,0,18"/>
+                <Button x:Name="EmptyCreateBtn"
+                        Style="{DynamicResource DsButtonPrimaryStyle}"
+                        Padding="14,7"
+                        HorizontalAlignment="Center"
+                        Click="OnCreateClick"/>
+            </StackPanel>
+
+            <ScrollViewer x:Name="PersonaScroll"
+                          VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Disabled"
+                          Style="{DynamicResource DsScrollViewerStyle}">
+                <Grid MaxWidth="{StaticResource MainPageContentWidth}"
+                      Margin="{StaticResource MainPageContentMargin}"
+                      HorizontalAlignment="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid Margin="0,0,0,12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="CountHint"
+                                   Style="{DynamicResource DsCaptionTextStyle}"
+                                   Foreground="{DynamicResource DsFgSubtleBrush}"/>
+                        <TextBlock x:Name="LimitHint"
+                                   Grid.Column="1"
+                                   Style="{DynamicResource DsCaptionTextStyle}"
+                                   Foreground="{DynamicResource DsWarningBrush}"
+                                   Visibility="Collapsed"/>
+                    </Grid>
+                    <ItemsControl x:Name="PersonaList"
+                                  Grid.Row="1"
+                                  HorizontalAlignment="Stretch">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <controls:ResponsiveGridPanel MaxColumns="3"
+                                                              MinItemWidth="250"
+                                                              ColumnGap="14"
+                                                              RowGap="14"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border MinHeight="132"
+                                        Padding="14"
+                                        Cursor="Hand"
+                                        Focusable="True"
+                                        Tag="{Binding Item}"
+                                        KeyDown="OnPersonaCardKeyDown"
+                                        PreviewMouseLeftButtonDown="OnPersonaCardClick">
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Setter Property="Background" Value="{DynamicResource DsBgElevBrush}"/>
+                                            <Setter Property="BorderBrush" Value="{DynamicResource DsLineBrush}"/>
+                                            <Setter Property="BorderThickness" Value="1"/>
+                                            <Setter Property="CornerRadius" Value="{DynamicResource CardCorner}"/>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="{DynamicResource DsBgHoverBrush}"/>
+                                                    <Setter Property="BorderBrush" Value="{DynamicResource DsLineStrongBrush}"/>
+                                                </Trigger>
+                                                <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                                    <Setter Property="BorderBrush" Value="{DynamicResource DsAccentBrush}"/>
+                                                </Trigger>
+                                                <DataTrigger Binding="{Binding IsActive}" Value="True">
+                                                    <Setter Property="BorderBrush" Value="{DynamicResource DsAccentRingBrush}"/>
+                                                    <Setter Property="Background" Value="{DynamicResource DsAccentSoftBrush}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Grid Grid.Row="0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="10"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Width="28"
+                                                    Height="28"
+                                                    CornerRadius="8"
+                                                    Background="{DynamicResource DsBgSunkenBrush}"
+                                                    BorderBrush="{DynamicResource DsLineBrush}"
+                                                    BorderThickness="1"
+                                                    VerticalAlignment="Top">
+                                                <TextBlock Text="{Binding Name[0]}"
+                                                           Style="{DynamicResource DsCaptionTextStyle}"
+                                                           FontWeight="SemiBold"
+                                                           Foreground="{DynamicResource DsFgBrush}"
+                                                           HorizontalAlignment="Center"
+                                                           VerticalAlignment="Center"/>
+                                            </Border>
+                                            <StackPanel Grid.Column="2">
+                                                <TextBlock Text="{Binding Name}"
+                                                           Style="{DynamicResource DsBodyTextStyle}"
+                                                           FontWeight="SemiBold"
+                                                           TextTrimming="CharacterEllipsis"/>
+                                            </StackPanel>
+                                            <Ellipse Grid.Column="3"
+                                                     Width="8"
+                                                     Height="8"
+                                                     Fill="{DynamicResource DsAccentBrush}"
+                                                     Margin="8,0,0,0"
+                                                     VerticalAlignment="Center"
+                                                     ToolTip="{Binding ActiveBadgeText}">
+                                                <Ellipse.Visibility>
+                                                    <Binding Path="IsActive" Converter="{StaticResource BoolToVisibility}"/>
+                                                </Ellipse.Visibility>
+                                            </Ellipse>
+                                        </Grid>
+
+                                        <TextBlock Text="{Binding Description}"
+                                                   Grid.Row="1"
+                                                   Style="{DynamicResource DsCaptionTextStyle}"
+                                                   Foreground="{DynamicResource DsFgMutedBrush}"
+                                                   TextWrapping="Wrap"
+                                                   Margin="0,10,0,12"
+                                                   MaxHeight="44"/>
+
+                                        <Grid Grid.Row="2">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <StackPanel Orientation="Horizontal"
+                                                        HorizontalAlignment="Left"
+                                                        VerticalAlignment="Center">
+                                                <StackPanel.Visibility>
+                                                    <Binding Path="HasPromptSummary" Converter="{StaticResource BoolToVisibility}"/>
+                                                </StackPanel.Visibility>
+                                                <TextBlock Text="&#xE720;"
+                                                           FontFamily="{DynamicResource IconFont}">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="Foreground" Value="{DynamicResource DsFgSubtleBrush}"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding TranscribeEnabled}" Value="True">
+                                                                    <Setter Property="Foreground" Value="{DynamicResource DsAccentBrush}"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                                <TextBlock Text="&#xE70F;"
+                                                           FontFamily="{DynamicResource IconFont}"
+                                                           Margin="10,0,0,0">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="Foreground" Value="{DynamicResource DsFgSubtleBrush}"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding RewriteEnabled}" Value="True">
+                                                                    <Setter Property="Foreground" Value="{DynamicResource DsAccentBrush}"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                                <TextBlock Text="&#xE9D9;"
+                                                           FontFamily="{DynamicResource IconFont}"
+                                                           Margin="10,0,0,0">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="Foreground" Value="{DynamicResource DsFgSubtleBrush}"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding IntentEnabled}" Value="True">
+                                                                    <Setter Property="Foreground" Value="{DynamicResource DsWarningBrush}"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </StackPanel>
+
+                                            <StackPanel Grid.Column="1"
+                                                        Orientation="Horizontal"
+                                                        HorizontalAlignment="Right"
+                                                        VerticalAlignment="Center">
+                                                <StackPanel.Visibility>
+                                                    <Binding Path="IsUserPersona" Converter="{StaticResource BoolToVisibility}"/>
+                                                </StackPanel.Visibility>
+                                                <Button Content="&#xE70F;"
+                                                        FontFamily="{DynamicResource IconFont}"
+                                                        Style="{DynamicResource DsIconButtonStyle}"
+                                                        Tag="{Binding Item}"
+                                                        Focusable="False"
+                                                        Click="OnPersonaEditClick"/>
+                                                <Button Content="&#xE74D;"
+                                                        FontFamily="{DynamicResource IconFont}"
+                                                        Style="{DynamicResource DsIconDangerHoverButtonStyle}"
+                                                        Tag="{Binding Item}"
+                                                        Focusable="False"
+                                                        Click="OnPersonaDeleteClick"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Grid>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</UserControl>

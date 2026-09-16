@@ -1,0 +1,46 @@
+## .NET / Visual Studio
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+*.csproj.user
+
+## NuGet
+packages/
+*.nupkg
+project.lock.json
+
+## Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+build/
+bld/
+artifacts/
+Releases/
+publish/
+
+## OS generated
+.DS_Store
+Thumbs.db
+desktop.ini
+
+## IDE
+.idea/
+*.swp
+*.swo
+*~
+
+## Logs
+*.log
+
+## Local screenshots
+window-current.png
+
+## eo-skills
+eo-doc/.sync-cursor
+eo-doc/vault

@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+{% block title %}邀请码管理 - Lobster Admin{% endblock %}
+{% block body %}
+<div class="layout">
+  {% include "partials/sidebar.html" %}
+  <main class="main">
+    <div class="page-title">🎫 邀请码管理</div>
+    <div class="stat-grid" style="grid-template-columns:repeat(3,1fr)">
+      <div class="stat-card"><div class="stat-label">总邀请码</div><div class="stat-value info" id="s-total">-</div></div>
+      <div class="stat-card"><div class="stat-label">已使用</div><div class="stat-value warning" id="s-used">-</div></div>
+      <div class="stat-card"><div class="stat-label">未使用</div><div class="stat-value success" id="s-unused">-</div></div>
+    </div>
+    <div class="card">
+      <div class="search-bar">
+        <input id="f-owner" class="form-input" placeholder="所有者邮箱" style="max-width:220px">
+        <select id="f-used" class="form-select" style="max-width:120px">
+          <option value="">全部状态</option>
+          <option value="false">未使用</option>
+          <option value="true">已使用</option>
+        </select>
+        <button class="btn btn-primary" onclick="loadInvites(1)">搜索</button>
+        <button class="btn btn-ghost" onclick="resetFilter()">重置</button>
+        <button class="btn btn-primary" style="margin-left:auto" onclick="openCreateModal()">+ 创建邀请码</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th>邀请码</th><th>所有者</th><th>状态</th><th>使用者</th><th>使用时间</th><th>创建时间</th><th>操作</th>
+          </tr></thead>
+          <tbody id="invite-tbody"></tbody>
+        </table>
+      </div>
+      <div class="pagination" id="invite-pager"></div>
+    </div>
+  </main>
+</div>
+
+<div class="modal-overlay" id="create-modal">
+  <div class="modal">
+    <div class="modal-title">创建邀请码</div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">所有者邮箱</label>
+        <input id="c-owner" class="form-input" placeholder="user@example.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">数量</label>
+        <input id="c-count" class="form-input" type="number" value="3" min="1" max="20">
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('create-modal')">取消</button>
+      <button class="btn btn-primary" onclick="doCreate()">创建</button>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+let currentPage = 1;
+
+function closeModal(id) { document.getElementById(id).classList.remove("show"); }
+function openCreateModal() { document.getElementById("create-modal").classList.add("show"); }
+function resetFilter() {
+  document.getElementById("f-owner").value = "";
+  document.getElementById("f-used").value = "";
+  loadInvites(1);
+}
+
+async function loadStats() {
+  try {
+    const d = await api("GET", "/api/v1/invites/stats");
+    document.getElementById("s-total").textContent = fmtNum(d.total);
+    document.getElementById("s-used").textContent = fmtNum(d.used);
+    document.getElementById("s-unused").textContent = fmtNum(d.unused);
+  } catch(e) {}
+}
+
+async function loadInvites(page) {
+  currentPage = page;
+  const params = new URLSearchParams({ page, page_size: 20 });
+  const owner = document.getElementById("f-owner").value.trim();
+  const used = document.getElementById("f-used").value;
+  if (owner) params.set("owner_email", owner);
+  if (used !== "") params.set("is_used", used);
+  try {
+    const data = await api("GET", `/api/v1/invites?${params}`);
+    const tbody = document.getElementById("invite-tbody");
+    tbody.innerHTML = data.items.map(i => `
+      <tr>
+        <td><code style="color:var(--primary)">${i.code}</code></td>
+        <td>${i.owner_email}</td>
+        <td><span class="badge ${i.is_used?'badge-warning':'badge-success'}">${i.is_used?'已使用':'未使用'}</span></td>
+        <td>${i.used_by||'-'}</td>
+        <td>${fmtTime(i.used_at)}</td>
+        <td>${fmtTime(i.created_at)}</td>
+        <td>${!i.is_used?`<button class="btn btn-danger btn-sm" onclick="doDelete('${i.code}')">删除</button>`:'-'}</td>
+      </tr>`).join("");
+    const total = data.total, totalPages = Math.ceil(total/20)||1;
+    document.getElementById("invite-pager").innerHTML = `
+      <span class="page-info">共 ${total} 条，第 ${page}/${totalPages} 页</span>
+      <button class="btn btn-ghost btn-sm" onclick="loadInvites(${page-1})" ${page<=1?"disabled":""}>上一页</button>
+      <button class="btn btn-ghost btn-sm" onclick="loadInvites(${page+1})" ${page>=totalPages?"disabled":""}>下一页</button>`;
+  } catch(e) { showToast(e.message, "error"); }
+}
+
+async function doCreate() {
+  const owner_email = document.getElementById("c-owner").value.trim();
+  const count = parseInt(document.getElementById("c-count").value) || 1;
+  if (!owner_email) { showToast("请输入所有者邮箱", "error"); return; }
+  try {
+    const d = await api("POST", "/api/v1/invites", { owner_email, count });
+    showToast(`创建成功: ${d.codes.join(", ")}`);
+    closeModal("create-modal");
+    loadInvites(1);
+    loadStats();
+  } catch(e) { showToast(e.message, "error"); }
+}
+
+async function doDelete(code) {
+  if (!confirm(`确认删除邀请码 ${code}？`)) return;
+  try {
+    await api("DELETE", `/api/v1/invites/${code}`);
+    showToast("已删除");
+    loadInvites(currentPage);
+    loadStats();
+  } catch(e) { showToast(e.message, "error"); }
+}
+
+loadStats();
+loadInvites(1);
+</script>
+{% endblock %}

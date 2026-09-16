@@ -1,0 +1,170 @@
+/* 登录/注册 与 个人中心 样式，沿用品牌设计令牌，与首页视觉统一。*/
+
+/* ── 登录/注册 ── */
+.auth-wrap{
+  min-height:calc(100vh - 64px);
+  display:flex;align-items:flex-start;justify-content:center;
+  padding:72px 20px 96px;
+}
+.auth-card{
+  width:100%;max-width:440px;background:var(--cream);
+  border:1px solid var(--rule-2);border-radius:16px;
+  padding:40px 38px 34px;position:relative;z-index:2;
+  box-shadow:0 30px 60px -40px rgba(24,19,17,0.35);
+}
+.auth-mark{width:44px;height:44px;color:var(--lobster);margin-bottom:18px;}
+.auth-title{
+  font-family:"Noto Serif SC",serif;font-weight:500;font-size:26px;line-height:1.2;
+  letter-spacing:-0.01em;color:var(--ink);margin:0 0 8px;
+}
+.auth-sub{
+  font-family:"Noto Serif SC",serif;font-weight:300;font-size:14px;line-height:1.6;
+  color:var(--ink-3);margin:0 0 26px;
+}
+.auth-field{margin-bottom:16px;}
+.auth-label{
+  display:block;font-family:"Geist Mono",monospace;font-size:10.5px;letter-spacing:0.12em;
+  text-transform:uppercase;color:var(--ink-3);margin-bottom:8px;
+}
+.auth-input{
+  width:100%;padding:12px 14px;font:inherit;font-size:14px;color:var(--ink);
+  background:var(--paper);border:1px solid var(--rule-2);border-radius:8px;
+  transition:border-color .2s;outline:none;
+}
+.auth-input:focus{border-color:var(--lobster);}
+.auth-input::placeholder{color:var(--ink-3);}
+.auth-code-row{display:flex;gap:10px;align-items:stretch;}
+.auth-code-row .auth-input{flex:1;}
+.auth-code-btn{
+  flex-shrink:0;padding:0 16px;font:inherit;font-size:12.5px;white-space:nowrap;
+  background:transparent;color:var(--ink-2);border:1px solid var(--rule-2);border-radius:8px;
+  cursor:pointer;transition:border-color .2s,color .2s;
+}
+.auth-code-btn:hover:not(:disabled){border-color:var(--ink);color:var(--lobster);}
+.auth-code-btn:disabled{opacity:.55;cursor:not-allowed;}
+.auth-submit{
+  width:100%;margin-top:10px;padding:14px;justify-content:center;
+  font-size:14px;border:1px solid var(--lobster);
+}
+.auth-submit:disabled{opacity:.6;cursor:not-allowed;}
+.auth-error{
+  margin-top:14px;font-size:13px;line-height:1.5;color:var(--lobster-dark);
+  background:#c2381f12;border:1px solid #c2381f33;border-radius:8px;padding:10px 12px;
+}
+.auth-hint{
+  margin-top:18px;font-family:"Noto Serif SC",serif;font-weight:300;
+  font-size:12.5px;line-height:1.6;color:var(--ink-3);text-align:center;
+}
+.auth-hint a{color:var(--lobster);cursor:pointer;}
+.auth-back{
+  display:inline-flex;align-items:center;gap:6px;margin-top:8px;
+  font-family:"Geist Mono",monospace;font-size:11px;letter-spacing:0.08em;
+  text-transform:uppercase;color:var(--ink-3);cursor:pointer;
+}
+.auth-back:hover{color:var(--lobster);}
+.auth-invite-fmt{
+  font-family:"Geist Mono",monospace;letter-spacing:0.24em;text-transform:uppercase;
+}
+
+/* ── 个人中心 ── */
+.account-page{padding:56px 0 96px;}
+.account-hero{
+  display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:24px;
+  padding-bottom:28px;border-bottom:2px solid var(--ink);margin-bottom:40px;
+}
+.account-eyebrow{
+  font-family:"Geist Mono",monospace;font-size:11.5px;text-transform:uppercase;
+  letter-spacing:0.16em;color:var(--ink-3);margin-bottom:18px;display:flex;gap:12px;align-items:center;
+}
+.account-eyebrow .num{color:var(--lobster);}
+.account-hero h1{
+  font-family:"Noto Serif SC",serif;font-weight:500;font-size:clamp(34px,4vw,56px);
+  line-height:1.05;letter-spacing:-0.02em;margin:0;color:var(--ink);
+}
+.account-hero .account-email-big{
+  font-family:"Geist Mono",monospace;font-size:13px;color:var(--ink-2);margin-top:14px;word-break:break-all;
+}
+.account-tier-badge{
+  display:inline-flex;align-items:center;gap:8px;padding:8px 16px;
+  background:var(--ink);color:var(--cream);font-family:"Geist Mono",monospace;
+  font-size:12px;letter-spacing:0.08em;text-transform:uppercase;
+}
+
+.account-section{margin-bottom:48px;}
+.account-section-tag{
+  display:flex;align-items:center;gap:12px;
+  font-family:"Geist Mono",monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.14em;
+  color:var(--ink-3);margin-bottom:20px;
+}
+.account-section-tag .num{color:var(--lobster);}
+
+.credit-summary{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;
+  background:var(--ink);border:1px solid var(--ink);margin-bottom:24px;
+}
+.credit-cell{background:var(--paper);padding:22px 22px;display:flex;flex-direction:column;gap:8px;}
+.credit-cell .k{font-family:"Geist Mono",monospace;font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-3);}
+.credit-cell .v{font-family:"Newsreader",serif;font-size:32px;line-height:1;color:var(--ink);}
+.credit-cell .v .unit{font-size:13px;color:var(--ink-3);margin-left:6px;font-family:"Geist Mono",monospace;}
+.credit-cell.is-accent{background:var(--lobster);}
+.credit-cell.is-accent .k{color:#fde8df;}
+.credit-cell.is-accent .v{color:var(--cream);}
+.credit-cell.is-accent .v .unit{color:#fde8dfcc;}
+
+.credit-items{display:flex;flex-direction:column;border-top:1px solid var(--rule-2);}
+.credit-item{
+  display:grid;grid-template-columns:1fr auto auto;gap:18px;align-items:center;
+  padding:16px 0;border-bottom:1px solid var(--rule-2);
+}
+.credit-item .ci-label{display:flex;flex-direction:column;gap:4px;}
+.credit-item .ci-name{font-size:14px;color:var(--ink);font-weight:500;}
+.credit-item .ci-type{font-family:"Geist Mono",monospace;font-size:10.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-3);}
+.credit-item .ci-bar{width:160px;height:6px;background:var(--paper-3);border-radius:3px;overflow:hidden;}
+.credit-item .ci-bar span{display:block;height:100%;background:var(--lobster);}
+.credit-item .ci-num{font-family:"Geist Mono",monospace;font-size:13px;color:var(--ink-2);white-space:nowrap;text-align:right;}
+.credit-item .ci-expire{font-family:"Geist Mono",monospace;font-size:10.5px;color:var(--ink-3);margin-top:3px;}
+
+/* 订单表 */
+.orders-table{width:100%;border-collapse:collapse;font-size:13.5px;}
+.orders-table th{
+  text-align:left;padding:12px 14px 12px 0;
+  font-family:"Geist Mono",monospace;font-size:10.5px;font-weight:500;
+  color:var(--lobster);letter-spacing:0.12em;text-transform:uppercase;
+  border-bottom:1px solid var(--ink);white-space:nowrap;
+}
+.orders-table td{
+  padding:16px 14px 16px 0;border-bottom:1px solid var(--rule-2);
+  color:var(--ink-2);vertical-align:top;
+}
+.orders-table td:first-child{color:var(--ink);font-weight:500;}
+.orders-table .o-amount{font-family:"Geist Mono",monospace;color:var(--ink);white-space:nowrap;}
+.order-status{
+  display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;
+  font-family:"Geist Mono",monospace;font-size:10.5px;letter-spacing:0.06em;text-transform:uppercase;
+  border:1px solid var(--rule-2);color:var(--ink-2);white-space:nowrap;
+}
+.order-status.is-ok{border-color:#1f3a3a55;color:#1f3a3a;background:#1f3a3a10;}
+.order-status.is-refund{border-color:#c2381f55;color:var(--lobster-dark);background:#c2381f10;}
+
+.account-empty{
+  padding:40px 24px;text-align:center;color:var(--ink-3);
+  font-family:"Noto Serif SC",serif;font-size:14px;border:1px dashed var(--rule-2);
+}
+.account-loading{padding:60px 0;text-align:center;color:var(--ink-3);font-family:"Noto Serif SC",serif;}
+
+/* 邀请码 */
+.invite-codes{display:flex;flex-wrap:wrap;gap:12px;}
+.invite-chip{
+  display:inline-flex;align-items:center;gap:10px;padding:12px 16px;
+  border:1px solid var(--rule-2);background:var(--paper);
+  font-family:"Geist Mono",monospace;font-size:14px;letter-spacing:0.14em;color:var(--ink);
+}
+.invite-chip.is-used{opacity:.5;text-decoration:line-through;}
+.invite-chip .copy{cursor:pointer;color:var(--ink-3);}
+.invite-chip .copy:hover{color:var(--lobster);}
+
+@media (max-width:680px){
+  .credit-item{grid-template-columns:1fr auto;}
+  .credit-item .ci-bar{display:none;}
+  .orders-wrap{overflow-x:auto;}
+}

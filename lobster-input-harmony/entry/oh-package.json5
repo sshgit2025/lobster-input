@@ -1,0 +1,9 @@
+{
+  "name": "entry",
+  "version": "1.0.91",
+  "description": "龙虾输入法主模块(设置应用 + 输入法扩展)",
+  "main": "",
+  "author": "",
+  "license": "",
+  "dependencies": {}
+}

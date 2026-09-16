@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}账号安全 - Lobster Admin{% endblock %}
+{% block body %}
+<div class="layout">
+  {% include "partials/sidebar.html" %}
+  <main class="main">
+    <div class="page-title">🔐 账号安全</div>
+    <div class="card" style="max-width:480px">
+      <div class="card-title">修改密码</div>
+      <div class="form-group">
+        <label class="form-label">当前密码</label>
+        <input id="old-pwd" class="form-input" type="password" placeholder="请输入当前密码">
+      </div>
+      <div class="form-group">
+        <label class="form-label">新密码</label>
+        <input id="new-pwd" class="form-input" type="password" placeholder="至少8位，包含字母和数字">
+      </div>
+      <div class="form-group">
+        <label class="form-label">确认新密码</label>
+        <input id="confirm-pwd" class="form-input" type="password" placeholder="再次输入新密码">
+      </div>
+      <button class="btn btn-primary" onclick="doChangePwd()">修改密码</button>
+    </div>
+  </main>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+async function doChangePwd() {
+  const old_password = document.getElementById("old-pwd").value;
+  const new_password = document.getElementById("new-pwd").value;
+  const confirm = document.getElementById("confirm-pwd").value;
+  if (!old_password || !new_password) { showToast("请填写完整", "error"); return; }
+  if (new_password !== confirm) { showToast("两次密码不一致", "error"); return; }
+  if (new_password.length < 8) { showToast("新密码至少8位", "error"); return; }
+  try {
+    await api("POST", "/api/v1/auth/change-password", { old_password, new_password });
+    showToast("密码修改成功，请重新登录");
+    setTimeout(() => { window.location.href = "{{ base_url }}/login"; }, 1500);
+  } catch(e) { showToast(e.message, "error"); }
+}
+</script>
+{% endblock %}

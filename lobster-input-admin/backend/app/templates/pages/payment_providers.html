@@ -1,0 +1,529 @@
+{% extends "base.html" %}
+{% block title %}支付配置 - Lobster Admin{% endblock %}
+{% block body %}
+<div class="layout">
+  {% include "partials/sidebar.html" %}
+  <main class="main">
+    <div class="page-head">
+      <div>
+        <div class="page-title">支付配置</div>
+        <div class="page-subtitle">按“商品、币种、渠道账号、支付方式、价格绑定”维护支付域配置，订阅权益仍由套餐配置管理。</div>
+      </div>
+      <button class="btn btn-primary" onclick="saveConfig()">保存配置</button>
+    </div>
+
+    <div class="ops-grid" id="summary-grid"></div>
+
+    <div class="payment-shell">
+      <aside class="payment-nav">
+        <button class="flow-tab active" data-tab="products" onclick="showTab('products')"><span>1</span><b>商品目录</b><small>套餐账期与加购包</small></button>
+        <button class="flow-tab" data-tab="currencies" onclick="showTab('currencies')"><span>2</span><b>币种汇率</b><small>币种清单与刷新源</small></button>
+        <button class="flow-tab" data-tab="channels" onclick="showTab('channels')"><span>3</span><b>渠道账号</b><small>Creem / ZPay 多账号</small></button>
+        <button class="flow-tab" data-tab="methods" onclick="showTab('methods')"><span>4</span><b>支付方式</b><small>客户端展示入口</small></button>
+        <button class="flow-tab" data-tab="prices" onclick="showTab('prices')"><span>5</span><b>价格绑定</b><small>商品到渠道价格</small></button>
+      </aside>
+
+      <section class="payment-workspace">
+        <div class="tab-panel" id="tab-products">
+          <div class="panel-head">
+            <div>
+              <h2>商品目录</h2>
+              <p>订阅商品只能选择已启用自助购买的套餐和账期，代码自动生成；只有加购商品允许填写加购积分。</p>
+            </div>
+            <div class="action-row">
+              <button class="btn btn-ghost btn-sm" onclick="addSubscriptionProduct()">新增订阅商品</button>
+              <button class="btn btn-ghost btn-sm" onclick="addTopupProduct()">新增加购商品</button>
+            </div>
+          </div>
+          <div id="products-list" class="object-list"></div>
+        </div>
+
+        <div class="tab-panel" id="tab-currencies" style="display:none">
+          <div class="panel-head">
+            <div>
+              <h2>币种汇率</h2>
+              <p>币种只能从预置清单追加。客户端套餐展示仍统一使用 USD，渠道价格可以按币种独立配置。</p>
+            </div>
+            <div class="action-row">
+              <select class="form-select compact" id="currency-add-select"></select>
+              <button class="btn btn-ghost btn-sm" onclick="addCurrencyFromPreset()">新增币种</button>
+            </div>
+          </div>
+          <div class="section-band">
+            <div class="section-title">汇率刷新源</div>
+            <div class="form-grid">
+              <label class="form-group"><span class="form-label">供应商</span><select class="form-select" id="fx-provider"><option value="manual">手动维护</option><option value="tianapi">天聚数行</option><option value="jisuapi">极速数据</option></select></label>
+              <label class="form-group"><span class="form-label">API Key</span><input class="form-input" id="fx-api-key" type="password" placeholder="已配置则留空不修改"></label>
+              <label class="form-group"><span class="form-label">基准币种</span><select class="form-select" id="fx-base"></select></label>
+              <label class="form-group"><span class="form-label">每日刷新小时</span><input class="form-input" id="fx-hour" type="number" min="0" max="23"></label>
+            </div>
+          </div>
+          <div id="currencies-list" class="object-list"></div>
+        </div>
+
+        <div class="tab-panel" id="tab-channels" style="display:none">
+          <div class="panel-head">
+            <div>
+              <h2>渠道账号</h2>
+              <p>每个渠道可以维护测试和生产等多套账号，并选择当前激活账号。密钥只在支付服务配置表保存。</p>
+            </div>
+            <div class="action-row">
+              <select class="form-select compact" id="channel-add-select"></select>
+              <button class="btn btn-ghost btn-sm" onclick="addChannelFromPreset()">新增渠道</button>
+            </div>
+          </div>
+          <div id="channels-list" class="object-list"></div>
+        </div>
+
+        <div class="tab-panel" id="tab-methods" style="display:none">
+          <div class="panel-head">
+            <div>
+              <h2>支付方式</h2>
+              <p>支付方式是给用户看的入口，必须绑定一个支付渠道，并限制可用币种。</p>
+            </div>
+            <div class="action-row">
+              <select class="form-select compact" id="method-add-select"></select>
+              <button class="btn btn-ghost btn-sm" onclick="addMethodFromPreset()">新增方式</button>
+            </div>
+          </div>
+          <div id="methods-list" class="object-list"></div>
+        </div>
+
+        <div class="tab-panel" id="tab-prices" style="display:none">
+          <div class="panel-head">
+            <div>
+              <h2>价格绑定</h2>
+              <p>把本地商品绑定到具体支付方式、渠道账号和币种。Creem 使用平台商品，ZPay 使用金额下单。</p>
+            </div>
+            <button class="btn btn-ghost btn-sm" onclick="addChannelPrice()">新增价格绑定</button>
+          </div>
+          <div class="filter-row">
+            <label class="form-group"><span class="form-label">商品筛选</span><select class="form-select" id="price-filter-product" onchange="renderChannelPrices()"></select></label>
+            <label class="form-group"><span class="form-label">渠道筛选</span><select class="form-select" id="price-filter-channel" onchange="renderChannelPrices()"></select></label>
+          </div>
+          <div id="prices-list" class="object-list"></div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const PROVIDERS = {
+  creem: {code:"creem", provider_code:"creem", name:"Creem", defaultMode:"external_product", supports:["card"], settlement:"USD", dashboard:"https://creem.io"},
+  zpay: {code:"zpay", provider_code:"zpay", name:"ZPay", defaultMode:"amount_order", supports:["wechat"], settlement:"CNY", dashboard:"https://zpayz.cn"}
+};
+const METHOD_PRESETS = {
+  card: {code:"card", name:"银行卡", description:"Visa / Mastercard", channel_code:"creem", currencies:["USD"], sort_order:10},
+  wechat: {code:"wechat", name:"微信支付", description:"中国大陆用户推荐", channel_code:"zpay", currencies:["CNY"], sort_order:20}
+};
+const CURRENCY_PRESETS = {
+  USD:{code:"USD", name:"美元", symbol:"$", rate_to_usd:1, rate_source:"fixed", auto_update:false, enabled:true},
+  CNY:{code:"CNY", name:"人民币", symbol:"¥", rate_to_usd:0.138, rate_source:"manual", auto_update:false, enabled:true},
+  HKD:{code:"HKD", name:"港币", symbol:"HK$", rate_to_usd:0.128, rate_source:"manual", auto_update:false, enabled:true},
+  KRW:{code:"KRW", name:"韩元", symbol:"₩", rate_to_usd:0.00073, rate_source:"manual", auto_update:false, enabled:true},
+  RUB:{code:"RUB", name:"卢布", symbol:"₽", rate_to_usd:0.011, rate_source:"manual", auto_update:false, enabled:true},
+  EUR:{code:"EUR", name:"欧元", symbol:"€", rate_to_usd:1.08, rate_source:"manual", auto_update:false, enabled:true}
+};
+const BILLING_LABELS = {weekly:"周付", monthly:"月付", quarterly:"季付", yearly:"年付", annual:"年付"};
+let cfg = {products:[], currencies:[], payment_methods:[], channels:[], channel_prices:[], exchange_rate_provider:{}};
+let plans = {};
+let discountStatuses = {};
+
+function esc(s){return String(s??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[ch]));}
+function money(cents,currency){return `${currency||""} ${((parseInt(cents)||0)/100).toFixed(2)}`;}
+function byCode(items){return Object.fromEntries((items||[]).filter(x=>x&&x.code).map(x=>[x.code,x]));}
+function productName(code){const p=byCode(cfg.products)[code]||{};return p.name||code||"-";}
+function currencyRows(){return cfg.currencies.filter(c=>c.enabled!==false);}
+function enabledChannels(){return cfg.channels.filter(c=>c.enabled!==false);}
+function enabledMethods(){return cfg.payment_methods.filter(m=>m.enabled!==false);}
+function channelAccounts(channelCode){return byCode(cfg.channels)[channelCode]?.accounts||[];}
+function opt(value,label,selected){return `<option value="${esc(value)}" ${String(value)===String(selected)?"selected":""}>${esc(label)}</option>`;}
+function select(id, options, selected, attrs=""){return `<select class="form-select" id="${id}" ${attrs}>${options.map(o=>opt(o.value,o.label,selected)).join("")}</select>`;}
+function input(id,value,type="text",attrs=""){const step=type==="number"?' step="any"':"";return `<input class="form-input" id="${id}" type="${type}"${step} value="${esc(value??"")}" ${attrs}>`;}
+function check(id,value){return `<label class="toggle"><input id="${id}" type="checkbox" ${value===false?"":"checked"}><span></span></label>`;}
+function val(id){return document.getElementById(id)?.value.trim()||"";}
+function boolVal(id){return document.getElementById(id)?.checked!==false;}
+function intVal(id){return parseInt(val(id))||0;}
+function numVal(id){return parseFloat(val(id))||0;}
+function cycleLabel(cycle){return BILLING_LABELS[cycle]||cycle;}
+function planOptions(selected){return Object.values(plans).filter(p=>p.paid&&p.self_checkout_enabled!==false&&p.enabled!==false).sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)).map(p=>({value:p.code,label:`${p.name||p.code} (${p.code})`}));}
+function cycleOptions(planCode, selected){const plan=plans[planCode]||{};return Object.entries(plan.billing_options||{}).filter(([,v])=>v.enabled!==false).map(([code])=>({value:code,label:cycleLabel(code)}));}
+function productOptions(selected, includeEmpty=false){const rows=cfg.products.map(p=>({value:p.code,label:`${p.name||p.code} (${p.code})`}));return includeEmpty?[{value:"",label:"全部商品"},...rows]:rows;}
+function currencyOptions(selected, includeEmpty=false){const rows=currencyRows().map(c=>({value:c.code,label:`${c.code} ${c.name||""}`}));return includeEmpty?[{value:"",label:"全部币种"},...rows]:rows;}
+function channelOptions(selected, includeEmpty=false){const rows=cfg.channels.map(c=>({value:c.code,label:`${c.name||c.code} (${c.code})`}));return includeEmpty?[{value:"",label:"全部渠道"},...rows]:rows;}
+function methodOptions(selected){return cfg.payment_methods.map(m=>({value:m.code,label:`${m.name||m.code} (${m.code})`}));}
+function methodsForChannel(channelCode){return cfg.payment_methods.filter(m=>m.channel_code===channelCode);}
+function accountOptions(channelCode, selected){return channelAccounts(channelCode).map(a=>({value:a.code,label:`${a.name||a.code} (${a.environment||"live"})`}));}
+function discountKey(productCode, channelCode, accountCode){return `${productCode || ""}:${channelCode || ""}:${accountCode || ""}`;}
+function discountStatus(productCode, channelCode, accountCode){return discountStatuses[discountKey(productCode, channelCode, accountCode)] || null;}
+function formatDateTime(value){if(!value)return "-";const d=new Date(value);return Number.isNaN(d.getTime())?String(value):d.toLocaleString();}
+function renderDiscountStatus(row){
+  if(!row) return `<span class="pill muted">未查询</span>`;
+  if(!row.configured) return `<span class="pill muted">未配置券码</span>`;
+  const text = row.expired ? "已过期" : row.valid ? "有效" : "异常";
+  const cls = row.expired || !row.valid ? "danger" : "success";
+  const exp = row.expires_at ? `，到期：${formatDateTime(row.expires_at)}` : "";
+  return `<span class="pill ${cls}">${text}</span><small>${esc(row.reason || "")}${esc(exp)}</small>`;
+}
+
+async function loadConfig(){
+  const [billing, planResp, discountResp] = await Promise.all([
+    api("GET","/api/v1/payment-provider-config"),
+    api("GET","/api/v1/plans/config"),
+    api("GET","/api/v1/payment-provider-config/discounts/status").catch(()=>({items:[]}))
+  ]);
+  cfg = billing || cfg;
+  plans = planResp.plan_configs || {};
+  discountStatuses = Object.fromEntries((discountResp.items||[]).map(row=>[discountKey(row.product_code,row.channel_code,row.account_code), row]));
+  ["products","currencies","payment_methods","channels","channel_prices"].forEach(k=>{if(!Array.isArray(cfg[k]))cfg[k]=[]});
+  cfg.exchange_rate_provider = cfg.exchange_rate_provider || {};
+  normalizeConfig();
+  render();
+}
+
+function normalizeConfig(){
+  if(!cfg.currencies.some(c=>c.code==="USD")) cfg.currencies.unshift({...CURRENCY_PRESETS.USD});
+  cfg.products.forEach(p=>{if(p.type==="subscription"){p.code=subscriptionProductCode(p.plan_code,p.billing_cycle);}});
+  cfg.channels.forEach(ch=>{
+    ch.accounts = Array.isArray(ch.accounts) ? ch.accounts : [];
+    if(ch.accounts.length && !ch.accounts.some(a=>a.code===ch.active_account_code)){
+      ch.active_account_code = ch.accounts.find(a=>a.enabled!==false)?.code || ch.accounts[0].code || "";
+    }
+  });
+}
+
+function subscriptionProductCode(planCode, cycle){return `${String(planCode||"").trim().toLowerCase()}_${String(cycle||"").trim().toLowerCase()}`;}
+
+function render(){
+  renderSummary();
+  renderAddSelectors();
+  renderProducts();
+  renderCurrencies();
+  renderChannels();
+  renderMethods();
+  renderPriceFilters();
+  renderChannelPrices();
+  renderExchange();
+}
+
+function renderSummary(){
+  const activeChannels=cfg.channels.filter(c=>c.enabled!==false&&c.active_account_code).length;
+  const activePrices=cfg.channel_prices.filter(p=>p.enabled!==false).length;
+  const methods=enabledMethods().length;
+  const currencies=currencyRows().length;
+  document.getElementById("summary-grid").innerHTML=[
+    ["商品",cfg.products.length,"订阅商品与加购包"],
+    ["启用渠道",activeChannels,"当前可用于下单的渠道账号"],
+    ["支付方式",methods,"客户端中转页可展示入口"],
+    ["价格绑定",activePrices,`${currencies} 个启用币种`]
+  ].map(([title,value,desc])=>`<div class="ops-card"><div class="ops-label">${title}</div><div class="ops-value">${value}</div><div class="ops-desc">${desc}</div></div>`).join("");
+}
+
+function renderAddSelectors(){
+  const unusedCurrencies = Object.values(CURRENCY_PRESETS).filter(c=>!cfg.currencies.some(row=>row.code===c.code));
+  document.getElementById("currency-add-select").innerHTML = unusedCurrencies.map(c=>opt(c.code,`${c.code} ${c.name}`,false)).join("");
+  const unusedChannels = Object.values(PROVIDERS).filter(p=>!cfg.channels.some(row=>row.code===p.code));
+  document.getElementById("channel-add-select").innerHTML = unusedChannels.map(p=>opt(p.code,p.name,false)).join("");
+  const unusedMethods = Object.values(METHOD_PRESETS).filter(p=>!cfg.payment_methods.some(row=>row.code===p.code));
+  document.getElementById("method-add-select").innerHTML = unusedMethods.map(p=>opt(p.code,p.name,false)).join("");
+}
+
+function renderExchange(){
+  const fx=cfg.exchange_rate_provider||{};
+  document.getElementById("fx-provider").value=fx.provider||"manual";
+  document.getElementById("fx-base").innerHTML=currencyOptions(fx.base_currency||"USD").map(o=>opt(o.value,o.label,o.value===(fx.base_currency||"USD"))).join("");
+  document.getElementById("fx-hour").value=fx.refresh_hour??3;
+}
+
+function renderProducts(){
+  document.getElementById("products-list").innerHTML = cfg.products.map((p,i)=>{
+    const isSub=p.type==="subscription";
+    const pOptions=planOptions(p.plan_code);
+    const cOptions=cycleOptions(p.plan_code,p.billing_cycle);
+    const code=isSub?subscriptionProductCode(p.plan_code,p.billing_cycle):p.code;
+    p.code=code;
+    return `<div class="object-row">
+      <div class="row-main">
+        <div class="row-title">${esc(p.name||code||"未命名商品")} <code>${esc(code||"-")}</code></div>
+        <div class="row-meta">${isSub?"订阅商品：权益、积分、周期来自套餐配置":"加购商品：仅这里配置加购积分包"}</div>
+      </div>
+      <div class="row-fields product-grid">
+        <label class="form-group"><span class="form-label">类型</span>${select(`p-${i}-type`,[{value:"subscription",label:"订阅商品"},{value:"credits_topup",label:"加购积分包"}],p.type,`onchange="onProductTypeChange(${i})"`)}</label>
+        <label class="form-group"><span class="form-label">商品名</span>${input(`p-${i}-name`,p.name||"")}</label>
+        ${isSub?`<label class="form-group"><span class="form-label">套餐</span>${select(`p-${i}-plan`,pOptions,p.plan_code,`onchange="onProductPlanChange(${i})"`)}</label>
+        <label class="form-group"><span class="form-label">账期</span>${select(`p-${i}-cycle`,cOptions,p.billing_cycle,`onchange="onProductCycleChange(${i})"`)}</label>`:
+        `<label class="form-group"><span class="form-label">商品代码</span>${input(`p-${i}-code`,p.code||"credits_topup")}</label>
+        <label class="form-group"><span class="form-label">加购积分</span>${input(`p-${i}-topup`,p.topup_credits||0,"number","min='0'")}</label>`}
+        <label class="form-group"><span class="form-label">状态</span><div class="inline-control">${check(`p-${i}-enabled`,p.enabled)}<span>启用</span></div></label>
+      </div>
+      <button class="btn btn-danger btn-sm" onclick="removeProduct(${i})">删除</button>
+    </div>`;
+  }).join("") || `<div class="empty-state">还没有商品。请先从套餐生成订阅商品，或创建积分加购包。</div>`;
+}
+
+function renderCurrencies(){
+  document.getElementById("currencies-list").innerHTML = cfg.currencies.map((c,i)=>`<div class="object-row">
+    <div class="row-main"><div class="row-title">${esc(c.code)} ${esc(c.name||"")} <span class="pill">${esc(c.symbol||"")}</span></div><div class="row-meta">1 ${esc(c.code)} = ${c.rate_to_usd||0} USD，来源：${esc(c.rate_source||"manual")}</div></div>
+    <div class="row-fields currency-grid">
+      <label class="form-group"><span class="form-label">币种</span><input class="form-input" value="${esc(c.code)}" disabled></label>
+      <label class="form-group"><span class="form-label">名称</span>${input(`c-${i}-name`,c.name)}</label>
+      <label class="form-group"><span class="form-label">符号</span>${input(`c-${i}-symbol`,c.symbol)}</label>
+      <label class="form-group"><span class="form-label">兑 USD 汇率</span>${input(`c-${i}-rate`,c.rate_to_usd,"number","min='0'")}</label>
+      <label class="form-group"><span class="form-label">来源</span>${select(`c-${i}-source`,[{value:"fixed",label:"固定"},{value:"manual",label:"手动"},{value:"tianapi",label:"天聚数行"},{value:"jisuapi",label:"极速数据"}],c.rate_source||"manual")}</label>
+      <label class="form-group"><span class="form-label">自动更新</span><div class="inline-control">${check(`c-${i}-auto`,c.auto_update)}<span>开启</span></div></label>
+      <label class="form-group"><span class="form-label">状态</span><div class="inline-control">${check(`c-${i}-enabled`,c.enabled)}<span>启用</span></div></label>
+    </div>
+    <button class="btn btn-danger btn-sm" onclick="removeCurrency(${i})" ${c.code==="USD"?"disabled":""}>删除</button>
+  </div>`).join("");
+}
+
+function renderChannels(){
+  document.getElementById("channels-list").innerHTML = cfg.channels.map((ch,i)=>{
+    const provider=PROVIDERS[ch.provider_code]||PROVIDERS[ch.code]||{};
+    const activeOptions=(ch.accounts||[]).map(a=>({value:a.code,label:`${a.name||a.code} (${a.environment||"live"}${a.enabled===false?"，停用":""})`}));
+    return `<div class="channel-block">
+      <div class="object-row channel-summary">
+        <div class="row-main"><div class="row-title">${esc(ch.name||provider.name||ch.code)} <code>${esc(ch.code)}</code></div><div class="row-meta">平台：${esc(ch.provider_code)}，激活账号：${esc(ch.active_account_code||"未选择")}</div></div>
+        <div class="row-fields channel-grid">
+          <label class="form-group"><span class="form-label">平台</span>${select(`ch-${i}-provider`,Object.values(PROVIDERS).map(p=>({value:p.provider_code,label:p.name})),ch.provider_code,`onchange="onChannelProviderChange(${i})"`)}</label>
+          <label class="form-group"><span class="form-label">名称</span>${input(`ch-${i}-name`,ch.name||provider.name||"")}</label>
+          <label class="form-group"><span class="form-label">当前激活账号</span>${select(`ch-${i}-active`,activeOptions,ch.active_account_code)}</label>
+          <label class="form-group"><span class="form-label">状态</span><div class="inline-control">${check(`ch-${i}-enabled`,ch.enabled)}<span>启用渠道</span></div></label>
+        </div>
+        <button class="btn btn-danger btn-sm" onclick="removeChannel(${i})">删除</button>
+      </div>
+      <div class="account-list">
+        <div class="sub-head"><b>账号配置</b><button class="btn btn-ghost btn-sm" onclick="addAccount(${i})">新增账号</button></div>
+        ${(ch.accounts||[]).map((a,j)=>accountRow(i,j,a,ch)).join("") || `<div class="empty-state slim">还没有账号。至少配置一个测试或生产账号。</div>`}
+      </div>
+    </div>`;
+  }).join("") || `<div class="empty-state">还没有支付渠道。请选择 Creem 或 ZPay 创建渠道。</div>`;
+}
+
+function accountRow(i,j,a,ch){
+  return `<div class="account-row">
+    <div class="row-fields account-grid">
+      <label class="form-group"><span class="form-label">账号代码</span>${input(`a-${i}-${j}-code`,a.code)}</label>
+      <label class="form-group"><span class="form-label">账号名称</span>${input(`a-${i}-${j}-name`,a.name)}</label>
+      <label class="form-group"><span class="form-label">环境</span>${select(`a-${i}-${j}-env`,[{value:"test",label:"测试"},{value:"live",label:"生产"}],a.environment||"live")}</label>
+      <label class="form-group"><span class="form-label">商户/PID</span>${input(`a-${i}-${j}-merchant`,a.merchant_id)}</label>
+      <label class="form-group"><span class="form-label">API Base</span>${input(`a-${i}-${j}-base`,a.api_base_url||defaultApiBase(ch.provider_code))}</label>
+      <label class="form-group"><span class="form-label">结算币种</span>${select(`a-${i}-${j}-settlement`,currencyOptions(a.settlement_currency),a.settlement_currency||defaultSettlement(ch.provider_code))}</label>
+      <label class="form-group"><span class="form-label">Dashboard</span>${input(`a-${i}-${j}-dash`,a.dashboard_url||defaultDashboard(ch.provider_code))}</label>
+      <label class="form-group"><span class="form-label">API Key</span><input class="form-input" id="a-${i}-${j}-key" type="password" placeholder="${a.api_key_configured?"已配置，留空不修改":"未配置"}"></label>
+      <label class="form-group"><span class="form-label">Webhook Secret</span><input class="form-input" id="a-${i}-${j}-secret" type="password" placeholder="${a.webhook_secret_configured?"已配置，留空不修改":"未配置"}"></label>
+      <label class="form-group"><span class="form-label">状态</span><div class="inline-control">${check(`a-${i}-${j}-enabled`,a.enabled)}<span>启用账号</span></div></label>
+    </div>
+    <button class="btn btn-danger btn-sm" onclick="removeAccount(${i},${j})">删除账号</button>
+  </div>`;
+}
+
+function renderMethods(){
+  document.getElementById("methods-list").innerHTML = cfg.payment_methods.map((m,i)=>{
+    const channels=cfg.channels.map(c=>({value:c.code,label:`${c.name||c.code} (${c.code}${c.enabled===false?"，停用":""})`}));
+    return `<div class="object-row">
+      <div class="row-main"><div class="row-title">${esc(m.name||m.code)} <code>${esc(m.code)}</code></div><div class="row-meta">${esc(m.description||"")}，渠道：${esc(m.channel_code||"-")}</div></div>
+      <div class="row-fields method-grid">
+        <label class="form-group"><span class="form-label">支付方式</span>${select(`m-${i}-code`,Object.values(METHOD_PRESETS).map(x=>({value:x.code,label:x.name})),m.code,`onchange="onMethodCodeChange(${i})"`)}</label>
+        <label class="form-group"><span class="form-label">名称</span>${input(`m-${i}-name`,m.name)}</label>
+        <label class="form-group"><span class="form-label">说明</span>${input(`m-${i}-desc`,m.description)}</label>
+        <label class="form-group"><span class="form-label">渠道</span>${select(`m-${i}-channel`,channels,m.channel_code)}</label>
+        <label class="form-group"><span class="form-label">排序</span>${input(`m-${i}-sort`,m.sort_order||100,"number")}</label>
+        <label class="form-group"><span class="form-label">状态</span><div class="inline-control">${check(`m-${i}-enabled`,m.enabled)}<span>启用</span></div></label>
+      </div>
+      <div class="currency-checks">${currencyRows().map(c=>`<label><input type="checkbox" data-method-currency="${i}" value="${esc(c.code)}" ${(m.currencies||[]).includes(c.code)?"checked":""}> ${esc(c.code)}</label>`).join("")}</div>
+      <button class="btn btn-danger btn-sm" onclick="removeMethod(${i})">删除</button>
+    </div>`;
+  }).join("") || `<div class="empty-state">还没有支付方式。请从银行卡或微信支付开始配置。</div>`;
+}
+
+function renderPriceFilters(){
+  const product=document.getElementById("price-filter-product");
+  const channel=document.getElementById("price-filter-channel");
+  const oldP=product?.value||"", oldC=channel?.value||"";
+  if(product) product.innerHTML=productOptions(oldP,true).map(o=>opt(o.value,o.label,oldP)).join("");
+  if(channel) channel.innerHTML=channelOptions(oldC,true).map(o=>opt(o.value,o.label,oldC)).join("");
+}
+
+function renderChannelPrices(){
+  const productFilter=val("price-filter-product");
+  const channelFilter=val("price-filter-channel");
+  let rows=cfg.channel_prices.map((p,i)=>({p,i}));
+  if(productFilter) rows=rows.filter(x=>x.p.product_code===productFilter);
+  if(channelFilter) rows=rows.filter(x=>x.p.channel_code===channelFilter);
+  document.getElementById("prices-list").innerHTML = rows.map(({p,i})=>priceRow(i,p)).join("") || `<div class="empty-state">没有符合筛选条件的价格绑定。</div>`;
+}
+
+function priceRow(i,p){
+  const channel=byCode(cfg.channels)[p.channel_code]||{};
+  const provider=PROVIDERS[channel.provider_code]||PROVIDERS[p.channel_code]||{};
+  const isCreem = channel.provider_code === "creem";
+  const status = isCreem ? discountStatus(p.product_code, p.channel_code, p.account_code) : null;
+  const discountControls = isCreem ? `
+      <label class="form-group"><span class="form-label">优惠券策略</span>${select(`cp-${i}-discount-mode`,[{value:"none",label:"不自动填充"},{value:"auto_apply",label:"自动填充此商品优惠券"}],p.discount_mode||"none")}</label>
+      <label class="form-group"><span class="form-label">优惠券码</span>${input(`cp-${i}-discount`,p.discount_code||"")}</label>
+      <label class="form-group"><span class="form-label">优惠券状态</span><div class="status-line">${renderDiscountStatus(status)}</div></label>` : "";
+  const accounts=accountOptions(p.channel_code,p.account_code);
+  const modeOptions=[{value:"external_product",label:"平台商品"},{value:"amount_order",label:"金额下单"}];
+  const strategyOptions=[{value:"fixed",label:"固定价格"},{value:"exchange_rate",label:"跟随汇率"}];
+  return `<div class="object-row price-row">
+    <div class="row-main"><div class="row-title">${esc(productName(p.product_code))} <span class="pill">${esc(p.payment_method||"-")}</span></div><div class="row-meta">${money(p.amount_cents,p.currency)}，${esc(provider.name||p.channel_code||"-")} / ${esc(p.account_code||"-")}</div></div>
+    <div class="row-fields price-grid">
+      <label class="form-group"><span class="form-label">商品</span>${select(`cp-${i}-product`,productOptions(p.product_code),p.product_code)}</label>
+      <label class="form-group"><span class="form-label">支付方式</span>${select(`cp-${i}-method`,methodOptions(p.payment_method),p.payment_method,`onchange="onPriceMethodChange(${i})"`)}</label>
+      <label class="form-group"><span class="form-label">渠道</span>${select(`cp-${i}-channel`,channelOptions(p.channel_code),p.channel_code,`onchange="onPriceChannelChange(${i})"`)}</label>
+      <label class="form-group"><span class="form-label">账号</span>${select(`cp-${i}-account`,accounts,p.account_code)}</label>
+      <label class="form-group"><span class="form-label">币种</span>${select(`cp-${i}-currency`,currencyOptions(p.currency),p.currency)}</label>
+      <label class="form-group"><span class="form-label">金额（分）</span>${input(`cp-${i}-amount`,p.amount_cents,"number","min='0'")}</label>
+      <label class="form-group"><span class="form-label">模式</span>${select(`cp-${i}-mode`,modeOptions,p.mode||provider.defaultMode)}</label>
+      <label class="form-group"><span class="form-label">外部商品 ID</span>${input(`cp-${i}-external`,p.external_product_id,"text",`${(p.mode||provider.defaultMode)==="amount_order"?"disabled":""}`)}</label>
+      ${discountControls}
+      <label class="form-group"><span class="form-label">价格策略</span>${select(`cp-${i}-strategy`,strategyOptions,p.pricing_strategy||"fixed")}</label>
+      <label class="form-group"><span class="form-label">基准币种</span>${select(`cp-${i}-base-currency`,currencyOptions(p.base_currency||"USD"),p.base_currency||"USD")}</label>
+      <label class="form-group"><span class="form-label">基准金额（分）</span>${input(`cp-${i}-base-amount`,p.base_amount_cents||0,"number","min='0'")}</label>
+      <label class="form-group"><span class="form-label">状态</span><div class="inline-control">${check(`cp-${i}-enabled`,p.enabled)}<span>启用</span></div></label>
+    </div>
+    <button class="btn btn-danger btn-sm" onclick="removePrice(${i})">删除</button>
+  </div>`;
+}
+
+function showTab(name){
+  document.querySelectorAll(".flow-tab").forEach(el=>el.classList.toggle("active",el.dataset.tab===name));
+  document.querySelectorAll(".tab-panel").forEach(el=>el.style.display=el.id===`tab-${name}`?"":"none");
+}
+
+function removeProduct(i){cfg.products.splice(i,1);cfg.channel_prices=cfg.channel_prices.filter(p=>cfg.products.some(x=>x.code===p.product_code));render();}
+function removeCurrency(i){const code=cfg.currencies[i]?.code;if(code==="USD")return;cfg.currencies.splice(i,1);cfg.channel_prices=cfg.channel_prices.filter(p=>p.currency!==code);render();}
+function removeChannel(i){const code=cfg.channels[i]?.code;cfg.channels.splice(i,1);cfg.payment_methods.forEach(m=>{if(m.channel_code===code)m.channel_code=""});cfg.channel_prices=cfg.channel_prices.filter(p=>p.channel_code!==code);render();}
+function removeMethod(i){const code=cfg.payment_methods[i]?.code;cfg.payment_methods.splice(i,1);cfg.channel_prices=cfg.channel_prices.filter(p=>p.payment_method!==code);render();}
+function removePrice(i){cfg.channel_prices.splice(i,1);render();}
+function removeAccount(i,j){const code=cfg.channels[i].accounts[j]?.code;cfg.channels[i].accounts.splice(j,1);if(cfg.channels[i].active_account_code===code)cfg.channels[i].active_account_code=cfg.channels[i].accounts[0]?.code||"";cfg.channel_prices=cfg.channel_prices.filter(p=>p.account_code!==code);render();}
+
+function addSubscriptionProduct(){
+  const plan=planOptions()[0]?.value||"";
+  const cycle=cycleOptions(plan)[0]?.value||"monthly";
+  cfg.products.push({code:subscriptionProductCode(plan,cycle),type:"subscription",name:defaultProductName(plan,cycle),plan_code:plan,billing_cycle:cycle,enabled:true,sort_order:cfg.products.length*10+10});
+  render();
+}
+function addTopupProduct(){cfg.products.push({code:"credits_topup",type:"credits_topup",name:"积分加购包",topup_credits:10000,enabled:true,sort_order:900});render();}
+function addCurrencyFromPreset(){const code=val("currency-add-select");if(!code)return;cfg.currencies.push({...CURRENCY_PRESETS[code]});render();}
+function addChannelFromPreset(){const code=val("channel-add-select");if(!code)return;const p=PROVIDERS[code];cfg.channels.push({code:p.code,provider_code:p.provider_code,name:p.name,enabled:code==="creem",active_account_code:"",accounts:[]});render();}
+function addMethodFromPreset(){const code=val("method-add-select");if(!code)return;cfg.payment_methods.push({...METHOD_PRESETS[code]});render();}
+function addAccount(i){const ch=cfg.channels[i];const provider=PROVIDERS[ch.provider_code]||{};const env=(ch.accounts||[]).some(a=>a.environment==="test")?"live":"test";const code=`${ch.code}_${env}`;ch.accounts=ch.accounts||[];ch.accounts.push({code,name:`${ch.name||provider.name||ch.code} ${env==="test"?"测试":"生产"}`,environment:env,merchant_id:"",api_base_url:defaultApiBase(ch.provider_code),api_key:"",webhook_secret:"",dashboard_url:defaultDashboard(ch.provider_code),settlement_currency:defaultSettlement(ch.provider_code),enabled:true});if(!ch.active_account_code)ch.active_account_code=code;render();}
+function addChannelPrice(){
+  const product=cfg.products[0]?.code||"";
+  const method=enabledMethods()[0]||{};
+  const channel=method.channel_code||enabledChannels()[0]?.code||"";
+  const account=channelAccounts(channel)[0]?.code||"";
+  const provider=PROVIDERS[byCode(cfg.channels)[channel]?.provider_code]||{};
+  const currency=(method.currencies||[])[0]||defaultSettlement(provider.code)||"USD";
+  cfg.channel_prices.push({product_code:product,payment_method:method.code||"",channel_code:channel,account_code:account,currency,amount_cents:0,mode:provider.defaultMode||"amount_order",external_product_id:"",discount_mode:"none",discount_code:"",pricing_strategy:"fixed",base_currency:"USD",base_amount_cents:0,enabled:true});
+  render();
+}
+
+function onProductTypeChange(i){readConfig(false);const p=cfg.products[i];if(p.type==="subscription"){p.plan_code=planOptions()[0]?.value||"";p.billing_cycle=cycleOptions(p.plan_code)[0]?.value||"monthly";p.code=subscriptionProductCode(p.plan_code,p.billing_cycle);p.name=defaultProductName(p.plan_code,p.billing_cycle);delete p.topup_credits;}else{p.code=p.code||"credits_topup";p.name=p.name||"积分加购包";p.topup_credits=p.topup_credits||10000;delete p.plan_code;delete p.billing_cycle;}render();}
+function onProductPlanChange(i){readConfig(false);const p=cfg.products[i];p.billing_cycle=cycleOptions(p.plan_code)[0]?.value||"monthly";p.code=subscriptionProductCode(p.plan_code,p.billing_cycle);p.name=defaultProductName(p.plan_code,p.billing_cycle);render();}
+function onProductCycleChange(i){readConfig(false);const p=cfg.products[i];p.code=subscriptionProductCode(p.plan_code,p.billing_cycle);p.name=p.name||defaultProductName(p.plan_code,p.billing_cycle);render();}
+function onChannelProviderChange(i){readConfig(false);const ch=cfg.channels[i];const p=PROVIDERS[ch.provider_code]||{};ch.code=p.code;ch.name=p.name;ch.accounts.forEach(a=>{a.settlement_currency=a.settlement_currency||p.settlement;a.api_base_url=a.api_base_url||defaultApiBase(ch.provider_code);a.dashboard_url=a.dashboard_url||defaultDashboard(ch.provider_code);});render();}
+function onMethodCodeChange(i){readConfig(false);const preset=METHOD_PRESETS[cfg.payment_methods[i].code];if(preset)cfg.payment_methods[i]={...cfg.payment_methods[i],...preset};render();}
+function applyPriceChannelDefaults(p){
+  const channel=byCode(cfg.channels)[p.channel_code]||{};
+  const provider=PROVIDERS[channel.provider_code]||{};
+  const method=byCode(cfg.payment_methods)[p.payment_method]||{};
+  if(method.channel_code && method.channel_code!==p.channel_code){
+    p.channel_code=method.channel_code;
+  }
+  const channelMethods=methodsForChannel(p.channel_code);
+  if(!channelMethods.some(m=>m.code===p.payment_method)){
+    p.payment_method=channelMethods[0]?.code||p.payment_method||"";
+  }
+  const activeMethod=byCode(cfg.payment_methods)[p.payment_method]||{};
+  p.account_code=channelAccounts(p.channel_code).some(a=>a.code===p.account_code)?p.account_code:(channelAccounts(p.channel_code)[0]?.code||"");
+  p.currency=(activeMethod.currencies||[]).includes(p.currency)?p.currency:((activeMethod.currencies||[])[0]||defaultSettlement(provider.code)||p.currency||"USD");
+  p.mode=provider.defaultMode||p.mode||"amount_order";
+  if((byCode(cfg.channels)[p.channel_code]||{}).provider_code!=="creem"){
+    p.discount_mode="none";
+    p.discount_code="";
+  }
+}
+function onPriceMethodChange(i){readConfig(false);applyPriceChannelDefaults(cfg.channel_prices[i]);render();}
+function onPriceChannelChange(i){readConfig(false);const p=cfg.channel_prices[i];const channelMethods=methodsForChannel(p.channel_code);if(!channelMethods.some(m=>m.code===p.payment_method))p.payment_method=channelMethods[0]?.code||p.payment_method;applyPriceChannelDefaults(p);render();}
+
+function defaultProductName(planCode,cycle){const p=plans[planCode]||{};return `${p.name||planCode} ${cycleLabel(cycle)}`.trim();}
+function defaultApiBase(provider){return provider==="zpay"?"https://zpayz.cn":provider==="creem"?"https://api.creem.io":"";}
+function defaultDashboard(provider){return provider==="zpay"?"https://zpayz.cn":provider==="creem"?"https://creem.io":"";}
+function defaultSettlement(provider){return provider==="zpay"?"CNY":"USD";}
+
+function readConfig(shouldValidate=true){
+  cfg.products=cfg.products.map((old,i)=>{
+    const type=val(`p-${i}-type`)||old.type;
+    if(type==="subscription"){
+      const plan=val(`p-${i}-plan`)||old.plan_code||"";
+      const cycle=val(`p-${i}-cycle`)||old.billing_cycle||"monthly";
+      return {code:subscriptionProductCode(plan,cycle),type,name:val(`p-${i}-name`)||defaultProductName(plan,cycle),description:old.description||"",plan_code:plan,billing_cycle:cycle,enabled:boolVal(`p-${i}-enabled`),sort_order:i*10+10};
+    }
+    return {code:val(`p-${i}-code`)||old.code,type,name:val(`p-${i}-name`)||old.name||"",description:old.description||"",topup_credits:intVal(`p-${i}-topup`),enabled:boolVal(`p-${i}-enabled`),sort_order:i*10+10};
+  });
+  cfg.currencies=cfg.currencies.map((old,i)=>({code:old.code,name:val(`c-${i}-name`)||old.name,symbol:val(`c-${i}-symbol`)||old.symbol,rate_to_usd:numVal(`c-${i}-rate`),rate_source:val(`c-${i}-source`)||"manual",auto_update:boolVal(`c-${i}-auto`),enabled:boolVal(`c-${i}-enabled`),updated_at:old.updated_at}));
+  cfg.channels=cfg.channels.map((old,i)=>{
+    const provider=val(`ch-${i}-provider`)||old.provider_code;
+    return {
+      code:old.code,
+      provider_code:provider,
+      name:val(`ch-${i}-name`)||old.name,
+      enabled:boolVal(`ch-${i}-enabled`),
+      active_account_code:val(`ch-${i}-active`),
+      accounts:(old.accounts||[]).map((a,j)=>{
+        return {
+          code:val(`a-${i}-${j}-code`)||a.code,
+          name:val(`a-${i}-${j}-name`)||a.name,
+          enabled:boolVal(`a-${i}-${j}-enabled`),
+          environment:val(`a-${i}-${j}-env`)||"live",
+          merchant_id:val(`a-${i}-${j}-merchant`),
+          api_base_url:val(`a-${i}-${j}-base`),
+          api_key:val(`a-${i}-${j}-key`),
+          webhook_secret:val(`a-${i}-${j}-secret`),
+          dashboard_url:val(`a-${i}-${j}-dash`),
+          settlement_currency:val(`a-${i}-${j}-settlement`)||defaultSettlement(provider)
+        };
+      })
+    };
+  });
+  cfg.payment_methods=cfg.payment_methods.map((old,i)=>({code:val(`m-${i}-code`)||old.code,name:val(`m-${i}-name`)||old.name,description:val(`m-${i}-desc`)||"",enabled:boolVal(`m-${i}-enabled`),sort_order:intVal(`m-${i}-sort`),channel_code:val(`m-${i}-channel`),currencies:[...document.querySelectorAll(`[data-method-currency="${i}"]:checked`)].map(el=>el.value)}));
+  cfg.channel_prices=cfg.channel_prices.map((old,i)=>{if(!document.getElementById(`cp-${i}-product`))return old;const channel=byCode(cfg.channels)[val(`cp-${i}-channel`)||old.channel_code]||{};const isCreem=channel.provider_code==="creem";const mode=isCreem?(val(`cp-${i}-discount-mode`)||"none"):"none";const row={product_code:val(`cp-${i}-product`)||old.product_code,payment_method:val(`cp-${i}-method`)||old.payment_method,channel_code:val(`cp-${i}-channel`)||old.channel_code,account_code:val(`cp-${i}-account`)||old.account_code,mode:val(`cp-${i}-mode`)||old.mode,currency:val(`cp-${i}-currency`)||old.currency,amount_cents:intVal(`cp-${i}-amount`),pricing_strategy:val(`cp-${i}-strategy`)||"fixed",base_currency:val(`cp-${i}-base-currency`)||"USD",base_amount_cents:intVal(`cp-${i}-base-amount`),external_product_id:val(`cp-${i}-external`)||old.external_product_id||"",external_price_id:old.external_price_id||"",discount_mode:mode,discount_code:mode==="auto_apply"?val(`cp-${i}-discount`):"",enabled:boolVal(`cp-${i}-enabled`)};applyPriceChannelDefaults(row);return row;});
+  cfg.exchange_rate_provider={provider:val("fx-provider")||"manual",api_key:val("fx-api-key"),base_currency:val("fx-base")||"USD",refresh_hour:Math.min(23,Math.max(0,intVal("fx-hour"))),enabled:val("fx-provider")!=="manual",last_refreshed_at:(cfg.exchange_rate_provider||{}).last_refreshed_at};
+  normalizeConfig();
+  if(shouldValidate)validateConfig();
+}
+
+function validateConfig(){
+  const errors=[];
+  const productCodes=new Set(), currencyCodes=new Set(cfg.currencies.map(c=>c.code)), channelCodes=new Set(cfg.channels.map(c=>c.code)), methodCodes=new Set(cfg.payment_methods.map(m=>m.code));
+  cfg.products.forEach(p=>{if(!p.code)errors.push("商品代码不能为空");if(productCodes.has(p.code))errors.push(`商品代码重复：${p.code}`);productCodes.add(p.code);if(p.type==="subscription"&&(!p.plan_code||!p.billing_cycle))errors.push(`订阅商品 ${p.code} 必须选择套餐和账期`);if(p.type==="credits_topup"&&p.topup_credits<=0)errors.push(`加购商品 ${p.code} 必须配置大于 0 的积分`);});
+  cfg.currencies.forEach(c=>{if(c.enabled!==false&&c.rate_to_usd<=0)errors.push(`${c.code} 汇率必须大于 0`);});
+  cfg.channels.forEach(ch=>{if(!ch.provider_code)errors.push(`${ch.code} 必须选择平台`);if(ch.enabled!==false&&ch.accounts.length&&!ch.active_account_code)errors.push(`${ch.name||ch.code} 必须选择当前激活账号`);});
+  cfg.payment_methods.forEach(m=>{if(!channelCodes.has(m.channel_code))errors.push(`支付方式 ${m.code} 未绑定有效渠道`);if(m.enabled!==false&&!m.currencies.length)errors.push(`支付方式 ${m.code} 至少选择一个币种`);});
+  const priceKeys=new Set();
+  cfg.channel_prices.forEach(p=>{const method=byCode(cfg.payment_methods)[p.payment_method]||{};const channel=byCode(cfg.channels)[p.channel_code]||{};const key=[p.product_code,p.payment_method,p.channel_code,p.account_code,p.currency].join("|");if(priceKeys.has(key))errors.push(`${p.product_code} 存在重复的同渠道同币种价格绑定`);priceKeys.add(key);if(!productCodes.has(p.product_code))errors.push("价格绑定引用了不存在的商品");if(!methodCodes.has(p.payment_method))errors.push(`${p.product_code} 引用了不存在的支付方式`);if(!channelCodes.has(p.channel_code))errors.push(`${p.product_code} 引用了不存在的渠道`);if(method.channel_code&&method.channel_code!==p.channel_code)errors.push(`${p.product_code} 的支付方式和渠道不匹配`);if(!currencyCodes.has(p.currency))errors.push(`${p.product_code} 引用了不存在的币种`);if(method.enabled!==false&&!(method.currencies||[]).includes(p.currency))errors.push(`${p.product_code} 的支付方式不支持 ${p.currency}`);if(p.enabled!==false&&channel.provider_code==="creem"&&p.mode==="external_product"&&!p.external_product_id)errors.push(`${p.product_code} 的 Creem 平台商品模式必须填写外部商品 ID`);if(p.enabled!==false&&channel.provider_code==="creem"&&p.discount_mode==="auto_apply"&&!p.discount_code)errors.push(`${p.product_code} 自动填充优惠券时必须填写券码`);if(p.enabled!==false&&p.pricing_strategy==="exchange_rate"&&(!p.base_currency||p.base_amount_cents<=0))errors.push(`${p.product_code} 跟随汇率必须填写基准币种和基准金额`);});
+  if(errors.length)throw new Error(errors.slice(0,6).join("\\n"));
+}
+
+async function saveConfig(){
+  try{
+    readConfig(true);
+    cfg=await api("POST","/api/v1/payment-provider-config",cfg);
+    showToast("支付配置已保存");
+    normalizeConfig();
+    render();
+  }catch(e){showToast(e.message,"error");}
+}
+
+loadConfig().catch(e=>showToast(e.message,"error"));
+</script>
+<style>
+.page-head{align-items:flex-start;display:flex;gap:16px;justify-content:space-between;margin-bottom:18px}.page-title{margin-bottom:4px}.page-subtitle{color:var(--text-muted);font-size:13px}.ops-grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));margin-bottom:16px}.ops-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:14px}.ops-label{color:var(--text-muted);font-size:12px}.ops-value{font-size:26px;font-weight:800;margin:4px 0}.ops-desc{color:var(--text-muted);font-size:12px}.payment-shell{align-items:flex-start;display:grid;gap:16px;grid-template-columns:240px minmax(0,1fr)}.payment-nav{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;display:flex;flex-direction:column;gap:4px;padding:8px;position:sticky;top:20px}.flow-tab{align-items:center;background:transparent;border:0;border-radius:6px;color:var(--text-muted);cursor:pointer;display:grid;gap:2px 10px;grid-template-columns:28px 1fr;padding:10px;text-align:left}.flow-tab span{align-items:center;background:var(--bg-hover);border-radius:50%;display:flex;font-size:12px;font-weight:700;height:24px;justify-content:center;width:24px}.flow-tab b{color:var(--text);font-size:13px}.flow-tab small{font-size:11px;grid-column:2}.flow-tab.active,.flow-tab:hover{background:var(--bg-hover)}.flow-tab.active span{background:var(--primary);color:#fff}.payment-workspace{min-width:0}.tab-panel{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:18px}.panel-head{align-items:flex-start;border-bottom:1px solid var(--border);display:flex;gap:16px;justify-content:space-between;margin-bottom:16px;padding-bottom:14px}.panel-head h2{font-size:18px;margin:0 0 4px}.panel-head p{color:var(--text-muted);font-size:12px;line-height:1.6;margin:0;max-width:760px}.action-row{display:flex;gap:8px;white-space:nowrap}.compact{min-width:160px}.object-list{display:flex;flex-direction:column;gap:12px}.object-row{align-items:flex-start;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:8px;display:grid;gap:12px;grid-template-columns:minmax(180px,260px) minmax(0,1fr) auto;padding:14px}.row-title{font-weight:700}.row-title code{color:var(--text-muted);font-size:12px;font-weight:500;margin-left:6px}.row-meta{color:var(--text-muted);font-size:12px;line-height:1.6;margin-top:4px}.row-fields{display:grid;gap:10px}.product-grid{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}.currency-grid{grid-template-columns:repeat(auto-fit,minmax(128px,1fr))}.channel-grid{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}.method-grid{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}.account-grid{grid-template-columns:repeat(auto-fit,minmax(155px,1fr))}.price-grid{grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}.form-label{display:block}.inline-control{align-items:center;display:flex;gap:8px;min-height:36px}.toggle input{display:none}.toggle span{background:#303545;border:1px solid var(--border);border-radius:999px;display:block;height:22px;position:relative;width:40px}.toggle span:after{background:#9aa3b2;border-radius:50%;content:"";height:16px;left:3px;position:absolute;top:2px;transition:.15s;width:16px}.toggle input:checked+span{background:rgba(232,93,47,.24);border-color:var(--primary)}.toggle input:checked+span:after{background:var(--primary);left:19px}.pill{background:var(--bg-hover);border:1px solid var(--border);border-radius:999px;color:var(--text-muted);font-size:11px;padding:2px 8px}.pill.success{background:rgba(34,197,94,.15);border-color:rgba(34,197,94,.35);color:var(--success)}.pill.danger{background:rgba(239,68,68,.15);border-color:rgba(239,68,68,.35);color:var(--danger)}.pill.muted{color:var(--text-muted)}.status-line{align-items:center;display:flex;flex-wrap:wrap;gap:6px;min-height:36px}.status-line small{color:var(--text-muted);font-size:11px}.section-band{background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:8px;margin-bottom:12px;padding:14px}.section-title,.sub-head{font-weight:700;margin-bottom:10px}.form-grid,.filter-row{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}.channel-block{border:1px solid var(--border);border-radius:8px;overflow:hidden}.channel-summary{border:0;border-bottom:1px solid var(--border);border-radius:0}.account-list{display:flex;flex-direction:column;gap:10px;padding:14px}.sub-head{align-items:center;display:flex;justify-content:space-between}.account-row{background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:8px;display:grid;gap:12px;grid-template-columns:minmax(0,1fr) auto;padding:12px}.currency-checks{align-content:center;display:flex;flex-wrap:wrap;gap:8px}.currency-checks label{background:var(--bg-hover);border:1px solid var(--border);border-radius:999px;color:var(--text-muted);font-size:12px;padding:6px 10px}.empty-state{border:1px dashed var(--border);border-radius:8px;color:var(--text-muted);font-size:13px;padding:22px;text-align:center}.empty-state.slim{padding:14px}.filter-row{margin-bottom:12px}@media(max-width:1000px){.payment-shell{grid-template-columns:1fr}.payment-nav{position:static}.object-row,.account-row{grid-template-columns:1fr}.panel-head{display:block}.action-row{margin-top:12px;white-space:normal}}
+</style>
+{% endblock %}

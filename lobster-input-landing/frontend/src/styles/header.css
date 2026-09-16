@@ -1,0 +1,106 @@
+/* 顶栏（站点级共享 Header）：品牌、导航、语言选择器、登录态、CTA。
+   topbar / nav / language-menu / cta-pill 逐字迁移自原 index.html；
+   语言选择器与登录态在所有页面右上角展示。*/
+.topbar{
+  position:sticky;top:0;z-index:30;background:var(--paper);
+  border-bottom:1px solid var(--rule-2);
+}
+.topbar-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 0;gap:32px;
+}
+.brand{display:flex;align-items:center;gap:12px;}
+.brand-mark{width:34px;height:34px;}
+.brand-name{font-family:"Newsreader",serif;font-size:21px;letter-spacing:0.02em;white-space:nowrap;}
+.brand-name b{font-weight:600;color:var(--lobster);}
+.nav{display:flex;gap:30px;font-size:13.5px;color:var(--ink-2);white-space:nowrap;}
+.nav a{padding:4px 0;border-bottom:1px solid transparent;transition:border .2s,color .2s;white-space:nowrap;cursor:pointer;}
+.nav a:hover{color:var(--lobster);border-bottom-color:var(--lobster);}
+.top-meta{display:flex;align-items:center;gap:14px;font-size:12.5px;color:var(--ink-3);}
+
+/* language menu */
+.language-menu{position:relative;}
+.language-toggle{
+  display:inline-flex;align-items:center;gap:7px;padding:6px 12px;
+  border:1px solid var(--rule-2);border-radius:999px;background:transparent;
+  color:var(--ink-2);font:inherit;font-size:12.5px;cursor:pointer;
+  transition:border-color .2s,color .2s;white-space:nowrap;
+}
+.language-toggle:hover{border-color:var(--ink);color:var(--lobster);}
+.language-toggle svg{flex-shrink:0;}
+.language-current{letter-spacing:0.01em;}
+.language-list{
+  position:absolute;right:0;top:calc(100% + 8px);min-width:200px;
+  padding:6px;border:1px solid var(--rule-2);border-radius:12px;
+  background:var(--cream);box-shadow:0 18px 40px -22px rgba(24,19,17,.45);
+  display:none;z-index:120;flex-direction:column;gap:2px;
+}
+.language-menu.is-open .language-list{display:flex;}
+.language-option{
+  width:100%;display:flex;align-items:center;justify-content:space-between;gap:14px;
+  border:0;background:transparent;color:var(--ink-2);padding:9px 12px;border-radius:8px;
+  font:inherit;font-size:13px;text-align:left;cursor:pointer;
+}
+.language-option:hover,
+.language-option.is-active{background:var(--paper-2);color:var(--lobster);}
+.language-option .check{opacity:0;color:var(--lobster);}
+.language-option.is-active .check{opacity:1;}
+
+.cta-pill{
+  display:inline-flex;align-items:center;gap:10px;padding:9px 16px 9px 14px;
+  background:var(--ink);color:var(--cream);border-radius:999px;font-size:13px;
+  letter-spacing:0.02em;transition:background .25s;white-space:nowrap;cursor:pointer;
+}
+.cta-pill:hover{background:var(--lobster);}
+.cta-pill .dot{width:7px;height:7px;background:var(--lobster);border-radius:50%;animation:pulse 1.6s ease-in-out infinite;}
+.cta-pill:hover .dot{background:var(--cream);}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.6);opacity:.55}}
+
+/* 登录态 / 账户菜单（沿用语言选择器的下拉视觉语言）*/
+.account-link{
+  display:inline-flex;align-items:center;gap:7px;padding:6px 14px;
+  border:1px solid var(--rule-2);border-radius:999px;background:transparent;
+  color:var(--ink-2);font:inherit;font-size:12.5px;cursor:pointer;
+  transition:border-color .2s,color .2s;white-space:nowrap;
+}
+.account-link:hover{border-color:var(--ink);color:var(--lobster);}
+.account-menu{position:relative;}
+.account-toggle{
+  display:inline-flex;align-items:center;gap:8px;padding:6px 12px;
+  border:1px solid var(--rule-2);border-radius:999px;background:transparent;
+  color:var(--ink-2);font:inherit;font-size:12.5px;cursor:pointer;max-width:200px;
+  transition:border-color .2s,color .2s;white-space:nowrap;
+}
+.account-toggle:hover{border-color:var(--ink);color:var(--lobster);}
+.account-toggle .avatar{
+  width:22px;height:22px;border-radius:50%;background:var(--lobster);color:var(--cream);
+  display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0;
+  font-family:"Geist Mono",monospace;text-transform:uppercase;
+}
+.account-toggle .account-email{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:130px;}
+.account-list{
+  position:absolute;right:0;top:calc(100% + 8px);min-width:200px;
+  padding:6px;border:1px solid var(--rule-2);border-radius:12px;
+  background:var(--cream);box-shadow:0 18px 40px -22px rgba(24,19,17,.45);
+  display:none;z-index:120;flex-direction:column;gap:2px;
+}
+.account-menu.is-open .account-list{display:flex;}
+.account-list .account-item{
+  width:100%;display:flex;align-items:center;gap:10px;
+  border:0;background:transparent;color:var(--ink-2);padding:9px 12px;border-radius:8px;
+  font:inherit;font-size:13px;text-align:left;cursor:pointer;
+}
+.account-list .account-item:hover{background:var(--paper-2);color:var(--lobster);}
+.account-list .account-item svg{width:14px;height:14px;flex-shrink:0;}
+.account-list .account-head{
+  padding:8px 12px 10px;border-bottom:1px solid var(--rule-2);margin-bottom:4px;
+}
+.account-list .account-head .k{font-family:"Geist Mono",monospace;font-size:10px;color:var(--ink-3);letter-spacing:0.12em;text-transform:uppercase;}
+.account-list .account-head .v{font-size:13px;color:var(--ink);margin-top:3px;overflow:hidden;text-overflow:ellipsis;}
+
+.top-back{
+  font-size:13px;color:var(--ink-2);padding:6px 12px;border:1px solid var(--rule-2);border-radius:999px;
+  display:inline-flex;align-items:center;gap:8px;white-space:nowrap;transition:border-color .25s,color .25s;cursor:pointer;
+}
+.top-back:hover{border-color:var(--ink);color:var(--lobster);}
+.top-back svg{width:14px;height:14px;}

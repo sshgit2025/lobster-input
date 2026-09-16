@@ -1,0 +1,469 @@
+{% extends "base.html" %}
+{% block title %}平台与 Key 分组 - API Pool Manager{% endblock %}
+{% block body %}
+<div class="layout">
+  {% with active="keys" %}{% include "partials/sidebar.html" %}{% endwith %}
+  <main class="main">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+      <h1 class="page-title" style="margin:0">平台与 Key 分组</h1>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-ghost btn-sm" onclick="openPlatformModal()">新增平台</button>
+        <button class="btn btn-ghost btn-sm" onclick="openGroupModal()">新增分组</button>
+        <button class="btn btn-primary" onclick="openKeyModal()">新增 Key</button>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:16px">
+      <select class="form-select" id="categoryFilter" onchange="onCategoryFilterChange()" style="width:auto"></select>
+      <select class="form-select" id="platformFilter" onchange="onPlatformFilterChange()" style="width:auto"></select>
+      <select class="form-select" id="groupFilter" onchange="onGroupFilterChange()" style="width:auto"></select>
+      <select class="form-select" id="statusFilter" onchange="onStatusFilterChange()" style="width:auto">
+        <option value="">全部 Key 状态</option>
+        <option value="active">活跃</option>
+        <option value="cooldown">冷却中</option>
+        <option value="exhausted">耗尽</option>
+        <option value="disabled">已禁用</option>
+        <option value="error">异常</option>
+        <option value="expired">已过期</option>
+      </select>
+      <button class="btn btn-ghost btn-sm" onclick="refreshAll()">刷新</button>
+    </div>
+
+    <div class="card">
+      <div class="card-title">平台目录</div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>分类</th><th>平台</th><th>名称</th><th>默认模型</th><th>Base URL</th><th>状态</th><th>操作</th></tr></thead>
+        <tbody id="platformRows"></tbody>
+      </table></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Key 负载均衡分组</div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>group_id</th><th>分类</th><th>平台</th><th>名称</th><th>Key</th><th>状态</th><th>操作</th></tr></thead>
+        <tbody id="groupRows"></tbody>
+      </table></div>
+      <div style="font-size:12px;color:var(--text-muted);margin-top:8px">管理端 provider 只挂载 group_id。组内多个 Key 的权重、优先级、额度、冷却和错误摘除全部由号池端处理。</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">真实 API Key <span id="keyFilterSummary" style="font-size:12px;font-weight:500;color:var(--text-muted)"></span></div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>名称</th><th>分组</th><th>平台</th><th>Key</th><th>代理</th><th>状态</th><th>权重/优先级</th><th>额度</th><th>总请求</th><th>操作</th></tr></thead>
+        <tbody id="keyRows"></tbody>
+      </table></div>
+      <div id="keyPagination" style="padding:8px 0"></div>
+    </div>
+  </main>
+</div>
+
+<div class="modal-overlay" id="platformModal">
+  <div class="modal">
+    <div class="modal-title">平台配置</div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">分类</label><input class="form-input" id="pCategory" placeholder="llm_chat"></div>
+      <div class="form-group"><label class="form-label">平台 code</label><input class="form-input" id="pCode" placeholder="aliyun"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">名称</label><input class="form-input" id="pName"></div>
+      <div class="form-group"><label class="form-label">默认模型</label><input class="form-input" id="pModel"></div>
+    </div>
+    <div class="form-group"><label class="form-label">默认 Base URL</label><input class="form-input" id="pBaseUrl"></div>
+    <div class="form-group"><label class="form-label">描述</label><input class="form-input" id="pDesc"></div>
+    <label class="form-checkbox"><input type="checkbox" id="pEnabled" checked> 启用</label>
+    <div class="modal-actions"><button class="btn btn-ghost" onclick="closeModal('platformModal')">取消</button><button class="btn btn-primary" onclick="savePlatform()">保存</button></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="groupModal">
+  <div class="modal">
+    <div class="modal-title">Key 分组配置</div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">分类</label><select class="form-select" id="gCategory" onchange="fillGroupPlatforms()"></select></div>
+      <div class="form-group"><label class="form-label">平台</label><select class="form-select" id="gPlatform"></select></div>
+    </div>
+    <div class="form-group"><label class="form-label">group_id</label><input class="form-input" id="gId" placeholder="llm_chat_aliyun_default"></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">名称</label><input class="form-input" id="gName"></div>
+      <div class="form-group"><label class="form-label">描述</label><input class="form-input" id="gDesc"></div>
+    </div>
+    <label class="form-checkbox"><input type="checkbox" id="gEnabled" checked> 启用</label>
+    <div class="modal-actions"><button class="btn btn-ghost" onclick="closeModal('groupModal')">取消</button><button class="btn btn-primary" onclick="saveGroup()">保存</button></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="keyModal">
+  <div class="modal">
+    <div class="modal-title" id="keyModalTitle">新增 Key</div>
+    <input type="hidden" id="keyId">
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">分组</label><select class="form-select" id="kGroup"></select></div>
+      <div class="form-group"><label class="form-label">名称</label><input class="form-input" id="kName"></div>
+    </div>
+    <div class="form-group"><label class="form-label">API Key</label><input class="form-input" id="kApiKey" placeholder="sk-..."></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">模型覆盖</label><input class="form-input" id="kModel" placeholder="留空使用平台默认"></div>
+      <div class="form-group"><label class="form-label">Base URL 覆盖</label><input class="form-input" id="kBaseUrl" placeholder="留空使用平台默认"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">权重</label><input class="form-input" id="kWeight" type="number" min="0" max="100" value="10"></div>
+      <div class="form-group"><label class="form-label">优先级</label><input class="form-input" id="kPriority" type="number" min="0" max="99" value="0"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">冷却秒数</label><input class="form-input" id="kCooldown" type="number" min="0" value="60"></div>
+      <div class="form-group"><label class="form-label">错误阈值</label><input class="form-input" id="kErrorThreshold" type="number" min="30" value="30"></div>
+    </div>
+    <div class="form-group"><label class="form-label">描述</label><input class="form-input" id="kDesc"></div>
+    <div class="quota-section">
+      <div class="quota-header"><label class="form-checkbox"><input type="checkbox" id="proxyEnabled"> 启用代理</label></div>
+      <div class="form-row" id="proxyFields" style="display:none">
+        <div class="form-group" style="grid-column:1 / -1"><label class="form-label">代理地址</label><input class="form-input" id="kProxyUrl" placeholder="http://host:port"></div>
+        <div class="form-group"><label class="form-label">用户名</label><input class="form-input" id="kProxyUser"></div>
+        <div class="form-group"><label class="form-label">密码</label><input class="form-input" id="kProxyPass" type="password"></div>
+      </div>
+    </div>
+    <div class="quota-section">
+      <div class="quota-header">额度</div>
+      <div class="form-row">
+        <label class="form-checkbox"><input type="checkbox" id="qTokenEnabled"> Token</label><input class="form-input" id="qTokenTotal" type="number" min="0" placeholder="Token 总额">
+        <label class="form-checkbox"><input type="checkbox" id="qSecondsEnabled"> 秒数</label><input class="form-input" id="qSecondsTotal" type="number" min="0" placeholder="秒数总额">
+        <label class="form-checkbox"><input type="checkbox" id="qRequestsEnabled"> 请求</label><input class="form-input" id="qRequestsTotal" type="number" min="0" placeholder="请求总额">
+      </div>
+    </div>
+    <div class="modal-actions"><button class="btn btn-ghost" onclick="closeModal('keyModal')">取消</button><button class="btn btn-primary" onclick="saveKey()">保存</button></div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+{% endblock %}
+{% block scripts %}
+<script>
+const CATEGORY_LABELS={asr:"ASR 语音识别",asr_realtime:"实时 ASR",llm_chat:"LLM 文本对话",web_search:"联网搜索",embedding:"向量 Embedding",tts:"音频合成"};
+const STATUS_LABELS={active:"活跃",cooldown:"冷却中",exhausted:"耗尽",disabled:"已禁用",error:"异常",expired:"已过期"};
+let allCategories=[], allPlatforms=[], allGroups=[], platforms=[], groups=[], currentPage=1, pageSize=20, keyRequestSeq=0;
+
+function esc(s){return String(s??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[ch]));}
+function closeModal(id){document.getElementById(id).classList.remove("show");}
+function maskKey(k){if(!k)return"-";return k.length<=12?k:`${k.slice(0,6)}...${k.slice(-6)}`;}
+function statusBadge(s){const map={active:"badge-success",cooldown:"badge-info",exhausted:"badge-warning",disabled:"badge-muted",error:"badge-danger",expired:"badge-muted"};return `<span class="badge ${map[s]||"badge-muted"}">${STATUS_LABELS[s]||s||"-"}</span>`;}
+function quotaSummary(k){const parts=[];if(k.token_quota?.enabled)parts.push(`T:${k.token_quota.used||0}/${k.token_quota.total||0}`);if(k.seconds_quota?.enabled)parts.push(`S:${k.seconds_quota.used||0}/${k.seconds_quota.total||0}`);if(k.requests_quota?.enabled)parts.push(`R:${k.requests_quota.used||0}/${k.requests_quota.total||0}`);return parts.join(" ")||'<span style="color:var(--text-muted)">无限</span>';}
+
+async function refreshAll(){
+  await loadCatalog();
+  renderFilters();
+  renderPlatforms();
+  renderGroups();
+  await loadKeys(1);
+}
+
+async function loadCatalog(){
+  [allCategories, allPlatforms, allGroups]=await Promise.all([
+    api("/api/v1/keys/categories"),
+    api("/api/v1/keys/platforms"),
+    api("/api/v1/keys/groups")
+  ]);
+  sanitizeCategoryFilter();
+  sanitizePlatformFilter();
+  sanitizeGroupFilter();
+  platforms=visiblePlatforms();
+  groups=visibleGroups(false);
+}
+
+function platformValue(p){return `${p.category}::${p.code}`;}
+
+function parsePlatformValue(value){
+  if(!value)return{category:"",platform_code:""};
+  const parts=String(value).split("::");
+  if(parts.length===2)return{category:parts[0],platform_code:parts[1]};
+  return{category:"",platform_code:value};
+}
+
+function selectedGroup(){
+  const groupId=document.getElementById("groupFilter").value||"";
+  return groupId?allGroups.find(g=>g.group_id===groupId):null;
+}
+
+function effectiveFilters(){
+  const category=document.getElementById("categoryFilter").value||"";
+  const platform=parsePlatformValue(document.getElementById("platformFilter").value||"");
+  const group=selectedGroup();
+  const resolvedCategory=category||platform.category||(group?group.category:"");
+  const resolvedPlatform=platform.platform_code||(group?group.platform_code:"");
+  return{
+    category:resolvedCategory||"",
+    platform_code:resolvedPlatform||"",
+    group_id:document.getElementById("groupFilter").value||"",
+    status:document.getElementById("statusFilter").value||""
+  };
+}
+
+function visiblePlatforms(){
+  const f=effectiveFilters();
+  return allPlatforms.filter(p=>{
+    if(f.category&&p.category!==f.category)return false;
+    if(f.platform_code&&(p.category!==f.category||p.code!==f.platform_code))return false;
+    return true;
+  });
+}
+
+function visibleGroups(ignoreGroupId=true){
+  const f=effectiveFilters();
+  return allGroups.filter(g=>{
+    if(f.category&&g.category!==f.category)return false;
+    if(f.platform_code&&g.platform_code!==f.platform_code)return false;
+    if(!ignoreGroupId&&f.group_id&&g.group_id!==f.group_id)return false;
+    return true;
+  });
+}
+
+function sanitizeCategoryFilter(){
+  const el=document.getElementById("categoryFilter");
+  const current=el.value||"";
+  if(!current)return;
+  const valid=[...new Set((allCategories||[]).concat(allPlatforms.map(p=>p.category)).concat(allGroups.map(g=>g.category)))].includes(current);
+  if(!valid)el.value="";
+}
+
+function sanitizePlatformFilter(){
+  const category=document.getElementById("categoryFilter").value||"";
+  const currentPlatform=document.getElementById("platformFilter").value||"";
+  if(!currentPlatform)return;
+  const valid=allPlatforms.some(p=>(!category||p.category===category)&&platformValue(p)===currentPlatform);
+  if(!valid)document.getElementById("platformFilter").value="";
+}
+
+function sanitizeGroupFilter(){
+  const currentGroup=document.getElementById("groupFilter").value||"";
+  if(currentGroup&&!allGroups.some(g=>g.group_id===currentGroup)){
+    document.getElementById("groupFilter").value="";
+  }
+}
+
+async function onCategoryFilterChange(){
+  document.getElementById("platformFilter").value="";
+  document.getElementById("groupFilter").value="";
+  applyCurrentFilters();
+  await loadKeys(1);
+}
+
+async function onPlatformFilterChange(){
+  const platform=parsePlatformValue(document.getElementById("platformFilter").value||"");
+  if(platform.category){
+    document.getElementById("categoryFilter").value=platform.category;
+  }
+  document.getElementById("groupFilter").value="";
+  applyCurrentFilters();
+  await loadKeys(1);
+}
+
+async function onGroupFilterChange(){
+  const group=selectedGroup();
+  if(group){
+    document.getElementById("categoryFilter").value=group.category;
+    document.getElementById("platformFilter").value=platformValue({category:group.category,code:group.platform_code});
+  }
+  applyCurrentFilters();
+  await loadKeys(1);
+}
+
+async function onStatusFilterChange(){
+  applyCurrentFilters();
+  await loadKeys(1);
+}
+
+function applyCurrentFilters(){
+  sanitizeCategoryFilter();
+  sanitizePlatformFilter();
+  sanitizeGroupFilter();
+  platforms=visiblePlatforms();
+  groups=visibleGroups(false);
+  renderFilters();
+  renderPlatforms();
+  renderGroups();
+}
+
+function renderFilters(){
+  const currentCat=document.getElementById("categoryFilter").value;
+  const group=selectedGroup();
+  const cats=[...new Set((allCategories||[]).concat(allPlatforms.map(p=>p.category)).concat(allGroups.map(g=>g.category)))].filter(Boolean).sort();
+  document.getElementById("categoryFilter").innerHTML='<option value="">全部分类</option>'+cats.map(c=>`<option value="${c}" ${c===currentCat?"selected":""}>${CATEGORY_LABELS[c]||c}</option>`).join("");
+
+  const currentPlatform=document.getElementById("platformFilter").value||(group?platformValue({category:group.category,code:group.platform_code}):"");
+  const platformChoices=allPlatforms.filter(p=>!currentCat||p.category===currentCat);
+  const validPlatform=platformChoices.some(p=>platformValue(p)===currentPlatform);
+  const platformSelected=validPlatform?currentPlatform:"";
+  document.getElementById("platformFilter").innerHTML='<option value="">全部平台</option>'+platformChoices.map(p=>`<option value="${platformValue(p)}" ${platformValue(p)===platformSelected?"selected":""}>${CATEGORY_LABELS[p.category]||p.category} / ${p.code}</option>`).join("");
+
+  const currentGroup=document.getElementById("groupFilter").value;
+  const groupChoices=visibleGroups(true);
+  const validGroup=groupChoices.some(g=>g.group_id===currentGroup);
+  const groupSelected=validGroup?currentGroup:"";
+  document.getElementById("groupFilter").innerHTML='<option value="">全部 Key 分组</option>'+groupChoices.map(g=>`<option value="${g.group_id}" ${g.group_id===groupSelected?"selected":""}>${g.category}/${g.platform_code} — ${g.group_id}</option>`).join("");
+  platforms=visiblePlatforms();
+  groups=visibleGroups(false);
+}
+
+function renderPlatforms(){
+  document.getElementById("platformRows").innerHTML=platforms.map(p=>`<tr>
+    <td>${CATEGORY_LABELS[p.category]||p.category}</td><td><code>${p.code}</code></td><td>${esc(p.name)}</td>
+    <td>${esc(p.default_model||"-")}</td><td style="max-width:360px;overflow:hidden;text-overflow:ellipsis">${esc(p.default_base_url||"-")}</td>
+    <td>${p.enabled?'<span class="badge badge-success">启用</span>':'<span class="badge badge-muted">停用</span>'}</td>
+    <td><button class="btn btn-ghost btn-sm" onclick='editPlatform(${JSON.stringify(p)})'>编辑</button></td>
+  </tr>`).join("")||'<tr><td colspan="7" style="text-align:center;color:var(--text-muted)">暂无平台</td></tr>';
+}
+
+function renderGroups(){
+  document.getElementById("groupRows").innerHTML=groups.map(g=>`<tr>
+    <td><code>${g.group_id}</code></td><td>${CATEGORY_LABELS[g.category]||g.category}</td><td>${g.platform_code}</td><td>${esc(g.name)}</td>
+    <td>${g.active_key_count||0}/${g.total_key_count||0}</td>
+    <td>${g.enabled?'<span class="badge badge-success">启用</span>':'<span class="badge badge-muted">停用</span>'}</td>
+    <td><button class="btn btn-ghost btn-sm" onclick='editGroup(${JSON.stringify(g)})'>编辑</button></td>
+  </tr>`).join("")||'<tr><td colspan="7" style="text-align:center;color:var(--text-muted)">暂无分组</td></tr>';
+}
+
+async function loadGroups(){
+  groups=visibleGroups(false);
+  platforms=visiblePlatforms();
+  renderGroups();
+  renderFilters();
+}
+
+async function loadKeys(page){
+  currentPage=page||1;
+  const f=effectiveFilters();
+  const requestSeq=++keyRequestSeq;
+  const params=new URLSearchParams({page:currentPage,page_size:pageSize});
+  if(f.category)params.set("category",f.category);
+  if(f.platform_code)params.set("platform_code",f.platform_code);
+  if(f.group_id)params.set("group_id",f.group_id);
+  if(f.status)params.set("status",f.status);
+  const data=await api(`/api/v1/keys?${params}`);
+  if(requestSeq!==keyRequestSeq)return;
+  renderKeyFilterSummary(data.total,f);
+  document.getElementById("keyRows").innerHTML=data.items.map(k=>{
+    const toggle=k.status==="active"
+      ? `<button class="btn btn-danger btn-sm" onclick="quickStatus('${k._id}','disabled')">禁用</button>`
+      : `<button class="btn btn-success btn-sm" onclick="quickStatus('${k._id}','active')">启用</button>`;
+    const proxy=(k.proxy_config?.enabled&&k.proxy_config?.proxy_url)?'<span class="badge badge-info">启用</span>':'<span style="color:var(--text-muted)">-</span>';
+    return `<tr style="${k.status==='disabled'?'opacity:.6':''}">
+      <td>${esc(k.name||"-")}</td><td><code>${k.group_id}</code><div style="font-size:11px;color:var(--text-muted)">${esc(k.group_name||"")}</div></td>
+      <td>${k.category}/${k.platform_code}</td><td><span class="key-mask" onclick="copyKey('${k._id}')" style="cursor:pointer">${maskKey(k.api_key)}</span></td>
+      <td>${proxy}</td><td>${statusBadge(k.status)}</td><td>${k.weight}/${k.priority}</td><td>${quotaSummary(k)}</td><td>${k.total_requests||0}</td>
+      <td style="display:flex;gap:6px;flex-wrap:wrap">${toggle}<button class="btn btn-ghost btn-sm" onclick="editKey('${k._id}')">编辑</button><button class="btn btn-danger btn-sm" onclick="deleteKey('${k._id}')">删除</button></td>
+    </tr>`;
+  }).join("")||'<tr><td colspan="10" style="text-align:center;color:var(--text-muted)">暂无 Key</td></tr>';
+  renderPagination("keyPagination",data.total,currentPage,pageSize,"loadKeys");
+}
+
+function renderKeyFilterSummary(total,filters){
+  const parts=[];
+  if(filters.category)parts.push(CATEGORY_LABELS[filters.category]||filters.category);
+  if(filters.platform_code)parts.push(filters.platform_code);
+  if(filters.group_id)parts.push(filters.group_id);
+  if(filters.status)parts.push(`状态:${STATUS_LABELS[filters.status]||filters.status}`);
+  const text=parts.length?`当前筛选 ${parts.join(" / ")}，命中 ${total||0} 条`:`共 ${total||0} 条`;
+  document.getElementById("keyFilterSummary").textContent=text;
+}
+
+function openPlatformModal(){editPlatform({category:document.getElementById("categoryFilter").value||"llm_chat",enabled:true});}
+function editPlatform(p){
+  document.getElementById("pCategory").value=p.category||"";
+  document.getElementById("pCode").value=p.code||"";
+  document.getElementById("pName").value=p.name||"";
+  document.getElementById("pModel").value=p.default_model||"";
+  document.getElementById("pBaseUrl").value=p.default_base_url||"";
+  document.getElementById("pDesc").value=p.description||"";
+  document.getElementById("pEnabled").checked=p.enabled!==false;
+  document.getElementById("platformModal").classList.add("show");
+}
+async function savePlatform(){
+  await api("/api/v1/keys/platforms","POST",{
+    category:document.getElementById("pCategory").value.trim(),
+    code:document.getElementById("pCode").value.trim(),
+    name:document.getElementById("pName").value.trim(),
+    default_model:document.getElementById("pModel").value.trim(),
+    default_base_url:document.getElementById("pBaseUrl").value.trim(),
+    description:document.getElementById("pDesc").value.trim(),
+    enabled:document.getElementById("pEnabled").checked
+  });
+  closeModal("platformModal");showToast("平台已保存","success");await refreshAll();
+}
+
+function openGroupModal(){fillGroupCategories(document.getElementById("categoryFilter").value||"");document.getElementById("gId").value="";document.getElementById("gName").value="";document.getElementById("gDesc").value="";document.getElementById("gEnabled").checked=true;document.getElementById("groupModal").classList.add("show");}
+function fillGroupCategories(selected){
+  const cats=[...new Set(allPlatforms.map(p=>p.category))].sort();
+  document.getElementById("gCategory").innerHTML=cats.map(c=>`<option value="${c}" ${c===selected?"selected":""}>${CATEGORY_LABELS[c]||c}</option>`).join("");
+  fillGroupPlatforms();
+}
+function fillGroupPlatforms(selected){
+  const cat=document.getElementById("gCategory").value;
+  const rows=allPlatforms.filter(p=>p.category===cat);
+  document.getElementById("gPlatform").innerHTML=rows.map(p=>`<option value="${p.code}" ${p.code===selected?"selected":""}>${p.code}</option>`).join("");
+}
+function editGroup(g){
+  fillGroupCategories(g.category);fillGroupPlatforms(g.platform_code);
+  document.getElementById("gId").value=g.group_id||"";
+  document.getElementById("gName").value=g.name||"";
+  document.getElementById("gDesc").value=g.description||"";
+  document.getElementById("gEnabled").checked=g.enabled!==false;
+  document.getElementById("groupModal").classList.add("show");
+}
+async function saveGroup(){
+  await api("/api/v1/keys/groups","POST",{
+    category:document.getElementById("gCategory").value,
+    platform_code:document.getElementById("gPlatform").value,
+    group_id:document.getElementById("gId").value.trim(),
+    name:document.getElementById("gName").value.trim(),
+    description:document.getElementById("gDesc").value.trim(),
+    enabled:document.getElementById("gEnabled").checked
+  });
+  closeModal("groupModal");showToast("分组已保存","success");await refreshAll();
+}
+
+async function fillKeyGroups(selected){
+  const choices=visibleGroups(true);
+  const rows=choices.length?choices:allGroups;
+  document.getElementById("kGroup").innerHTML=rows.map(g=>`<option value="${g.group_id}" ${g.group_id===selected?"selected":""}>${g.category}/${g.platform_code} — ${g.group_id}</option>`).join("");
+}
+async function openKeyModal(){document.getElementById("keyId").value="";document.getElementById("keyModalTitle").textContent="新增 Key";["kName","kApiKey","kModel","kBaseUrl","kDesc","kProxyUrl","kProxyUser","kProxyPass","qTokenTotal","qSecondsTotal","qRequestsTotal"].forEach(id=>document.getElementById(id).value="");document.getElementById("kWeight").value=10;document.getElementById("kPriority").value=0;document.getElementById("kCooldown").value=60;document.getElementById("kErrorThreshold").value=30;["proxyEnabled","qTokenEnabled","qSecondsEnabled","qRequestsEnabled"].forEach(id=>document.getElementById(id).checked=false);document.getElementById("proxyFields").style.display="none";await fillKeyGroups(document.getElementById("groupFilter").value);document.getElementById("keyModal").classList.add("show");}
+async function editKey(id){
+  const k=await api(`/api/v1/keys/${id}`);
+  await openKeyModal();
+  document.getElementById("keyModalTitle").textContent="编辑 Key";
+  document.getElementById("keyId").value=id;
+  await fillKeyGroups(k.group_id);
+  document.getElementById("kName").value=k.name||"";document.getElementById("kApiKey").value=k.api_key||"";document.getElementById("kModel").value=k.model||"";document.getElementById("kBaseUrl").value=k.base_url||"";document.getElementById("kDesc").value=k.description||"";document.getElementById("kWeight").value=k.weight??10;document.getElementById("kPriority").value=k.priority??0;document.getElementById("kCooldown").value=k.cooldown_seconds??60;document.getElementById("kErrorThreshold").value=k.error_threshold??30;
+  document.getElementById("proxyEnabled").checked=!!k.proxy_config?.enabled;document.getElementById("proxyFields").style.display=k.proxy_config?.enabled?"grid":"none";document.getElementById("kProxyUrl").value=k.proxy_config?.proxy_url||"";document.getElementById("kProxyUser").value=k.proxy_config?.username||"";document.getElementById("kProxyPass").value=k.proxy_config?.password||"";
+  document.getElementById("qTokenEnabled").checked=!!k.token_quota?.enabled;document.getElementById("qTokenTotal").value=k.token_quota?.total||"";
+  document.getElementById("qSecondsEnabled").checked=!!k.seconds_quota?.enabled;document.getElementById("qSecondsTotal").value=k.seconds_quota?.total||"";
+  document.getElementById("qRequestsEnabled").checked=!!k.requests_quota?.enabled;document.getElementById("qRequestsTotal").value=k.requests_quota?.total||"";
+}
+document.getElementById("proxyEnabled").addEventListener("change",e=>{document.getElementById("proxyFields").style.display=e.target.checked?"grid":"none";});
+async function saveKey(){
+  const id=document.getElementById("keyId").value;
+  const body={
+    group_id:document.getElementById("kGroup").value,
+    api_key:document.getElementById("kApiKey").value,
+    name:document.getElementById("kName").value,
+    description:document.getElementById("kDesc").value,
+    model:document.getElementById("kModel").value,
+    base_url:document.getElementById("kBaseUrl").value,
+    weight:parseInt(document.getElementById("kWeight").value)||10,
+    priority:parseInt(document.getElementById("kPriority").value)||0,
+    cooldown_seconds:parseInt(document.getElementById("kCooldown").value)||60,
+    error_threshold:parseInt(document.getElementById("kErrorThreshold").value)||30,
+    proxy_config:{enabled:document.getElementById("proxyEnabled").checked,proxy_url:document.getElementById("kProxyUrl").value,username:document.getElementById("kProxyUser").value,password:document.getElementById("kProxyPass").value},
+    token_quota:{enabled:document.getElementById("qTokenEnabled").checked,total:parseFloat(document.getElementById("qTokenTotal").value)||0,used:0},
+    seconds_quota:{enabled:document.getElementById("qSecondsEnabled").checked,total:parseFloat(document.getElementById("qSecondsTotal").value)||0,used:0},
+    requests_quota:{enabled:document.getElementById("qRequestsEnabled").checked,total:parseFloat(document.getElementById("qRequestsTotal").value)||0,used:0}
+  };
+  if(id) await api(`/api/v1/keys/${id}`,"PUT",body); else await api("/api/v1/keys","POST",body);
+  closeModal("keyModal");showToast("Key 已保存","success");await refreshAll();
+}
+async function deleteKey(id){if(!confirm("确认删除此 Key？"))return;await api(`/api/v1/keys/${id}`,"DELETE");showToast("已删除","success");await refreshAll();}
+async function quickStatus(id,status){let reason=status==="disabled"?prompt("禁用原因："):"手动恢复";if(status==="disabled"&&!reason)return;await api(`/api/v1/keys/${id}/reset`,"POST",{status,reason});showToast("状态已更新","success");await loadKeys(currentPage);}
+async function copyKey(id){const k=await api(`/api/v1/keys/${id}`);await navigator.clipboard.writeText(k.api_key);showToast("API Key 已复制","success");}
+
+refreshAll();
+</script>
+{% endblock %}

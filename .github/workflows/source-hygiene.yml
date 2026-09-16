@@ -1,0 +1,26 @@
+name: Source hygiene
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python scripts/check_public_repo.py
+      - name: Validate Python syntax
+        run: python -m compileall -q scripts lobster-input-backend/backend/app lobster-input-admin/backend/app lobster-input-api-manage/backend/app lobster-input-payment/app lobster-input-landing/backend/app
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.24.x'
+      - name: Install secret scanner
+        run: go install github.com/zricethezav/gitleaks/v8@v8.24.3
+      - name: Scan committed secrets
+        run: gitleaks git . --redact --no-banner

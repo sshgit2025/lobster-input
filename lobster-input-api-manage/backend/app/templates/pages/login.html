@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}登录 - API Pool Manager{% endblock %}
+{% block body %}
+<div class="login-wrap">
+  <div class="login-card">
+    <div class="login-logo">🔑</div>
+    <div class="login-title">API Pool Manager</div>
+    <form id="loginForm">
+      <div class="form-group">
+        <label class="form-label">用户名</label>
+        <input class="form-input" name="username" required autocomplete="username">
+      </div>
+      <div class="form-group">
+        <label class="form-label">密码</label>
+        <input class="form-input" name="password" type="password" required autocomplete="current-password">
+      </div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:8px" type="submit">登录</button>
+    </form>
+  </div>
+</div>
+<div id="toast-container"></div>
+{% endblock %}
+{% block scripts %}
+<script>
+document.getElementById('loginForm').addEventListener('submit', async(e)=>{
+  e.preventDefault();
+  const fd = new FormData(e.target);
+  const body = {username:fd.get('username'),password:fd.get('password')};
+  try {
+    const r = await fetch(`${__BASE_URL__}/api/v1/auth/login`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+    if(!r.ok){const d=await r.json();throw new Error(d.detail||'登录失败');}
+    location.href=`${__BASE_URL__}/dashboard`;
+  }catch(err){showToast(err.message,'error');}
+});
+</script>
+{% endblock %}

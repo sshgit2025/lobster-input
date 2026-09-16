@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+{% block title %}客户端日志 - Lobster Admin{% endblock %}
+{% block body %}
+<div class="layout">
+  {% include "partials/sidebar.html" %}
+  <main class="main">
+    <div class="page-title">📋 客户端日志</div>
+    <div class="card">
+      <div class="search-bar">
+        <input id="f-email" class="form-input" placeholder="邮箱筛选" style="max-width:220px">
+        <select id="f-level" class="form-select" style="max-width:120px">
+          <option value="">全部级别</option>
+          <option value="debug">debug</option>
+          <option value="info">info</option>
+          <option value="warn">warn</option>
+          <option value="error">error</option>
+          <option value="fatal">fatal</option>
+        </select>
+        <input id="f-tag" class="form-input" placeholder="Tag筛选（如 Permission）" style="max-width:180px">
+        <button class="btn btn-primary" onclick="loadLogs(1)">搜索</button>
+        <button class="btn btn-ghost" onclick="resetFilter()">重置</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th>时间</th><th>用户</th><th>版本</th><th>系统</th><th>级别</th><th>Tag</th><th>内容</th><th>操作</th>
+          </tr></thead>
+          <tbody id="log-tbody"></tbody>
+        </table>
+      </div>
+      <div class="pagination" id="log-pager"></div>
+    </div>
+  </main>
+</div>
+
+<div class="modal-overlay" id="detail-modal">
+  <div class="modal" style="max-width:640px">
+    <div class="modal-title">日志详情</div>
+    <div class="modal-body">
+      <pre id="detail-content" style="background:#1a1a2e;color:#e0e0e0;padding:16px;border-radius:8px;
+        overflow:auto;font-size:13px;white-space:pre-wrap;word-break:break-all"></pre>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('detail-modal')">关闭</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const base = "{{ base_url }}";
+let currentPage = 1;
+
+function getToken() {
+  const p = "{{ auth_cookie_name }}=";
+  return document.cookie.split(';').map(c=>c.trim()).find(c=>c.startsWith(p))?.slice(p.length) || '';
+}
+
+async function logApi(path, options = {}) {
+  const headers = Object.assign({'Authorization': 'Bearer ' + getToken()}, options.headers || {});
+  const r = await fetch(base + path, Object.assign({credentials: 'include', headers}, options));
+  const data = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(data.detail || r.status);
+  return data;
+}
+
+function escapeHtml(value) {
+  return String(value ?? '').replace(/[&<>"']/g, ch => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  }[ch]));
+}
+
+function levelBadge(level) {
+  const map = {debug:'#666', info:'#2196F3', warn:'#FF9800', error:'#F44336', fatal:'#B71C1C'};
+  const color = map[level] || '#888';
+  return `<span style="background:${color};color:#fff;padding:2px 8px;border-radius:4px;font-size:12px">${escapeHtml(level || '-')}</span>`;
+}
+
+async function loadLogs(page) {
+  currentPage = page;
+  const email = document.getElementById('f-email').value.trim();
+  const level = document.getElementById('f-level').value;
+  const tag   = document.getElementById('f-tag').value.trim();
+  let qs = `?page=${page}&page_size=50`;
+  if (email) qs += `&email=${encodeURIComponent(email)}`;
+  if (level) qs += `&level=${level}`;
+  if (tag)   qs += `&tag=${encodeURIComponent(tag)}`;
+
+  try {
+    const data = await logApi(`/api/v1/logs${qs}`);
+    const tbody = document.getElementById('log-tbody');
+    if (!data.items.length) {
+      tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#888">暂无日志</td></tr>';
+    } else {
+      tbody.innerHTML = data.items.map(item => {
+        const ts = item.created_at ? item.created_at.replace('T',' ').substring(0,19) : '-';
+        const msg = (item.message || '').substring(0, 60) + ((item.message||'').length > 60 ? '…' : '');
+        return `<tr>
+          <td style="white-space:nowrap;font-size:12px">${escapeHtml(ts)}</td>
+          <td style="font-size:12px">${escapeHtml(item.user_email || '-')}</td>
+          <td>${escapeHtml(item.app_version || '-')}</td>
+          <td style="font-size:12px">${escapeHtml(item.os_version || '-')}</td>
+          <td>${levelBadge(item.level)}</td>
+          <td><code style="font-size:12px">${escapeHtml(item.tag || '-')}</code></td>
+          <td style="max-width:300px;font-size:13px">${escapeHtml(msg)}</td>
+          <td style="white-space:nowrap">
+            <button class="btn btn-ghost" style="padding:2px 8px;font-size:12px"
+              onclick='showDetail(${JSON.stringify(JSON.stringify(item))})'>详情</button>
+            <button class="btn btn-ghost" style="padding:2px 8px;font-size:12px;color:var(--danger)"
+              onclick='deleteLog(${JSON.stringify(item.id || "")})'>删除</button>
+          </td>
+        </tr>`;
+      }).join('');
+    }
+    renderPager(data.total, data.page, data.page_size);
+  } catch(e) {
+    document.getElementById('log-tbody').innerHTML =
+      '<tr><td colspan="8" style="color:red">加载失败: ' + e.message + '</td></tr>';
+  }
+}
+
+function showDetail(jsonStr) {
+  const item = JSON.parse(jsonStr);
+  document.getElementById('detail-content').textContent = JSON.stringify(item, null, 2);
+  document.getElementById('detail-modal').classList.add('show');
+}
+
+async function deleteLog(id) {
+  if (!id) {
+    showToast('日志ID缺失，无法删除', 'error');
+    return;
+  }
+  if (!confirm('确认删除这条日志？')) return;
+  try {
+    await logApi(`/api/v1/logs/${encodeURIComponent(id)}`, {method: 'DELETE'});
+    showToast('日志已删除');
+    loadLogs(currentPage);
+  } catch(e) {
+    showToast('删除失败: ' + e.message, 'error');
+  }
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('show');
+}
+
+function resetFilter() {
+  document.getElementById('f-email').value = '';
+  document.getElementById('f-level').value = '';
+  document.getElementById('f-tag').value = '';
+  loadLogs(1);
+}
+
+function renderPager(total, page, pageSize) {
+  const pages = Math.ceil(total / pageSize);
+  const pager = document.getElementById('log-pager');
+  if (pages <= 1) { pager.innerHTML = `<span style="color:#888">共 ${total} 条</span>`; return; }
+  let html = `<span style="color:#888;margin-right:8px">共 ${total} 条</span>`;
+  if (page > 1) html += `<button class="btn btn-ghost" onclick="loadLogs(${page-1})">上一页</button>`;
+  html += `<span style="margin:0 8px">${page} / ${pages}</span>`;
+  if (page < pages) html += `<button class="btn btn-ghost" onclick="loadLogs(${page+1})">下一页</button>`;
+  pager.innerHTML = html;
+}
+
+loadLogs(1);
+</script>
+{% endblock %}

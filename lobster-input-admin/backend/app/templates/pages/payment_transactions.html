@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}交易流水 - Lobster Admin{% endblock %}
+{% block body %}
+<div class="layout">{% include "partials/sidebar.html" %}<main class="main">
+  <div class="page-title">交易流水</div>
+  <div class="card">
+    <div class="search-bar"><input id="email" class="form-input" placeholder="邮箱搜索" style="max-width:240px"><input id="provider" class="form-input" placeholder="provider" style="max-width:160px"><button class="btn btn-primary" onclick="loadRows(1)">搜索</button></div>
+    <div class="table-wrap"><table><thead><tr><th>事件 ID</th><th>类型</th><th>Provider</th><th>订单</th><th>渠道流水</th><th>创建时间</th></tr></thead><tbody id="rows"></tbody></table></div>
+    <div class="pagination" id="pager"></div>
+  </div>
+</main></div>
+{% endblock %}
+{% block scripts %}
+<script>
+let page=1;function esc(s){return String(s??"").replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));}function val(id){return document.getElementById(id)?.value.trim()||"";}
+async function loadRows(p){page=p||1;const q=new URLSearchParams({page,page_size:20});if(val("email"))q.set("email",val("email"));if(val("provider"))q.set("provider",val("provider"));const data=await api("GET",`/api/v1/payment-provider-config/transactions?${q}`);document.getElementById("rows").innerHTML=(data.items||[]).map(o=>`<tr><td><code>${esc(o.payment_event_id)}</code></td><td>${esc(o.event_type||o.type)}</td><td>${esc(o.provider)}</td><td>${esc(o.payment_order_id||"-")}</td><td>${esc(o.provider_payment_id||"-")}</td><td>${fmtTime(o.created_at)}</td></tr>`).join("");const pages=Math.ceil((data.total||0)/20)||1;document.getElementById("pager").innerHTML=`<span class="page-info">共 ${data.total||0} 条，第 ${page}/${pages} 页</span><button class="btn btn-ghost btn-sm" onclick="loadRows(${page-1})" ${page<=1?"disabled":""}>上一页</button><button class="btn btn-ghost btn-sm" onclick="loadRows(${page+1})" ${page>=pages?"disabled":""}>下一页</button>`;}
+loadRows(1).catch(e=>showToast(e.message,"error"));
+</script>
+{% endblock %}

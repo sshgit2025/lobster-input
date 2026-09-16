@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+{% block title %}协议管理 - Lobster Admin{% endblock %}
+{% block body %}
+<div class="layout">
+  {% include "partials/sidebar.html" %}
+  <main class="main">
+    <div class="page-title">📜 协议管理</div>
+
+    <div class="card">
+      <div class="card-title" style="display:flex;justify-content:space-between;align-items:center">
+        协议列表
+        <button class="btn btn-primary btn-sm" onclick="openEditor(null)">+ 新增协议</button>
+      </div>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:14px">
+        支持类型：<code>terms</code>（用户协议）、<code>privacy</code>（隐私政策）；
+        支持语言：zh / zh-Hant / yue / en / ru / ko
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>协议类型</th>
+              <th>语言</th>
+              <th>内容预览</th>
+              <th>最后更新</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody id="agreements-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="modal-overlay" id="agreement-modal">
+  <div class="modal modal-wide">
+    <div class="modal-title" id="agreement-modal-title">新增协议</div>
+
+    <div class="modal-body">
+      <div class="modal-grid" style="margin-bottom:14px">
+        <div class="form-group" style="margin:0">
+          <label class="form-label">协议类型</label>
+          <select id="agr-type" class="form-select">
+            <option value="terms">terms（用户协议）</option>
+            <option value="privacy">privacy（隐私政策）</option>
+          </select>
+        </div>
+        <div class="form-group" style="margin:0">
+          <label class="form-label">语言</label>
+          <select id="agr-lang" class="form-select">
+            <option value="zh">zh — 简体中文</option>
+            <option value="zh-Hant">zh-Hant — 繁體中文</option>
+            <option value="yue">yue — 粵語</option>
+            <option value="en">en — English</option>
+            <option value="ru">ru — Русский</option>
+            <option value="ko">ko — 한국어</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">协议内容（Markdown 格式）</label>
+        <div class="modal-split-pane">
+          <textarea id="agr-content" class="form-input"
+            style="min-height:320px;resize:vertical;font-family:monospace;font-size:13px;line-height:1.6"
+            placeholder="# 用户协议&#10;&#10;请在此输入 Markdown 格式协议内容..."
+            oninput="renderPreview()"></textarea>
+          <div id="agr-preview"
+            style="min-height:320px;border:1px solid var(--border);border-radius:6px;padding:14px;
+                   overflow-y:auto;font-size:13px;line-height:1.7;background:var(--bg-card)">
+            <span style="color:var(--text-muted);font-size:12px">预览区</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('agreement-modal')">取消</button>
+      <button class="btn btn-primary" onclick="doSaveAgreement()">保存</button>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let _editKey = null;
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove("show");
+}
+
+function openEditor(item) {
+  _editKey = item ? { type: item.type, lang: item.lang } : null;
+  document.getElementById("agreement-modal-title").textContent =
+    item ? `编辑协议 ${item.type}/${item.lang}` : "新增协议";
+  document.getElementById("agr-type").value = item ? item.type : "terms";
+  document.getElementById("agr-lang").value = item ? item.lang : "zh";
+  document.getElementById("agr-content").value = item ? item.content : "";
+  renderPreview();
+  document.getElementById("agreement-modal").classList.add("show");
+}
+
+function renderPreview() {
+  const md = document.getElementById("agr-content").value;
+  document.getElementById("agr-preview").innerHTML = simpleMarkdown(md);
+}
+
+function simpleMarkdown(md) {
+  return md
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+    .replace(/^### (.+)$/gm, '<h3 style="color:#4ade80;margin:10px 0 4px">$1</h3>')
+    .replace(/^## (.+)$/gm, '<h2 style="color:#22d3ee;margin:12px 0 6px">$1</h2>')
+    .replace(/^# (.+)$/gm, '<h1 style="color:#22d3ee;margin:14px 0 8px">$1</h1>')
+    .replace(/^---+$/gm, '<hr style="border-color:#333;margin:8px 0">')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em style="color:#aaa">$1</em>')
+    .replace(/`([^`]+)`/g, '<code style="background:#111;padding:2px 5px;border-radius:3px;color:#4ade80">$1</code>')
+    .replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" style="color:#22d3ee">$1</a>')
+    .replace(/\n/g, '<br>');
+}
+
+async function loadAgreements() {
+  try {
+    const data = await api("GET", "/api/v1/agreements");
+    const TYPE_LABEL = { terms: "用户协议", privacy: "隐私政策" };
+    const LANG_LABEL = {
+      zh: "简体中文", "zh-Hant": "繁體中文",
+      yue: "粵語", en: "English", ru: "Русский", ko: "한국어"
+    };
+    document.getElementById("agreements-tbody").innerHTML = data.length === 0
+      ? '<tr><td colspan="5" style="text-align:center;color:var(--text-muted)">暂无协议，点击右上角新增</td></tr>'
+      : data.map(a => `
+        <tr>
+          <td><span class="badge badge-info">${TYPE_LABEL[a.type]||a.type}</span></td>
+          <td>${LANG_LABEL[a.lang]||a.lang}</td>
+          <td style="max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text-muted);font-size:12px">
+            ${(a.content||"").substring(0,80).replace(/</g,"&lt;")}${(a.content||"").length>80?"…":""}
+          </td>
+          <td>${fmtTime(a.updated_at)}</td>
+          <td style="display:flex;gap:6px">
+            <button class="btn btn-ghost btn-sm" onclick="loadAndEdit('${a.type}','${a.lang}')">编辑</button>
+            <button class="btn btn-danger btn-sm" onclick="doDelete('${a.type}','${a.lang}')">删除</button>
+          </td>
+        </tr>`).join("");
+  } catch(e) { showToast(e.message, "error"); }
+}
+
+async function loadAndEdit(type, lang) {
+  try {
+    const data = await api("GET", `/api/v1/agreements/content?type=${encodeURIComponent(type)}&lang=${encodeURIComponent(lang)}`);
+    openEditor(data);
+  } catch(e) { showToast(e.message, "error"); }
+}
+
+async function doSaveAgreement() {
+  const type = document.getElementById("agr-type").value;
+  const lang = document.getElementById("agr-lang").value;
+  const content = document.getElementById("agr-content").value.trim();
+  if (!content) { showToast("协议内容不能为空", "error"); return; }
+  try {
+    await api("POST", "/api/v1/agreements", { type, lang, content });
+    showToast("保存成功");
+    closeModal("agreement-modal");
+    loadAgreements();
+  } catch(e) { showToast(e.message, "error"); }
+}
+
+async function doDelete(type, lang) {
+  if (!confirm(`确认删除协议 ${type}/${lang}？`)) return;
+  try {
+    await api("DELETE", `/api/v1/agreements/${encodeURIComponent(type)}/${encodeURIComponent(lang)}`);
+    showToast("已删除");
+    loadAgreements();
+  } catch(e) { showToast(e.message, "error"); }
+}
+
+loadAgreements();
+</script>
+{% endblock %}

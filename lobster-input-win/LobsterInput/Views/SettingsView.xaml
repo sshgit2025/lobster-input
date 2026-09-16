@@ -1,0 +1,717 @@
+﻿<UserControl x:Class="LobsterInput.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignWidth="600" d:DesignHeight="700"
+             Background="Transparent">
+
+    <UserControl.Resources>
+        <Style x:Key="SettingsSectionHeader" TargetType="StackPanel">
+            <Setter Property="Margin" Value="0,0,0,12"/>
+            <Setter Property="Orientation" Value="Horizontal"/>
+        </Style>
+        <Style x:Key="SettingsSectionIcon" TargetType="TextBlock">
+            <Setter Property="Width" Value="16"/>
+            <Setter Property="Margin" Value="0,0,6,0"/>
+            <Setter Property="FontFamily" Value="{DynamicResource IconFont}"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="{DynamicResource DsFgSubtleBrush}"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="SettingsSectionLabel" TargetType="TextBlock" BasedOn="{StaticResource DsSectionTitleStyle}">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="SettingsRowIcon" TargetType="TextBlock">
+            <Setter Property="Width" Value="16"/>
+            <Setter Property="FontFamily" Value="{DynamicResource IconFont}"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="{DynamicResource DsFgSubtleBrush}"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="SettingsTitleLine" TargetType="StackPanel">
+            <Setter Property="Orientation" Value="Horizontal"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="SettingsInlineIcon" TargetType="TextBlock" BasedOn="{StaticResource SettingsRowIcon}">
+            <Setter Property="Margin" Value="0,0,8,0"/>
+        </Style>
+        <Style x:Key="SettingsRowTitle" TargetType="TextBlock" BasedOn="{StaticResource DsBodyTextStyle}">
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="SettingsDivider" TargetType="Rectangle">
+            <Setter Property="Height" Value="1"/>
+            <Setter Property="Fill" Value="{DynamicResource DsLineBrush}"/>
+            <Setter Property="Margin" Value="18,0,0,0"/>
+        </Style>
+        <Style x:Key="SettingsCombo" TargetType="ComboBox" BasedOn="{StaticResource DsSelectComboBoxStyle}">
+            <Setter Property="Background" Value="{DynamicResource DsBgElevBrush}"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+        <Style x:Key="SettingsHotkeyButtonStyle" TargetType="Button" BasedOn="{StaticResource DsButtonGhostStyle}">
+            <Setter Property="Height" Value="28"/>
+            <Setter Property="MinWidth" Value="74"/>
+            <Setter Property="Padding" Value="8,0"/>
+            <Setter Property="Foreground" Value="{DynamicResource DsFgBrush}"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+        <Style x:Key="SettingsClearHotkeyButtonStyle" TargetType="Button" BasedOn="{StaticResource DsIconButtonStyle}">
+            <Setter Property="FontFamily" Value="{DynamicResource IconFont}"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="Foreground" Value="{DynamicResource DsFgMutedBrush}"/>
+        </Style>
+        <Style x:Key="SettingsDetailButtonStyle" TargetType="Button" BasedOn="{StaticResource DsButtonDefaultStyle}">
+            <Setter Property="Height" Value="28"/>
+            <Setter Property="MinWidth" Value="88"/>
+            <Setter Property="Padding" Value="10,0"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="{DynamicResource DsFgMutedBrush}"/>
+            <Setter Property="Background" Value="{DynamicResource DsBgElevBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource DsLineBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+        <DataTemplate x:Key="CreditItemTemplate">
+            <Grid Margin="0,8,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="86"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding Name}"
+                                   Style="{DynamicResource DsCaptionTextStyle}"
+                                   Foreground="{DynamicResource DsFgBrush}"
+                                   FontWeight="Medium"/>
+                        <TextBlock Grid.Column="1"
+                                   Text="{Binding BalanceText}"
+                                   Style="{DynamicResource DsCaptionTextStyle}"
+                                   Foreground="{DynamicResource DsFgMutedBrush}"/>
+                    </Grid>
+                    <Grid x:Name="CreditItemProgress"
+                          Height="5"
+                          ClipToBounds="True"
+                          SnapsToDevicePixels="True"
+                          Margin="0,6,0,0">
+                        <Border Background="{DynamicResource DsBgSunkenBrush}"
+                                CornerRadius="3"/>
+                        <Border Width="{Binding ActualWidth, ElementName=CreditItemProgress}"
+                                HorizontalAlignment="Left"
+                                Background="{DynamicResource DsAccentBrush}"
+                                CornerRadius="3"
+                                RenderTransformOrigin="0,0.5">
+                            <Border.RenderTransform>
+                                <ScaleTransform ScaleX="{Binding ProgressScale, Mode=OneWay}"/>
+                            </Border.RenderTransform>
+                        </Border>
+                    </Grid>
+                    <TextBlock Text="{Binding ExpiryText}"
+                               Style="{DynamicResource DsCaptionTextStyle}"
+                               Foreground="{DynamicResource DsFgSubtleBrush}"
+                               Margin="0,4,0,0"/>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+        <Style x:Key="AccentSwatchButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="32"/>
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource DsLineBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontFamily" Value="{StaticResource IconFont}"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Ring"
+                                Width="{TemplateBinding Width}"
+                                Height="{TemplateBinding Height}"
+                                Background="Transparent"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{StaticResource RadiusPill}"
+                                Padding="3">
+                            <Border x:Name="Swatch"
+                                    Background="{TemplateBinding Background}"
+                                    CornerRadius="{StaticResource RadiusPill}">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"/>
+                            </Border>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Ring" Property="BorderBrush" Value="{DynamicResource DsAccentRingBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="Ring" Property="BorderBrush" Value="{DynamicResource DsAccentBrush}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Margin="{StaticResource MainPageHeaderMargin}">
+            <TextBlock x:Name="SettingsPageTitle"
+                       Style="{DynamicResource DsPageTitleTextStyle}"
+                       VerticalAlignment="Top"
+                       Margin="{StaticResource MainPageTitleTopMargin}" />
+        </Grid>
+
+        <ScrollViewer Grid.Row="1"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled"
+                      Style="{DynamicResource DsScrollViewerStyle}">
+            <StackPanel Margin="{StaticResource MainPageContentMargin}"
+                        Width="{StaticResource MainPageCompactContentWidth}"
+                        HorizontalAlignment="Center">
+
+                <!-- Account Credits -->
+                <StackPanel Style="{StaticResource SettingsSectionHeader}">
+                    <TextBlock Text="&#xE8C7;" Style="{StaticResource SettingsSectionIcon}"/>
+                    <TextBlock x:Name="CreditsSectionLabel" Style="{StaticResource SettingsSectionLabel}"/>
+                </StackPanel>
+                <Border Style="{DynamicResource DsCardStyle}" Padding="18,14" Margin="0,0,0,28">
+                    <StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <StackPanel Style="{StaticResource SettingsTitleLine}">
+                                    <TextBlock Text="&#xE8D7;" Style="{StaticResource SettingsInlineIcon}"/>
+                                    <TextBlock x:Name="PlanNameText" Style="{StaticResource SettingsRowTitle}"/>
+                                </StackPanel>
+                                <TextBlock x:Name="CreditsUsedText" Style="{DynamicResource DsCaptionTextStyle}" Margin="0,2,0,0"/>
+                            </StackPanel>
+                            <TextBlock x:Name="CreditsRemainingText"
+                                       Grid.Column="1"
+                                       Style="{DynamicResource DsBodyTextStyle}"
+                                       FontWeight="SemiBold"
+                                       VerticalAlignment="Center"/>
+                        </Grid>
+                        <Grid x:Name="CreditsProgress"
+                              Height="8"
+                              Margin="0,12,0,8"
+                              ClipToBounds="True">
+                            <Border Background="{DynamicResource DsBgSunkenBrush}"
+                                    CornerRadius="4"/>
+                            <Border x:Name="CreditsProgressFill"
+                                    Width="{Binding ActualWidth, ElementName=CreditsProgress}"
+                                    HorizontalAlignment="Left"
+                                    Background="{DynamicResource DsAccentBrush}"
+                                    CornerRadius="4"
+                                    RenderTransformOrigin="0,0.5">
+                                <Border.RenderTransform>
+                                    <ScaleTransform x:Name="CreditsProgressScale" ScaleX="0"/>
+                                </Border.RenderTransform>
+                            </Border>
+                        </Grid>
+                        <Grid Margin="0,4,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock x:Name="CreditsResetText"
+                                       Style="{DynamicResource DsCaptionTextStyle}"
+                                       Foreground="{DynamicResource DsFgSubtleBrush}"
+                                       VerticalAlignment="Center"/>
+                            <Button x:Name="CreditDetailsToggleBtn"
+                                    Grid.Column="1"
+                                    Style="{StaticResource SettingsDetailButtonStyle}"
+                                    Click="OnCreditDetailsToggleClick"/>
+                        </Grid>
+                        <StackPanel x:Name="CreditDetailsPanel"
+                                    Visibility="Collapsed"
+                                    Margin="0,10,0,0">
+                            <Border Height="1"
+                                    Background="{DynamicResource DsLineBrush}"
+                                    Margin="0,0,0,2"/>
+                            <ItemsControl x:Name="CreditItemsList"
+                                          ItemTemplate="{StaticResource CreditItemTemplate}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Subscription -->
+                <StackPanel x:Name="SubscriptionSectionHeader" Style="{StaticResource SettingsSectionHeader}">
+                    <TextBlock Text="&#xE8C7;" Style="{StaticResource SettingsSectionIcon}"/>
+                    <TextBlock x:Name="SubscriptionSectionLabel" Style="{StaticResource SettingsSectionLabel}"/>
+                </StackPanel>
+                <Border x:Name="SubscriptionEntryCard"
+                        Padding="18,14"
+                        Margin="0,0,0,28"
+                        Cursor="Hand"
+                        Focusable="True"
+                        KeyDown="OnSubscriptionRowKeyDown"
+                        MouseLeftButtonUp="OnSubscriptionRowClick">
+                    <Border.Style>
+                        <Style TargetType="Border" BasedOn="{StaticResource DsCardStyle}">
+                            <Style.Triggers>
+                                <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                    <Setter Property="BorderBrush" Value="{DynamicResource DsAccentRingBrush}" />
+                                    <Setter Property="BorderThickness" Value="2" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel VerticalAlignment="Center">
+                            <StackPanel Style="{StaticResource SettingsTitleLine}">
+                                <TextBlock Text="&#xE8D7;" Style="{StaticResource SettingsInlineIcon}"/>
+                                <TextBlock x:Name="SubscriptionEntryTitle" Style="{StaticResource SettingsRowTitle}"/>
+                            </StackPanel>
+                            <TextBlock x:Name="SubscriptionEntryDesc" Style="{DynamicResource DsCaptionTextStyle}" TextWrapping="Wrap" Margin="0,2,0,0"/>
+                        </StackPanel>
+                        <TextBlock Grid.Column="1" Text="&#xE76C;" Style="{StaticResource SettingsRowIcon}"/>
+                    </Grid>
+                </Border>
+
+                <!-- Appearance -->
+                <StackPanel Style="{StaticResource SettingsSectionHeader}">
+                    <TextBlock Text="&#xE713;" Style="{StaticResource SettingsSectionIcon}"/>
+                    <TextBlock x:Name="ThemeSectionLabel" Style="{StaticResource SettingsSectionLabel}"/>
+                </StackPanel>
+                <Border Style="{StaticResource DsCardStyle}" Padding="18,6" Margin="0,0,0,28">
+                    <StackPanel>
+                        <Grid Margin="0,8,0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel VerticalAlignment="Center">
+                                <StackPanel Style="{StaticResource SettingsTitleLine}">
+                                    <TextBlock Text="&#xE790;" Style="{StaticResource SettingsInlineIcon}"/>
+                                    <TextBlock x:Name="ThemeTitle" Style="{StaticResource SettingsRowTitle}"/>
+                                </StackPanel>
+                                <TextBlock x:Name="ThemeDesc"
+                                           Style="{DynamicResource DsCaptionTextStyle}"
+                                           TextWrapping="Wrap"
+                                           Margin="0,2,0,0"/>
+                            </StackPanel>
+                            <CheckBox x:Name="ThemeToggle"
+                                      Grid.Column="1"
+                                      Style="{StaticResource DsToggleCheckBoxStyle}"
+                                      VerticalAlignment="Center"
+                                      Checked="OnThemeToggleChanged"
+                                      Unchecked="OnThemeToggleChanged"/>
+                        </Grid>
+                        <Rectangle Style="{StaticResource SettingsDivider}" Margin="0"/>
+                        <Grid Margin="0,10,0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel VerticalAlignment="Center">
+                                <StackPanel Style="{StaticResource SettingsTitleLine}">
+                                    <TextBlock Text="&#xE771;" Style="{StaticResource SettingsInlineIcon}"/>
+                                    <TextBlock x:Name="AccentTitle" Style="{StaticResource SettingsRowTitle}"/>
+                                </StackPanel>
+                                <TextBlock x:Name="AccentDesc"
+                                           Style="{DynamicResource DsCaptionTextStyle}"
+                                           TextWrapping="Wrap"
+                                           Margin="0,2,0,0"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                <Button x:Name="AccentSandBtn" Style="{StaticResource AccentSwatchButtonStyle}" Tag="Sand" Margin="6,0,0,0" ToolTip="Sand" Click="OnAccentClick"/>
+                                <Button x:Name="AccentMonoBtn" Style="{StaticResource AccentSwatchButtonStyle}" Tag="Mono" Margin="6,0,0,0" ToolTip="Mono" Click="OnAccentClick"/>
+                                <Button x:Name="AccentBlueBtn" Style="{StaticResource AccentSwatchButtonStyle}" Tag="Blue" Margin="6,0,0,0" ToolTip="Blue" Click="OnAccentClick"/>
+                                <Button x:Name="AccentOrangeBtn" Style="{StaticResource AccentSwatchButtonStyle}" Tag="Orange" Margin="6,0,0,0" ToolTip="Orange" Click="OnAccentClick"/>
+                                <Button x:Name="AccentRedBtn" Style="{StaticResource AccentSwatchButtonStyle}" Tag="Red" Margin="6,0,0,0" ToolTip="Red" Click="OnAccentClick"/>
+                                <Button x:Name="AccentGreenBtn" Style="{StaticResource AccentSwatchButtonStyle}" Tag="Green" Margin="6,0,0,0" ToolTip="Green" Click="OnAccentClick"/>
+                                <Button x:Name="AccentPurpleBtn" Style="{StaticResource AccentSwatchButtonStyle}" Tag="Purple" Margin="6,0,0,0" ToolTip="Purple" Click="OnAccentClick"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Microphone -->
+                <StackPanel Style="{StaticResource SettingsSectionHeader}">
+                    <TextBlock Text="&#xE8B7;" Style="{StaticResource SettingsSectionIcon}"/>
+                    <TextBlock x:Name="MicrophoneSectionLabel" Style="{StaticResource SettingsSectionLabel}"/>
+                </StackPanel>
+                <Border Style="{DynamicResource DsCardStyle}" Padding="0" Margin="0,0,0,28">
+                    <StackPanel>
+                        <Grid Margin="18,14">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel VerticalAlignment="Center">
+                                <StackPanel Style="{StaticResource SettingsTitleLine}">
+                                    <TextBlock Text="&#xE720;" Style="{StaticResource SettingsInlineIcon}"/>
+                                    <TextBlock x:Name="MicrophoneTitle" Style="{StaticResource SettingsRowTitle}"/>
+                                </StackPanel>
+                                <TextBlock x:Name="MicrophoneDesc"
+                                           Style="{DynamicResource DsCaptionTextStyle}"
+                                           TextWrapping="Wrap"
+                                           Margin="0,2,0,0"/>
+                            </StackPanel>
+                            <ComboBox x:Name="MicrophoneCombo"
+                                      Grid.Column="1"
+                                      Style="{StaticResource SettingsCombo}"
+                                      Width="200"
+                                      SelectionChanged="OnMicrophoneChanged"/>
+                        </Grid>
+                        <Rectangle Style="{StaticResource SettingsDivider}"/>
+                        <Grid Margin="18,14">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel VerticalAlignment="Center">
+                                <StackPanel Style="{StaticResource SettingsTitleLine}">
+                                    <TextBlock Text="&#xE945;" Style="{StaticResource SettingsInlineIcon}"/>
+                                    <TextBlock x:Name="FastModeTitle" Style="{StaticResource SettingsRowTitle}"/>
+                                </StackPanel>
+                                <TextBlock x:Name="FastModeDesc" Style="{DynamicResource DsCaptionTextStyle}" TextWrapping="Wrap" Margin="0,2,0,0"/>
+                            </StackPanel>
+                            <CheckBox x:Name="FastModeToggle" Grid.Column="1" Style="{StaticResource DsToggleCheckBoxStyle}" VerticalAlignment="Center" Checked="OnFastModeToggleChanged" Unchecked="OnFastModeToggleChanged"/>
+                        </Grid>
+                        <Rectangle Style="{StaticResource SettingsDivider}"/>
+                        <Grid Margin="18,14">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel VerticalAlignment="Center">
+                                <StackPanel Style="{StaticResource SettingsTitleLine}">
+                                    <TextBlock Text="&#xE995;" Style="{StaticResource SettingsInlineIcon}"/>
+                                    <TextBlock x:Name="RealtimeRecognitionTitle" Style="{StaticResource SettingsRowTitle}"/>
+                                </StackPanel>
+                                <TextBlock x:Name="RealtimeRecognitionDesc" Style="{DynamicResource DsCaptionTextStyle}" TextWrapping="Wrap" Margin="0,2,0,0"/>
+                            </StackPanel>
+                            <CheckBox x:Name="RealtimeRecognitionToggle" Grid.Column="1" Style="{StaticResource DsToggleCheckBoxStyle}" VerticalAlignment="Center" Checked="OnRealtimeRecognitionToggleChanged" Unchecked="OnRealtimeRecognitionToggleChanged"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Hotkeys -->
+                <StackPanel Style="{StaticResource SettingsSectionHeader}" Height="16">
+                    <TextBlock Text="&#xE765;" Style="{StaticResource SettingsSectionIcon}"/>
+                    <TextBlock x:Name="HotkeySectionLabel" Style="{StaticResource SettingsSectionLabel}"/>
+                    <TextBlock x:Name="RecordingHint"
+                               FontSize="{StaticResource FontSizeSectionTitle}"
+                               FontFamily="{DynamicResource AppFont}"
+                               FontWeight="Medium"
+                               Foreground="{DynamicResource DsAccentBrush}"
+                               Margin="14,0,0,0"
+                               VerticalAlignment="Center"
+                               LineHeight="14"
+                               MaxWidth="360"
+                               TextTrimming="CharacterEllipsis"
+                               TextWrapping="NoWrap"
+                               Visibility="Hidden"/>
+                </StackPanel>
+                <Border Style="{DynamicResource DsCardStyle}" Padding="0" Margin="0,0,0,28">
+                    <StackPanel>
+                        <Grid Margin="18,14">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <StackPanel Style="{StaticResource SettingsTitleLine}">
+                                    <TextBlock Text="&#xE720;" Style="{StaticResource SettingsInlineIcon}"/>
+                                    <TextBlock x:Name="HkTranscribeTitle" Style="{StaticResource SettingsRowTitle}"/>
+                                </StackPanel>
+                                <TextBlock x:Name="HkTranscribeDesc" Style="{DynamicResource DsCaptionTextStyle}" Margin="0,2,0,0"/>
+                            </StackPanel>
+                            <Button x:Name="HkTranscribeBtn" Grid.Column="1" Style="{StaticResource SettingsHotkeyButtonStyle}" Click="OnTranscribeHotkeyClick"/>
+                            <Button x:Name="HkTranscribeClearBtn" Grid.Column="2" Style="{StaticResource SettingsClearHotkeyButtonStyle}" Margin="6,0,0,0" Click="OnTranscribeHotkeyClearClick"/>
+                        </Grid>
+                        <Rectangle Style="{StaticResource SettingsDivider}"/>
+                        <Grid Margin="18,14">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <StackPanel Style="{StaticResource SettingsTitleLine}">
+                                    <TextBlock Text="&#xE70F;" Style="{StaticResource SettingsInlineIcon}"/>
+                                    <TextBlock x:Name="HkRewriteTitle" Style="{StaticResource SettingsRowTitle}"/>
+                                </StackPanel>
+                                <TextBlock x:Name="HkRewriteDesc" Style="{DynamicResource DsCaptionTextStyle}" Margin="0,2,0,0"/>
+                            </StackPanel>
+                            <Button x:Name="HkRewriteBtn" Grid.Column="1" Style="{StaticResource SettingsHotkeyButtonStyle}" Click="OnRewriteHotkeyClick"/>
+                            <Button x:Name="HkRewriteClearBtn" Grid.Column="2" Style="{StaticResource SettingsClearHotkeyButtonStyle}" Margin="6,0,0,0" Click="OnRewriteHotkeyClearClick"/>
+                        </Grid>
+                        <Rectangle Style="{StaticResource SettingsDivider}"/>
+                        <Grid Margin="18,14">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <StackPanel Style="{StaticResource SettingsTitleLine}">
+                                    <TextBlock Text="&#xE9D9;" Style="{StaticResource SettingsInlineIcon}"/>
+                                    <TextBlock x:Name="HkAgentTitle" Style="{StaticResource SettingsRowTitle}"/>
+                                </StackPanel>
+                                <TextBlock x:Name="HkAgentDesc" Style="{DynamicResource DsCaptionTextStyle}" Margin="0,2,0,0"/>
+                            </StackPanel>
+                            <Button x:Name="HkAgentBtn" Grid.Column="1" Style="{StaticResource SettingsHotkeyButtonStyle}" Click="OnAgentHotkeyClick"/>
+                            <Button x:Name="HkAgentClearBtn" Grid.Column="2" Style="{StaticResource SettingsClearHotkeyButtonStyle}" Margin="6,0,0,0" Click="OnAgentHotkeyClearClick"/>
+                        </Grid>
+                        <Rectangle Style="{StaticResource SettingsDivider}"/>
+                        <Grid Margin="18,14">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <StackPanel Style="{StaticResource SettingsTitleLine}">
+                                    <TextBlock Text="&#xE722;" Style="{StaticResource SettingsInlineIcon}"/>
+                                    <TextBlock x:Name="HkScreenshotTitle" Style="{StaticResource SettingsRowTitle}"/>
+                                </StackPanel>
+                                <TextBlock x:Name="HkScreenshotDesc" Style="{DynamicResource DsCaptionTextStyle}" Margin="0,2,0,0"/>
+                            </StackPanel>
+                            <Button x:Name="HkScreenshotBtn" Grid.Column="1" Style="{StaticResource SettingsHotkeyButtonStyle}" Click="OnScreenshotHotkeyClick"/>
+                            <Button x:Name="HkScreenshotClearBtn" Grid.Column="2" Style="{StaticResource SettingsClearHotkeyButtonStyle}" Margin="6,0,0,0" Click="OnScreenshotHotkeyClearClick"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+                <!-- Screenshot -->
+                <StackPanel Style="{StaticResource SettingsSectionHeader}">
+                    <TextBlock Text="&#xE722;" Style="{StaticResource SettingsSectionIcon}"/>
+                    <TextBlock x:Name="ScreenshotSectionLabel" Style="{StaticResource SettingsSectionLabel}"/>
+                </StackPanel>
+                <Border Style="{DynamicResource DsCardStyle}" Padding="18,14" Margin="0,0,0,28">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel VerticalAlignment="Center">
+                            <StackPanel Style="{StaticResource SettingsTitleLine}">
+                                <TextBlock Text="&#xE722;" Style="{StaticResource SettingsInlineIcon}"/>
+                                <TextBlock x:Name="ScreenshotConfirmTitle" Style="{StaticResource SettingsRowTitle}"/>
+                            </StackPanel>
+                            <TextBlock x:Name="ScreenshotConfirmDesc" Style="{DynamicResource DsCaptionTextStyle}" TextWrapping="Wrap" Margin="0,2,0,0"/>
+                        </StackPanel>
+                        <CheckBox x:Name="ScreenshotConfirmToggle" Grid.Column="1" Style="{StaticResource DsToggleCheckBoxStyle}" VerticalAlignment="Center" Checked="OnScreenshotConfirmToggleChanged" Unchecked="OnScreenshotConfirmToggleChanged"/>
+                    </Grid>
+                </Border>
+                <Border Style="{DynamicResource DsCardStyle}" Padding="18,14" Margin="0,0,0,28">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel VerticalAlignment="Center">
+                            <StackPanel Style="{StaticResource SettingsTitleLine}">
+                                <TextBlock Text="&#xE722;" Style="{StaticResource SettingsInlineIcon}"/>
+                                <TextBlock x:Name="LongImageModeTitle" Style="{StaticResource SettingsRowTitle}"/>
+                            </StackPanel>
+                            <TextBlock x:Name="LongImageModeDesc" Style="{DynamicResource DsCaptionTextStyle}" TextWrapping="Wrap" Margin="0,2,0,0"/>
+                        </StackPanel>
+                        <CheckBox x:Name="LongImageModeToggle" Grid.Column="1" Style="{StaticResource DsToggleCheckBoxStyle}" VerticalAlignment="Center" Checked="OnLongImageModeToggleChanged" Unchecked="OnLongImageModeToggleChanged"/>
+                    </Grid>
+                </Border>
+                <!-- Privacy -->
+                <StackPanel Style="{StaticResource SettingsSectionHeader}">
+                    <TextBlock Text="&#xE72E;" Style="{StaticResource SettingsSectionIcon}"/>
+                    <TextBlock x:Name="PrivacySectionLabel" Style="{StaticResource SettingsSectionLabel}"/>
+                </StackPanel>
+                <Border Style="{DynamicResource DsCardStyle}" Padding="18,14" Margin="0,0,0,28">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel VerticalAlignment="Center">
+                            <StackPanel Style="{StaticResource SettingsTitleLine}">
+                                <TextBlock Text="&#xE8C8;" Style="{StaticResource SettingsInlineIcon}"/>
+                                <TextBlock x:Name="ClipboardTitle" Style="{StaticResource SettingsRowTitle}"/>
+                            </StackPanel>
+                            <TextBlock x:Name="ClipboardDesc" Style="{DynamicResource DsCaptionTextStyle}" TextWrapping="Wrap" Margin="0,2,0,0"/>
+                        </StackPanel>
+                        <CheckBox x:Name="ClipboardToggle" Grid.Column="1" Style="{StaticResource DsToggleCheckBoxStyle}" VerticalAlignment="Center" Checked="OnClipboardToggleChanged" Unchecked="OnClipboardToggleChanged"/>
+                    </Grid>
+                </Border>
+
+                <!-- Tutorial -->
+                <StackPanel Style="{StaticResource SettingsSectionHeader}">
+                    <TextBlock Text="&#xE7BE;" Style="{StaticResource SettingsSectionIcon}"/>
+                    <TextBlock x:Name="TutorialSectionLabel" Style="{StaticResource SettingsSectionLabel}"/>
+                </StackPanel>
+                <Border Padding="18,14"
+                        Margin="0,0,0,28"
+                        Cursor="Hand"
+                        Focusable="True"
+                        KeyDown="OnTutorialRowKeyDown"
+                        MouseLeftButtonUp="OnTutorialRowClick">
+                    <Border.Style>
+                        <Style TargetType="Border" BasedOn="{StaticResource DsCardStyle}">
+                            <Style.Triggers>
+                                <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                    <Setter Property="BorderBrush" Value="{DynamicResource DsAccentRingBrush}" />
+                                    <Setter Property="BorderThickness" Value="2" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel VerticalAlignment="Center">
+                            <StackPanel Style="{StaticResource SettingsTitleLine}">
+                                <TextBlock Text="&#xE768;" Style="{StaticResource SettingsInlineIcon}"/>
+                                <TextBlock x:Name="TutorialReplayTitle" Style="{StaticResource SettingsRowTitle}"/>
+                            </StackPanel>
+                            <TextBlock x:Name="TutorialReplayDesc" Style="{DynamicResource DsCaptionTextStyle}" TextWrapping="Wrap" Margin="0,2,0,0"/>
+                        </StackPanel>
+                        <TextBlock Grid.Column="1" Text="&#xE76C;" Style="{StaticResource SettingsRowIcon}"/>
+                    </Grid>
+                </Border>
+
+                <!-- Feedback -->
+                <StackPanel Style="{StaticResource SettingsSectionHeader}">
+                    <TextBlock Text="&#xE8BD;" Style="{StaticResource SettingsSectionIcon}"/>
+                    <TextBlock x:Name="FeedbackSectionLabel" Style="{StaticResource SettingsSectionLabel}"/>
+                </StackPanel>
+                <Border Padding="18,14"
+                        Margin="0,0,0,28"
+                        Cursor="Hand"
+                        Focusable="True"
+                        KeyDown="OnFeedbackRowKeyDown"
+                        MouseLeftButtonUp="OnFeedbackRowClick">
+                    <Border.Style>
+                        <Style TargetType="Border" BasedOn="{StaticResource DsCardStyle}">
+                            <Style.Triggers>
+                                <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                    <Setter Property="BorderBrush" Value="{DynamicResource DsAccentRingBrush}" />
+                                    <Setter Property="BorderThickness" Value="2" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel VerticalAlignment="Center">
+                            <StackPanel Style="{StaticResource SettingsTitleLine}">
+                                <TextBlock Text="&#xE8F2;" Style="{StaticResource SettingsInlineIcon}"/>
+                                <TextBlock x:Name="FeedbackTitle" Style="{StaticResource SettingsRowTitle}"/>
+                            </StackPanel>
+                            <TextBlock x:Name="FeedbackDesc" Style="{DynamicResource DsCaptionTextStyle}" TextWrapping="Wrap" Margin="0,2,0,0"/>
+                        </StackPanel>
+                        <TextBlock Grid.Column="1" Text="&#xE76C;" Style="{StaticResource SettingsRowIcon}"/>
+                    </Grid>
+                </Border>
+
+                <!-- Language -->
+                <StackPanel Style="{StaticResource SettingsSectionHeader}">
+                    <TextBlock Text="&#xE909;" Style="{StaticResource SettingsSectionIcon}"/>
+                    <TextBlock x:Name="LanguageLabel" Style="{StaticResource SettingsSectionLabel}"/>
+                </StackPanel>
+                <Border Style="{DynamicResource DsCardStyle}" Padding="18,14" Margin="0,0,0,28">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel VerticalAlignment="Center">
+                            <StackPanel Style="{StaticResource SettingsTitleLine}">
+                                <TextBlock Text="&#xE774;" Style="{StaticResource SettingsInlineIcon}"/>
+                                <TextBlock x:Name="LanguageTitle" Style="{StaticResource SettingsRowTitle}"/>
+                            </StackPanel>
+                            <TextBlock x:Name="LanguageCurrentText" Style="{DynamicResource DsCaptionTextStyle}" Margin="0,2,0,0"/>
+                        </StackPanel>
+                        <ComboBox x:Name="LanguageCombo"
+                                  Grid.Column="1"
+                                  Style="{StaticResource SettingsCombo}"
+                                  Width="160"
+                                  SelectionChanged="OnLanguageChanged"/>
+                    </Grid>
+                </Border>
+
+                <!-- Software Update -->
+                <StackPanel Style="{StaticResource SettingsSectionHeader}">
+                    <TextBlock Text="&#xE777;" Style="{StaticResource SettingsSectionIcon}"/>
+                    <TextBlock x:Name="SoftwareUpdateSectionLabel" Style="{StaticResource SettingsSectionLabel}"/>
+                </StackPanel>
+                <Border Style="{DynamicResource DsCardStyle}" Padding="18,14" Margin="0,0,0,28">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel VerticalAlignment="Center">
+                            <StackPanel Style="{StaticResource SettingsTitleLine}">
+                                <TextBlock Text="&#xE895;" Style="{StaticResource SettingsInlineIcon}"/>
+                                <TextBlock x:Name="SoftwareUpdateTitle" Style="{StaticResource SettingsRowTitle}"/>
+                            </StackPanel>
+                            <TextBlock x:Name="VersionText" Style="{DynamicResource DsCaptionTextStyle}" Margin="0,2,0,0"/>
+                        </StackPanel>
+                        <Button x:Name="CheckUpdateBtn"
+                                Grid.Column="1"
+                                Style="{DynamicResource DsButtonDefaultStyle}"
+                                Padding="14,8"
+                                VerticalAlignment="Center"
+                                Click="OnCheckUpdateClick"/>
+                    </Grid>
+                </Border>
+
+                <!-- Windows-only options kept after the Mac-aligned settings surface. -->
+                <StackPanel Style="{StaticResource SettingsSectionHeader}">
+                    <TextBlock Text="&#xE7C3;" Style="{StaticResource SettingsSectionIcon}"/>
+                    <TextBlock x:Name="WindowsOptionsSectionLabel" Style="{StaticResource SettingsSectionLabel}"/>
+                </StackPanel>
+                <Border Style="{DynamicResource DsCardStyle}" Padding="18,14" Margin="0,0,0,20">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <StackPanel Style="{StaticResource SettingsTitleLine}">
+                                <TextBlock Text="&#xE7B8;" Style="{StaticResource SettingsInlineIcon}"/>
+                                <TextBlock x:Name="StartupLaunchTitle" Style="{StaticResource SettingsRowTitle}"/>
+                            </StackPanel>
+                            <TextBlock x:Name="StartupLaunchDesc" Style="{DynamicResource DsCaptionTextStyle}" TextWrapping="Wrap" Margin="0,2,0,0"/>
+                        </StackPanel>
+                        <CheckBox x:Name="StartupLaunchToggle" Grid.Column="1" Style="{StaticResource DsToggleCheckBoxStyle}" VerticalAlignment="Center" Checked="OnStartupLaunchToggleChanged" Unchecked="OnStartupLaunchToggleChanged"/>
+                    </Grid>
+                </Border>
+
+                <Button x:Name="InviteCodesBtn"
+                        Style="{DynamicResource DsButtonPrimaryStyle}"
+                        Padding="14,8"
+                        HorizontalAlignment="Left"
+                        Click="OnInviteCodesClick"
+                        Visibility="Collapsed"/>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

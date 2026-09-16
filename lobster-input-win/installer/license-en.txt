@@ -1,0 +1,10 @@
+Lobster Input — Open-source distribution notice
+
+Original project code is provided under the MIT License included in the source repository. Third-party components retain their own licenses. Installation does not waive the rights granted by those licenses.
+
+Website: https://lobster-input.com
+Repository: https://github.com/sshgit2025/lobster-input
+
+Hosted services may have separate terms, pricing, and privacy notices supplied by their operator. Review the actual notices before connecting to such services. Depending on enabled features, audio, text, clipboard content, screenshots, device information, and diagnostics may be processed locally or sent to configured servers and providers.
+
+Redistributors must supply the applicable licenses and their own accurate service and privacy notices. This document is not a substitute for an operator's completed notice.

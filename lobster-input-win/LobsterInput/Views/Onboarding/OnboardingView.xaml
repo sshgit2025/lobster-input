@@ -1,0 +1,680 @@
+﻿<UserControl x:Class="LobsterInput.Views.Onboarding.OnboardingView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:LobsterInput.ViewModels">
+
+    <UserControl.DataContext>
+        <vm:OnboardingViewModel />
+    </UserControl.DataContext>
+
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        <Style x:Key="OnboardingTextArea" TargetType="TextBox"
+               BasedOn="{StaticResource DsInputTextBoxStyle}">
+            <Setter Property="AcceptsReturn" Value="True" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Height" Value="132" />
+            <Setter Property="MinHeight" Value="132" />
+            <Setter Property="Padding" Value="16,12" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="VerticalContentAlignment" Value="Top" />
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+            <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
+        </Style>
+        <Style x:Key="OnboardingSelectableTextArea" TargetType="TextBox"
+               BasedOn="{StaticResource OnboardingTextArea}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Foreground" Value="{DynamicResource DsAccentBrush}" />
+            <Setter Property="Height" Value="118" />
+            <Setter Property="MinHeight" Value="118" />
+            <Setter Property="IsReadOnly" Value="True" />
+            <Setter Property="IsReadOnlyCaretVisible" Value="False" />
+            <Setter Property="Cursor" Value="IBeam" />
+            <Setter Property="Padding" Value="0" />
+        </Style>
+    </UserControl.Resources>
+
+    <Border Background="Transparent"
+            CornerRadius="{DynamicResource CardCorner}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="1" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="1" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!-- Step indicator dots -->
+            <StackPanel Grid.Row="0" Orientation="Horizontal"
+                        HorizontalAlignment="Center" Margin="0"
+                        Height="58"
+                        VerticalAlignment="Center">
+                <ItemsControl x:Name="StepDots"
+                              ItemsSource="{Binding StepIndices}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+
+                <!-- Manual step dots (0..7) -->
+                <Ellipse x:Name="Dot0" Width="26" Height="26" Margin="5,0" Cursor="Hand"
+                         Focusable="True" KeyDown="Dot_KeyDown"
+                         GotKeyboardFocus="Dot_FocusChanged" LostKeyboardFocus="Dot_FocusChanged"
+                         StrokeThickness="0" MouseLeftButtonDown="Dot_Click" Tag="0" />
+                <Ellipse x:Name="Dot1" Width="26" Height="26" Margin="5,0" Cursor="Hand"
+                         Focusable="True" KeyDown="Dot_KeyDown"
+                         GotKeyboardFocus="Dot_FocusChanged" LostKeyboardFocus="Dot_FocusChanged"
+                         StrokeThickness="0" MouseLeftButtonDown="Dot_Click" Tag="1" />
+                <Ellipse x:Name="Dot2" Width="26" Height="26" Margin="5,0" Cursor="Hand"
+                         Focusable="True" KeyDown="Dot_KeyDown"
+                         GotKeyboardFocus="Dot_FocusChanged" LostKeyboardFocus="Dot_FocusChanged"
+                         StrokeThickness="0" MouseLeftButtonDown="Dot_Click" Tag="2" />
+                <Ellipse x:Name="Dot3" Width="26" Height="26" Margin="5,0" Cursor="Hand"
+                         Focusable="True" KeyDown="Dot_KeyDown"
+                         GotKeyboardFocus="Dot_FocusChanged" LostKeyboardFocus="Dot_FocusChanged"
+                         StrokeThickness="0" MouseLeftButtonDown="Dot_Click" Tag="3" />
+                <Ellipse x:Name="Dot4" Width="26" Height="26" Margin="5,0" Cursor="Hand"
+                         Focusable="True" KeyDown="Dot_KeyDown"
+                         GotKeyboardFocus="Dot_FocusChanged" LostKeyboardFocus="Dot_FocusChanged"
+                         StrokeThickness="0" MouseLeftButtonDown="Dot_Click" Tag="4" />
+                <Ellipse x:Name="Dot5" Width="26" Height="26" Margin="5,0" Cursor="Hand"
+                         Focusable="True" KeyDown="Dot_KeyDown"
+                         GotKeyboardFocus="Dot_FocusChanged" LostKeyboardFocus="Dot_FocusChanged"
+                         StrokeThickness="0" MouseLeftButtonDown="Dot_Click" Tag="5" />
+                <Ellipse x:Name="Dot6" Width="26" Height="26" Margin="5,0" Cursor="Hand"
+                         Focusable="True" KeyDown="Dot_KeyDown"
+                         GotKeyboardFocus="Dot_FocusChanged" LostKeyboardFocus="Dot_FocusChanged"
+                         StrokeThickness="0" MouseLeftButtonDown="Dot_Click" Tag="6" />
+                <Ellipse x:Name="Dot7" Width="26" Height="26" Margin="5,0" Cursor="Hand"
+                         Focusable="True" KeyDown="Dot_KeyDown"
+                         GotKeyboardFocus="Dot_FocusChanged" LostKeyboardFocus="Dot_FocusChanged"
+                         StrokeThickness="0" MouseLeftButtonDown="Dot_Click" Tag="7" />
+                <Ellipse x:Name="Dot8" Width="26" Height="26" Margin="5,0" Cursor="Hand"
+                         Focusable="True" KeyDown="Dot_KeyDown"
+                         GotKeyboardFocus="Dot_FocusChanged" LostKeyboardFocus="Dot_FocusChanged"
+                         StrokeThickness="0" MouseLeftButtonDown="Dot_Click" Tag="8" />
+            </StackPanel>
+
+            <Rectangle Grid.Row="1" Height="1" Fill="{DynamicResource DsLineBrush}" />
+
+            <!-- Content area: each step panel -->
+            <Grid Grid.Row="2" x:Name="ContentArea" Margin="50,28">
+                <Border x:Name="StepHotkeyBadge"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Panel.ZIndex="10"
+                        Padding="12,7"
+                        CornerRadius="7"
+                        Background="{DynamicResource DsBgElevBrush}"
+                        BorderThickness="1"
+                        BorderBrush="{DynamicResource DsLineBrush}">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock x:Name="StepHotkeyIcon"
+                                   Text="&#xE765;"
+                                   FontFamily="{DynamicResource IconFont}"
+                                   FontSize="13"
+                                   Foreground="{DynamicResource DsAccentBrush}"
+                                   VerticalAlignment="Center"
+                                   Margin="0,0,7,0" />
+                        <TextBlock x:Name="StepHotkeyLabel"
+                                   Style="{DynamicResource DsCaptionTextStyle}"
+                                   VerticalAlignment="Center"
+                                   Margin="0,0,8,0" />
+                        <TextBlock x:Name="StepHotkeyKey"
+                                   Style="{DynamicResource DsSectionTitleStyle}"
+                                   FontSize="13"
+                                   Foreground="{DynamicResource DsAccentBrush}"
+                                   VerticalAlignment="Center" />
+                    </StackPanel>
+                </Border>
+
+                <!-- Step 0: Welcome -->
+                <ScrollViewer x:Name="Step0" Visibility="Collapsed"
+                              VerticalScrollBarVisibility="Auto"
+                              Style="{DynamicResource DsScrollViewerStyle}">
+                    <StackPanel Width="600" HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
+                        <TextBlock x:Name="WelcomeTitle"
+                                   Style="{DynamicResource DsPageTitleTextStyle}"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,0,0,12" />
+                        <TextBlock x:Name="WelcomeDesc"
+                                   Style="{DynamicResource DsBodyTextStyle}"
+                                   TextWrapping="Wrap" TextAlignment="Center"
+                                   Margin="0,0,0,28" />
+
+                        <!-- Feature cards -->
+                        <Border Style="{DynamicResource DsCardStyle}" Margin="0,0,0,10">
+                            <StackPanel>
+                                <TextBlock x:Name="Feature1Title"
+                                           Style="{DynamicResource DsSectionTitleStyle}"
+                                           Foreground="{DynamicResource DsAccentBrush}" />
+                                <TextBlock x:Name="Feature1Desc"
+                                           Style="{DynamicResource DsBodyTextStyle}"
+                                           TextWrapping="Wrap" Margin="0,4,0,0" />
+                            </StackPanel>
+                        </Border>
+                        <Border Style="{DynamicResource DsCardStyle}" Margin="0,0,0,10">
+                            <StackPanel>
+                                <TextBlock x:Name="Feature2Title"
+                                           Style="{DynamicResource DsSectionTitleStyle}"
+                                           Foreground="{DynamicResource DsAccentBrush}" />
+                                <TextBlock x:Name="Feature2Desc"
+                                           Style="{DynamicResource DsBodyTextStyle}"
+                                           TextWrapping="Wrap" Margin="0,4,0,0" />
+                            </StackPanel>
+                        </Border>
+                        <Border Style="{DynamicResource DsCardStyle}" Margin="0,0,0,10">
+                            <StackPanel>
+                                <TextBlock x:Name="Feature3Title"
+                                           Style="{DynamicResource DsSectionTitleStyle}"
+                                           Foreground="{DynamicResource DsAccentBrush}" />
+                                <TextBlock x:Name="Feature3Desc"
+                                           Style="{DynamicResource DsBodyTextStyle}"
+                                           TextWrapping="Wrap" Margin="0,4,0,0" />
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- Step 1: Default hotkeys -->
+                <ScrollViewer x:Name="Step1" Visibility="Collapsed"
+                              VerticalScrollBarVisibility="Auto"
+                              Style="{DynamicResource DsScrollViewerStyle}">
+                    <StackPanel MaxWidth="560" HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
+                        <TextBlock x:Name="ShortcutTitle"
+                                   Style="{DynamicResource DsPageTitleTextStyle}"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,0,0,8" />
+                        <TextBlock x:Name="ShortcutDesc"
+                                   Style="{DynamicResource DsBodyTextStyle}"
+                                   TextWrapping="Wrap" TextAlignment="Center"
+                                   Margin="0,0,0,24" />
+
+                        <Border Style="{DynamicResource DsCardStyle}" Margin="0,0,0,8">
+                            <Grid Margin="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="120" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock x:Name="ShortcutTranscribeKey" Grid.Column="0"
+                                           Style="{DynamicResource DsSectionTitleStyle}"
+                                           Foreground="{DynamicResource DsAccentBrush}"
+                                           VerticalAlignment="Center" />
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock x:Name="ShortcutTranscribeTitle"
+                                               Style="{DynamicResource DsSectionTitleStyle}" />
+                                    <TextBlock x:Name="ShortcutTranscribeDesc"
+                                               Style="{DynamicResource DsCaptionTextStyle}"
+                                               Margin="0,4,0,0" />
+                                </StackPanel>
+                                <TextBlock Grid.Column="2"
+                                           Text="&#xE720;"
+                                           FontFamily="{DynamicResource IconFont}"
+                                           FontSize="16"
+                                           Foreground="{DynamicResource DsAccentBrush}"
+                                           VerticalAlignment="Center" />
+                            </Grid>
+                        </Border>
+
+                        <Border Style="{DynamicResource DsCardStyle}" Margin="0,0,0,8">
+                            <Grid Margin="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="120" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock x:Name="ShortcutRewriteKey" Grid.Column="0"
+                                           Style="{DynamicResource DsSectionTitleStyle}"
+                                           Foreground="{DynamicResource DsAccentBrush}"
+                                           VerticalAlignment="Center" />
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock x:Name="ShortcutRewriteTitle"
+                                               Style="{DynamicResource DsSectionTitleStyle}" />
+                                    <TextBlock x:Name="ShortcutRewriteDesc"
+                                               Style="{DynamicResource DsCaptionTextStyle}"
+                                               Margin="0,4,0,0" />
+                                </StackPanel>
+                                <TextBlock Grid.Column="2"
+                                           Text="&#xE104;"
+                                           FontFamily="{DynamicResource IconFont}"
+                                           FontSize="16"
+                                           Foreground="{DynamicResource DsAccentBrush}"
+                                           VerticalAlignment="Center" />
+                            </Grid>
+                        </Border>
+
+                        <Border Style="{DynamicResource DsCardStyle}" Margin="0,0,0,8">
+                            <Grid Margin="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="120" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock x:Name="ShortcutAgentKey" Grid.Column="0"
+                                           Style="{DynamicResource DsSectionTitleStyle}"
+                                           Foreground="{DynamicResource DsAccentBrush}"
+                                           VerticalAlignment="Center" />
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock x:Name="ShortcutAgentTitle"
+                                               Style="{DynamicResource DsSectionTitleStyle}" />
+                                    <TextBlock x:Name="ShortcutAgentDesc"
+                                               Style="{DynamicResource DsCaptionTextStyle}"
+                                               Margin="0,4,0,0" />
+                                </StackPanel>
+                                <TextBlock Grid.Column="2"
+                                           Text="&#xE8B8;"
+                                           FontFamily="{DynamicResource IconFont}"
+                                           FontSize="16"
+                                           Foreground="{DynamicResource DsAccentBrush}"
+                                           VerticalAlignment="Center" />
+                            </Grid>
+                        </Border>
+
+                        <Border Style="{DynamicResource DsCardStyle}">
+                            <Grid Margin="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="120" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock x:Name="ShortcutScreenshotKey" Grid.Column="0"
+                                           Style="{DynamicResource DsSectionTitleStyle}"
+                                           Foreground="{DynamicResource DsAccentBrush}"
+                                           VerticalAlignment="Center" />
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock x:Name="ShortcutScreenshotTitle"
+                                               Style="{DynamicResource DsSectionTitleStyle}" />
+                                    <TextBlock x:Name="ShortcutScreenshotDesc"
+                                               Style="{DynamicResource DsCaptionTextStyle}"
+                                               Margin="0,4,0,0" />
+                                </StackPanel>
+                                <TextBlock Grid.Column="2"
+                                           Text="&#xE722;"
+                                           FontFamily="{DynamicResource IconFont}"
+                                           FontSize="16"
+                                           Foreground="{DynamicResource DsAccentBrush}"
+                                           VerticalAlignment="Center" />
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- Step 2: Transcribe Fill -->
+                <ScrollViewer x:Name="Step2" Visibility="Collapsed"
+                              VerticalScrollBarVisibility="Auto"
+                              Style="{DynamicResource DsScrollViewerStyle}">
+                    <StackPanel MaxWidth="520" HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
+                        <TextBlock x:Name="TriFillTitle"
+                                   Style="{DynamicResource DsPageTitleTextStyle}"
+                                   HorizontalAlignment="Center" Margin="0,0,0,6" />
+                        <TextBlock x:Name="TriFillSub"
+                                   Style="{DynamicResource DsSectionTitleStyle}"
+                                   HorizontalAlignment="Center" Margin="0,0,0,20" />
+                        <TextBlock x:Name="TriFillFieldLabel"
+                                   Style="{DynamicResource DsBodyTextStyle}"
+                                   Margin="0,0,0,8" />
+                        <TextBox x:Name="TriFillInput"
+                                 Style="{StaticResource OnboardingTextArea}" />
+
+                        <Border Style="{DynamicResource DsCardStyle}" Margin="0,16,0,0">
+                            <StackPanel>
+                                <TextBlock x:Name="TriFillHowLabel"
+                                           Style="{DynamicResource DsSectionTitleStyle}"
+                                           Foreground="{DynamicResource DsAccentBrush}"
+                                           Margin="0,0,0,8" />
+                                <TextBlock x:Name="TriFillI1"
+                                           Style="{DynamicResource DsBodyTextStyle}" Margin="0,2" />
+                                <TextBlock x:Name="TriFillI2"
+                                           Style="{DynamicResource DsBodyTextStyle}" Margin="0,2"
+                                           TextWrapping="Wrap" />
+                                <TextBlock x:Name="TriFillI3"
+                                           Style="{DynamicResource DsBodyTextStyle}" Margin="0,2" />
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- Step 3: Rewrite Generate -->
+                <ScrollViewer x:Name="Step3" Visibility="Collapsed"
+                              VerticalScrollBarVisibility="Auto"
+                              Style="{DynamicResource DsScrollViewerStyle}">
+                    <StackPanel Width="600" HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
+                        <TextBlock x:Name="RwGenTitle"
+                                   Style="{DynamicResource DsPageTitleTextStyle}"
+                                   HorizontalAlignment="Center" Margin="0,0,0,6" />
+                        <TextBlock x:Name="RwGenSub"
+                                   Style="{DynamicResource DsSectionTitleStyle}"
+                                   HorizontalAlignment="Center" Margin="0,0,0,20" />
+                        <TextBlock x:Name="RwGenFieldLabel"
+                                   Style="{DynamicResource DsBodyTextStyle}"
+                                   TextWrapping="Wrap" Margin="0,0,0,8" />
+                        <TextBox x:Name="RwGenInput"
+                                 Style="{StaticResource OnboardingTextArea}" />
+
+                        <Border Style="{DynamicResource DsCardStyle}" Margin="0,16,0,0">
+                            <StackPanel>
+                                <TextBlock x:Name="RwGenHowLabel"
+                                           Style="{DynamicResource DsSectionTitleStyle}"
+                                           Foreground="{DynamicResource DsAccentBrush}"
+                                           Margin="0,0,0,8" />
+                                <TextBlock x:Name="RwGenI1"
+                                           Style="{DynamicResource DsBodyTextStyle}" Margin="0,2" />
+                                <TextBlock x:Name="RwGenI2"
+                                           Style="{DynamicResource DsBodyTextStyle}" Margin="0,2"
+                                           TextWrapping="Wrap" />
+                                <TextBlock x:Name="RwGenI3"
+                                           Style="{DynamicResource DsBodyTextStyle}" Margin="0,2" />
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- Step 4: Rewrite Selected (read-only) -->
+                <ScrollViewer x:Name="Step4" Visibility="Collapsed"
+                              VerticalScrollBarVisibility="Auto"
+                              Style="{DynamicResource DsScrollViewerStyle}">
+                    <StackPanel Width="600" HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
+                        <TextBlock x:Name="RwRoTitle"
+                                   Style="{DynamicResource DsPageTitleTextStyle}"
+                                   HorizontalAlignment="Center" Margin="0,0,0,6" />
+                        <TextBlock x:Name="RwRoSub"
+                                   Style="{DynamicResource DsSectionTitleStyle}"
+                                   HorizontalAlignment="Center" Margin="0,0,0,20" />
+                        <TextBlock x:Name="RwRoSelectHint"
+                                   Style="{DynamicResource DsBodyTextStyle}"
+                                   Margin="0,0,0,8" />
+                        <Border Style="{DynamicResource DsCardStyle}" Padding="16">
+                            <TextBox x:Name="RwRoSampleText"
+                                     Style="{StaticResource OnboardingSelectableTextArea}" />
+                        </Border>
+
+                        <Border Style="{DynamicResource DsCardStyle}" Margin="0,16,0,0">
+                            <StackPanel>
+                                <TextBlock x:Name="RwRoHowLabel"
+                                           Style="{DynamicResource DsSectionTitleStyle}"
+                                           Foreground="{DynamicResource DsAccentBrush}"
+                                           Margin="0,0,0,8" />
+                                <TextBlock x:Name="RwRoI1"
+                                           Style="{DynamicResource DsBodyTextStyle}" Margin="0,2" />
+                                <TextBlock x:Name="RwRoI2"
+                                           Style="{DynamicResource DsBodyTextStyle}" Margin="0,2"
+                                           TextWrapping="Wrap" />
+                                <TextBlock x:Name="RwRoI3"
+                                           Style="{DynamicResource DsBodyTextStyle}" Margin="0,2"
+                                           TextWrapping="Wrap" />
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- Step 5: Rewrite Edit -->
+                <ScrollViewer x:Name="Step5" Visibility="Collapsed"
+                              VerticalScrollBarVisibility="Auto"
+                              Style="{DynamicResource DsScrollViewerStyle}">
+                    <StackPanel Width="600" HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
+                        <TextBlock x:Name="RwEdTitle"
+                                   Style="{DynamicResource DsPageTitleTextStyle}"
+                                   HorizontalAlignment="Center" Margin="0,0,0,6" />
+                        <TextBlock x:Name="RwEdSub"
+                                   Style="{DynamicResource DsSectionTitleStyle}"
+                                   HorizontalAlignment="Center" Margin="0,0,0,20" />
+                        <TextBlock x:Name="RwEdFieldLabel"
+                                   Style="{DynamicResource DsBodyTextStyle}"
+                                   TextWrapping="Wrap" Margin="0,0,0,8" />
+                        <TextBox x:Name="RwEdInput"
+                                 Style="{StaticResource OnboardingTextArea}"
+                                 Text="{Binding TrialEditableText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                        <Border Style="{DynamicResource DsCardStyle}" Margin="0,16,0,0">
+                            <StackPanel>
+                                <TextBlock x:Name="RwEdHowLabel"
+                                           Style="{DynamicResource DsSectionTitleStyle}"
+                                           Foreground="{DynamicResource DsAccentBrush}"
+                                           Margin="0,0,0,8" />
+                                <TextBlock x:Name="RwEdI1"
+                                           Style="{DynamicResource DsBodyTextStyle}" Margin="0,2" />
+                                <TextBlock x:Name="RwEdI2"
+                                           Style="{DynamicResource DsBodyTextStyle}" Margin="0,2"
+                                           TextWrapping="Wrap" />
+                                <TextBlock x:Name="RwEdI3"
+                                           Style="{DynamicResource DsBodyTextStyle}" Margin="0,2" />
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- Step 6: Screenshot OCR -->
+                <ScrollViewer x:Name="Step6" Visibility="Collapsed"
+                              VerticalScrollBarVisibility="Auto"
+                              Style="{DynamicResource DsScrollViewerStyle}">
+                    <StackPanel Width="600" HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
+                        <TextBlock x:Name="ShotOcrTitle"
+                                   Style="{DynamicResource DsPageTitleTextStyle}"
+                                   HorizontalAlignment="Center" Margin="0,0,0,6" />
+                        <TextBlock x:Name="ShotOcrSub"
+                                   Style="{DynamicResource DsSectionTitleStyle}"
+                                   TextWrapping="Wrap"
+                                   TextAlignment="Center"
+                                   HorizontalAlignment="Center" Margin="0,0,0,20" />
+                        <TextBlock x:Name="ShotOcrFieldLabel"
+                                   Style="{DynamicResource DsBodyTextStyle}"
+                                   TextWrapping="Wrap" Margin="0,0,0,8" />
+
+                        <Border Style="{DynamicResource DsCardStyle}"
+                                Padding="18"
+                                Margin="0,0,0,14"
+                                Background="{DynamicResource DsBgElevBrush}">
+                            <TextBlock x:Name="ShotOcrSampleText"
+                                       Style="{DynamicResource DsBodyTextStyle}"
+                                       FontSize="15"
+                                       LineHeight="24"
+                                       TextWrapping="Wrap"
+                                       IsHitTestVisible="False"
+                                       Foreground="{DynamicResource DsFgFaintBrush}" />
+                        </Border>
+
+                        <TextBox x:Name="ShotOcrInput"
+                                 Style="{StaticResource OnboardingTextArea}" />
+
+                        <Border Style="{DynamicResource DsCardStyle}" Margin="0,16,0,0">
+                            <StackPanel>
+                                <TextBlock x:Name="ShotOcrHowLabel"
+                                           Style="{DynamicResource DsSectionTitleStyle}"
+                                           Foreground="{DynamicResource DsAccentBrush}"
+                                           Margin="0,0,0,8" />
+                                <TextBlock x:Name="ShotOcrI1"
+                                           Style="{DynamicResource DsBodyTextStyle}" Margin="0,2"
+                                           TextWrapping="Wrap" />
+                                <TextBlock x:Name="ShotOcrI2"
+                                           Style="{DynamicResource DsBodyTextStyle}" Margin="0,2"
+                                           TextWrapping="Wrap" />
+                                <TextBlock x:Name="ShotOcrI3"
+                                           Style="{DynamicResource DsBodyTextStyle}" Margin="0,2"
+                                           TextWrapping="Wrap" />
+                                <TextBlock x:Name="ShotOcrI4"
+                                           Style="{DynamicResource DsBodyTextStyle}" Margin="0,2"
+                                           TextWrapping="Wrap" />
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- Step 7: Agent Search -->
+                <ScrollViewer x:Name="Step7" Visibility="Collapsed"
+                              VerticalScrollBarVisibility="Auto"
+                              Style="{DynamicResource DsScrollViewerStyle}">
+                    <StackPanel MaxWidth="520" HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
+                        <TextBlock x:Name="AgSearchTitle"
+                                   Style="{DynamicResource DsPageTitleTextStyle}"
+                                   HorizontalAlignment="Center" Margin="0,0,0,6" />
+                        <TextBlock x:Name="AgSearchSub"
+                                   Style="{DynamicResource DsSectionTitleStyle}"
+                                   HorizontalAlignment="Center" Margin="0,0,0,20" />
+                        <TextBlock x:Name="AgSearchExLabel"
+                                   Style="{DynamicResource DsBodyTextStyle}"
+                                   Margin="0,0,0,10" />
+
+                        <Border Style="{DynamicResource DsCardStyle}" Margin="0,0,0,6">
+                            <TextBlock x:Name="AgSearchEx1"
+                                       Style="{DynamicResource DsBodyTextStyle}"
+                                       Foreground="{DynamicResource DsAccentBrush}" />
+                        </Border>
+                        <Border Style="{DynamicResource DsCardStyle}" Margin="0,0,0,6">
+                            <TextBlock x:Name="AgSearchEx2"
+                                       Style="{DynamicResource DsBodyTextStyle}"
+                                       Foreground="{DynamicResource DsAccentBrush}" />
+                        </Border>
+                        <Border Style="{DynamicResource DsCardStyle}" Margin="0,0,0,6">
+                            <TextBlock x:Name="AgSearchEx3"
+                                       Style="{DynamicResource DsBodyTextStyle}"
+                                       Foreground="{DynamicResource DsAccentBrush}" />
+                        </Border>
+
+                        <Border Style="{DynamicResource DsCardStyle}" Margin="0,16,0,0">
+                            <StackPanel>
+                                <TextBlock x:Name="AgSearchHowLabel"
+                                           Style="{DynamicResource DsSectionTitleStyle}"
+                                           Foreground="{DynamicResource DsAccentBrush}"
+                                           Margin="0,0,0,8" />
+                                <TextBlock x:Name="AgSearchI1"
+                                           Style="{DynamicResource DsBodyTextStyle}" Margin="0,2" />
+                                <TextBlock x:Name="AgSearchI2"
+                                           Style="{DynamicResource DsBodyTextStyle}" Margin="0,2" />
+                                <TextBlock x:Name="AgSearchI3"
+                                           Style="{DynamicResource DsBodyTextStyle}" Margin="0,2"
+                                           TextWrapping="Wrap" />
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- Step 8: Complete -->
+                <ScrollViewer x:Name="Step8" Visibility="Collapsed"
+                              VerticalScrollBarVisibility="Auto"
+                              Style="{DynamicResource DsScrollViewerStyle}">
+                    <StackPanel MaxWidth="480" HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
+                        <TextBlock x:Name="CompleteTitle"
+                                   Style="{DynamicResource DsPageTitleTextStyle}"
+                                   HorizontalAlignment="Center"
+                                   FontSize="28"
+                                   Margin="0,0,0,16" />
+                        <TextBlock x:Name="CompleteDesc"
+                                   Style="{DynamicResource DsBodyTextStyle}"
+                                   TextWrapping="Wrap" TextAlignment="Center"
+                                   Margin="0,0,0,28" />
+
+                        <!-- Hotkey reminder cards -->
+                        <Border Style="{DynamicResource DsCardStyle}" Margin="0,0,0,8">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock x:Name="CompleteHk1Label"
+                                           Style="{DynamicResource DsBodyTextStyle}" />
+                                <TextBlock x:Name="CompleteHk1Key"
+                                           Grid.Column="1"
+                                           Style="{DynamicResource DsBodyTextStyle}"
+                                           Foreground="{DynamicResource DsAccentBrush}" />
+                            </Grid>
+                        </Border>
+                        <Border Style="{DynamicResource DsCardStyle}" Margin="0,0,0,8">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock x:Name="CompleteHk2Label"
+                                           Style="{DynamicResource DsBodyTextStyle}" />
+                                <TextBlock x:Name="CompleteHk2Key"
+                                           Grid.Column="1"
+                                           Style="{DynamicResource DsBodyTextStyle}"
+                                           Foreground="{DynamicResource DsAccentBrush}" />
+                            </Grid>
+                        </Border>
+                        <Border Style="{DynamicResource DsCardStyle}" Margin="0,0,0,8">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock x:Name="CompleteHk3Label"
+                                           Style="{DynamicResource DsBodyTextStyle}" />
+                                <TextBlock x:Name="CompleteHk3Key"
+                                           Grid.Column="1"
+                                           Style="{DynamicResource DsBodyTextStyle}"
+                                           Foreground="{DynamicResource DsAccentBrush}" />
+                            </Grid>
+                        </Border>
+                        <Border Style="{DynamicResource DsCardStyle}" Margin="0,0,0,8">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock x:Name="CompleteHk4Label"
+                                           Style="{DynamicResource DsBodyTextStyle}" />
+                                <TextBlock x:Name="CompleteHk4Key"
+                                           Grid.Column="1"
+                                           Style="{DynamicResource DsBodyTextStyle}"
+                                           Foreground="{DynamicResource DsAccentBrush}" />
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+
+            </Grid>
+
+            <!-- Bottom navigation bar -->
+            <Rectangle Grid.Row="3" Height="1" Fill="{DynamicResource DsLineBrush}" />
+
+            <Grid Grid.Row="4" Margin="48,14">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Button x:Name="BackBtn" Grid.Column="0"
+                        Style="{DynamicResource DsButtonDefaultStyle}"
+                        Click="Back_Click"
+                        HorizontalAlignment="Left"
+                        Padding="20,10" />
+
+                <!-- Step counter -->
+                <TextBlock x:Name="StepCounter" Grid.Column="1"
+                           Style="{DynamicResource DsCaptionTextStyle}"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center" />
+
+                <StackPanel Grid.Column="2" Orientation="Horizontal"
+                            HorizontalAlignment="Right">
+                    <Button x:Name="SkipBtn"
+                            Style="{DynamicResource DsButtonDefaultStyle}"
+                            Click="Skip_Click"
+                            Margin="0,0,12,0"
+                            Padding="20,10" />
+                    <Button x:Name="NextBtn"
+                            Style="{DynamicResource DsButtonPrimaryStyle}"
+                            Click="Next_Click"
+                            Padding="20,10" />
+                </StackPanel>
+            </Grid>
+
+        </Grid>
+    </Border>
+</UserControl>

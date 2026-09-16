@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
+    <channel>
+        <title>龙虾输入法</title>
+        <item>
+            <title>版本 0.3.5</title>
+            <pubDate>Wed, 15 Apr 2026 13:30:00 +0800</pubDate>
+            <sparkle:version>36</sparkle:version>
+            <sparkle:shortVersionString>0.3.5</sparkle:shortVersionString>
+            <description><![CDATA[
+                <h3>0.3.5 更新内容</h3>
+                <ul>
+                    <li>修复录音结束后崩溃问题</li>
+                    <li>修复录音识别结果为空的问题</li>
+                </ul>
+            ]]></description>
+            <enclosure
+                url="https://downloads.example.com/standard/voice-input-0.3.5-b36.zip"
+                sparkle:edSignature="PzkfZnbz59Hd127944PlZ3g5BOVktHNOrOEFaSiLibHAt8CEsYvlwgDBjUhjgwoEn97iOwa7PXNoyq1mVQw2Bg=="
+                length="6204515"
+                type="application/octet-stream"/>
+        </item>
+    </channel>
+</rss>

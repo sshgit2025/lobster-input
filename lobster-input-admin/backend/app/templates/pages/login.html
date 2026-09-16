@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>登录 - Lobster Admin</title>
+<link rel="stylesheet" href="{{ base_url }}/static/css/style.css">
+</head>
+<body>
+<div class="login-wrap">
+  <div class="login-card">
+    <div class="login-logo">🦞</div>
+    <div class="login-title">Lobster 管理后台</div>
+    <div class="form-group">
+      <label class="form-label">管理员账号</label>
+      <input id="username" class="form-input" type="text" placeholder="请输入账号" autocomplete="username">
+    </div>
+    <div class="form-group">
+      <label class="form-label">密码</label>
+      <input id="password" class="form-input" type="password" placeholder="请输入密码" autocomplete="current-password">
+    </div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:8px" onclick="doLogin()">登 录</button>
+    <div id="err-msg" style="color:var(--danger);text-align:center;margin-top:12px;font-size:13px"></div>
+  </div>
+</div>
+<script>window.__BASE_URL__ = "{{ base_url }}";</script>
+<script src="{{ base_url }}/static/js/main.js"></script>
+<script>
+document.addEventListener("keydown", e => { if (e.key === "Enter") doLogin(); });
+async function doLogin() {
+  const username = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value;
+  if (!username || !password) {
+    document.getElementById("err-msg").textContent = "请输入账号和密码";
+    return;
+  }
+  try {
+    await api("POST", "/api/v1/auth/login", { username, password });
+    window.location.href = BASE_URL + "/dashboard";
+  } catch (e) {
+    document.getElementById("err-msg").textContent = e.message;
+  }
+}
+</script>
+</body>
+</html>

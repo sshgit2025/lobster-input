@@ -1,0 +1,232 @@
+﻿<UserControl x:Class="LobsterInput.Views.DictionaryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:LobsterInput.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignWidth="600" d:DesignHeight="600"
+             Background="Transparent">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Margin="{StaticResource MainPageHeaderMargin}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel VerticalAlignment="Top"
+                        Margin="{StaticResource MainPageTitleTopMargin}">
+                <TextBlock x:Name="DictionaryPageTitle"
+                           Style="{DynamicResource DsPageTitleTextStyle}"
+                           />
+                <TextBlock x:Name="DescText"
+                           Style="{DynamicResource DsCaptionTextStyle}"
+                           Foreground="{DynamicResource DsFgSubtleBrush}"
+                           TextWrapping="Wrap"
+                           Margin="0,6,0,0"/>
+            </StackPanel>
+            <Button x:Name="AddButton"
+                    Grid.Column="1"
+                    Style="{DynamicResource DsButtonPrimaryStyle}"
+                    Padding="14,7"
+                    VerticalAlignment="Top"
+                    Margin="{StaticResource MainPageTitleTopMargin}"
+                    Click="OnAddClick"/>
+        </Grid>
+
+        <!-- Add New Word -->
+        <Border Grid.Row="1"
+                Style="{DynamicResource DsCardStyle}"
+                MaxWidth="{StaticResource MainPageContentWidth}"
+                HorizontalAlignment="Stretch"
+                Margin="32,20,32,14"
+                Visibility="Collapsed">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="NewWordInput"
+                         Grid.Column="0"
+                         Style="{DynamicResource DsInputTextBoxStyle}"
+                         MaxLength="20"
+                         KeyDown="OnNewWordKeyDown"/>
+                <Button x:Name="InlineAddButton"
+                        Grid.Column="1" Margin="8,0,0,0"
+                        Style="{DynamicResource DsButtonPrimaryStyle}"
+                        Padding="14,6"
+                        Click="OnAddClick"/>
+            </Grid>
+        </Border>
+
+        <!-- Search -->
+        <Grid Grid.Row="2"
+              MaxWidth="{StaticResource MainPageContentWidth}"
+              HorizontalAlignment="Stretch"
+              Margin="32,20,32,18">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="&#xE721;"
+                           FontFamily="{DynamicResource IconFont}"
+                           FontSize="14"
+                           Foreground="{DynamicResource DsFgSubtleBrush}"
+                           VerticalAlignment="Center"
+                           Margin="12,0,0,0"
+                           Panel.ZIndex="1"
+                           IsHitTestVisible="False"/>
+                <TextBox x:Name="SearchInput"
+                         Grid.Column="0"
+                         Style="{DynamicResource DsInputTextBoxStyle}"
+                         Padding="34,0,10,0"
+                         TextChanged="OnSearchTextChanged"/>
+                <Button x:Name="ClearSearchBtn"
+                        Grid.Column="1" Margin="8,0,0,0"
+                        Style="{DynamicResource DsIconButtonStyle}"
+                        FontFamily="{DynamicResource IconFont}"
+                        FontSize="12"
+                        Visibility="Collapsed"
+                        Click="OnClearSearchClick"/>
+            </Grid>
+        </Grid>
+
+        <!-- Loading Indicator -->
+        <TextBlock x:Name="LoadingText"
+                   Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Top"
+                   Margin="0,20,0,0"
+                   Style="{DynamicResource DsCaptionTextStyle}"
+                   Visibility="Collapsed"/>
+
+        <!-- Empty State -->
+        <StackPanel x:Name="EmptyPanel"
+                    Grid.Row="3"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    Margin="32,54,32,0"
+                    MaxWidth="360"
+                    Visibility="Collapsed">
+            <Border Width="56"
+                    Height="56"
+                    CornerRadius="14"
+                    Background="{DynamicResource DsBgSunkenBrush}"
+                    BorderBrush="{DynamicResource DsLineBrush}"
+                    BorderThickness="1"
+                    HorizontalAlignment="Center"
+                    Margin="0,0,0,14">
+                <TextBlock Text="&#xE82D;"
+                           FontFamily="{DynamicResource IconFont}"
+                           FontSize="26"
+                           Foreground="{DynamicResource DsFgFaintBrush}"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+            </Border>
+            <TextBlock x:Name="EmptyText"
+                       TextAlignment="Center"
+                       Style="{DynamicResource DsBodyTextStyle}"
+                       FontWeight="Medium"
+                       Foreground="{DynamicResource DsFgMutedBrush}"
+                       Margin="0,0,0,4"/>
+            <TextBlock x:Name="EmptyDescriptionText"
+                       TextAlignment="Center"
+                       Style="{DynamicResource DsCaptionTextStyle}"
+                       Foreground="{DynamicResource DsFgSubtleBrush}"
+                       TextWrapping="Wrap"
+                       Margin="0"/>
+        </StackPanel>
+
+        <!-- Hot Words List -->
+        <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Auto"
+                      Style="{DynamicResource DsScrollViewerStyle}">
+            <Grid MaxWidth="{StaticResource MainPageContentWidth}"
+                  Margin="32,0,32,24"
+                  HorizontalAlignment="Center">
+            <ItemsControl x:Name="WordsList"
+                          HorizontalAlignment="Stretch">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <controls:ResponsiveGridPanel MaxColumns="3"
+                                                      MinItemWidth="250"
+                                                      ColumnGap="12"
+                                                      RowGap="12"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="{DynamicResource DsBgElevBrush}"
+                                BorderBrush="{DynamicResource DsLineBrush}"
+                                BorderThickness="1"
+                                CornerRadius="{DynamicResource SmallCorner}"
+                                Padding="14,10,10,10">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Text="{Binding Word}"
+                                           FontSize="13"
+                                           FontWeight="Medium"
+                                           FontFamily="{DynamicResource AppFont}"
+                                           Foreground="{DynamicResource DsFgBrush}"
+                                           TextTrimming="CharacterEllipsis"
+                                           VerticalAlignment="Center"/>
+
+                                <Button Grid.Column="1" Content="&#xE70F;"
+                                        Style="{StaticResource DsIconButtonStyle}"
+                                        FontFamily="{DynamicResource IconFont}" FontSize="13"
+                                        Tag="{Binding}" Click="OnEditClick"
+                                        ToolTip="{Binding EditTooltip, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+
+                                <Button Grid.Column="2" Content="&#xE74D;"
+                                        Style="{StaticResource DsIconDangerHoverButtonStyle}"
+                                        FontFamily="{DynamicResource IconFont}" FontSize="13"
+                                        Tag="{Binding}" Click="OnDeleteClick"
+                                        ToolTip="{Binding DeleteTooltip, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            </Grid>
+        </ScrollViewer>
+
+        <!-- Error Message -->
+        <TextBlock x:Name="ErrorText"
+                   Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                   Margin="32,0,32,16"
+                   FontSize="12" FontFamily="{DynamicResource AppFont}"
+                   Foreground="{DynamicResource DsDangerBrush}"
+                   TextWrapping="Wrap" Visibility="Collapsed"/>
+        <StackPanel x:Name="PaginationPanel"
+                    Grid.Row="4"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    Margin="32,0,32,20">
+            <Button x:Name="PrevPageBtn"
+                    Style="{DynamicResource DsButtonDefaultStyle}"
+                    Padding="10,5"
+                    Content="‹"
+                    Click="OnPrevPageClick"/>
+            <TextBlock x:Name="PageInfoText"
+                       Style="{DynamicResource DsCaptionTextStyle}"
+                       VerticalAlignment="Center"
+                       Margin="14,0"/>
+            <Button x:Name="NextPageBtn"
+                    Style="{DynamicResource DsButtonDefaultStyle}"
+                    Padding="10,5"
+                    Content="›"
+                    Click="OnNextPageClick"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -1,0 +1,18 @@
+{
+  "subtypes": [
+    {
+      "id": "lobster_zh_cn",
+      "label": "$string:ime_subtype_zh_cn",
+      "icon": "$media:layered_image",
+      "locale": "zh-CN",
+      "mode": "lower"
+    },
+    {
+      "id": "lobster_en_us",
+      "label": "$string:ime_subtype_en_us",
+      "icon": "$media:layered_image",
+      "locale": "en-US",
+      "mode": "lower"
+    }
+  ]
+}

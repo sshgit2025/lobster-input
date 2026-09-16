@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+{% block title %}支付订单 - Lobster Admin{% endblock %}
+{% block body %}
+<div class="layout">{% include "partials/sidebar.html" %}<main class="main">
+  <div class="page-title">支付订单</div>
+  <div class="page-subtitle">按订单查看支付、渠道交易和退款状态。退款会调用原支付渠道并同步处理套餐权益。</div>
+  <div class="card">
+    <div class="search-bar">
+      <input id="email" class="form-input" placeholder="邮箱搜索" style="max-width:240px">
+      <select id="status" class="form-select" style="max-width:180px">
+        <option value="">全部状态</option>
+        <option value="pending_payment">待支付</option>
+        <option value="paid">已支付</option>
+        <option value="failed">失败</option>
+        <option value="refunding">退款中</option>
+        <option value="partially_refunded">部分退款</option>
+        <option value="refunded">已退款</option>
+      </select>
+      <button class="btn btn-primary" onclick="loadRows(1)">搜索</button>
+    </div>
+    <div class="table-wrap"><table><thead><tr><th>订单号</th><th>用户</th><th>商品</th><th>金额</th><th>方式/渠道</th><th>结算方式</th><th>状态</th><th>退款</th><th>创建时间</th><th>操作</th></tr></thead><tbody id="rows"></tbody></table></div>
+    <div class="pagination" id="pager"></div>
+  </div>
+</main></div>
+
+<div class="modal-overlay" id="detail-modal">
+  <div class="modal" style="max-width:980px">
+    <div class="modal-title">订单详情</div>
+    <div id="detail"></div>
+    <div class="modal-actions">
+      <button class="btn btn-danger" id="refund-open-btn" onclick="openRefundPanel()">发起退款</button>
+      <button class="btn btn-ghost" onclick="closeModal('detail-modal')">关闭</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="refund-modal">
+  <div class="modal" style="max-width:620px">
+    <div class="modal-title">发起原渠道退款</div>
+    <div class="refund-grid">
+      <label class="form-label">退款方式</label>
+      <select id="refund_mode" class="form-select" onchange="syncRefundMode()">
+        <option value="full">全额退款</option>
+        <option value="prorated">按剩余价值比例退款</option>
+        <option value="partial">固定金额退款</option>
+      </select>
+      <label class="form-label">固定金额</label>
+      <input id="refund_amount" class="form-input" placeholder="仅固定金额退款填写，例如 9.99">
+      <label class="form-label">业务处理</label>
+      <label class="check-line"><input id="refund_revoke" type="checkbox" checked> 退款成功后取消当前套餐权益并重置积分</label>
+      <label class="form-label">退款原因</label>
+      <select id="refund_reason_code" class="form-select">
+        <option value="customer_request">用户主动申请</option>
+        <option value="duplicate_purchase">重复购买</option>
+        <option value="payment_error">支付异常</option>
+        <option value="service_issue">服务不可用或体验问题</option>
+        <option value="fraud_risk">风控或异常订单</option>
+        <option value="admin_adjustment">管理员调整</option>
+        <option value="other">其他</option>
+      </select>
+      <label class="form-label">原因备注</label>
+      <textarea id="refund_reason_note" class="form-input" rows="3" placeholder="补充具体退款原因，便于审计和客服追踪"></textarea>
+    </div>
+    <div class="hint-box">按比例退款采用“剩余时长比例”和“剩余套餐积分比例”中的较小值计算，避免用户已消耗大量积分但仍按时间高额退款。</div>
+    <div class="modal-actions">
+      <button class="btn btn-danger" onclick="submitRefund()">确认退款</button>
+      <button class="btn btn-ghost" onclick="closeModal('refund-modal')">取消</button>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+let page=1,currentOrderId="",currentOrder=null,currentDetail=null;
+function esc(s){return String(s??"").replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));}
+function val(id){return document.getElementById(id)?.value.trim()||"";}
+function money(c,currency){return `${esc(currency||"")} ${((parseInt(c)||0)/100).toFixed(2)}`;}
+function closeModal(id){document.getElementById(id).classList.remove("show");}
+function badge(status){const s=String(status||"-");return `<span class="badge badge-info">${esc(s)}</span>`;}
+const SETTLEMENT_MODE_LABELS={full_price:"全价",prorated_difference:"补差价"};
+const CHANGE_MODE_LABELS={new:"新购",renew:"续费",cycle_upgrade:"账期升级",activate_now:"立即升级"};
+function settlementBadge(mode){if(!mode)return "-";const cls=mode==="prorated_difference"?"badge-warning":"badge-info";return `<span class="badge ${cls}">${esc(SETTLEMENT_MODE_LABELS[mode]||mode)}</span>`;}
+function refundedText(o){const refunded=parseInt(o.refunded_amount_cents||0);return refunded>0?money(refunded,o.currency):"-";}
+async function loadRows(p){
+  page=p||1;
+  const q=new URLSearchParams({page,page_size:20});
+  if(val("email"))q.set("email",val("email"));
+  if(val("status"))q.set("status",val("status"));
+  const data=await api("GET",`/api/v1/payment-provider-config/orders?${q}`);
+  document.getElementById("rows").innerHTML=(data.items||[]).map(o=>`<tr>
+    <td><code>${esc(o.order_id)}</code></td><td>${esc(o.user_email)}</td>
+    <td>${esc(o.product_name||o.product_code)}</td><td>${money(o.paid_amount_cents||o.amount_cents,o.currency)}</td>
+    <td>${esc(o.payment_method||"-")} / ${esc(o.payment_channel||"-")}</td><td>${settlementBadge(o.settlement_mode)}</td><td>${badge(o.status)}</td>
+    <td>${refundedText(o)}</td><td>${fmtTime(o.created_at)}</td>
+    <td><button class="btn btn-ghost btn-sm" onclick="openOrder('${esc(o.order_id)}')">详情</button></td>
+  </tr>`).join("");
+  const pages=Math.ceil((data.total||0)/20)||1;
+  document.getElementById("pager").innerHTML=`<span class="page-info">共 ${data.total||0} 条，第 ${page}/${pages} 页</span><button class="btn btn-ghost btn-sm" onclick="loadRows(${page-1})" ${page<=1?"disabled":""}>上一页</button><button class="btn btn-ghost btn-sm" onclick="loadRows(${page+1})" ${page>=pages?"disabled":""}>下一页</button>`;
+}
+function section(title, body){return `<div class="detail-section"><div class="card-title">${esc(title)}</div>${body}</div>`;}
+function kv(rows){return `<div class="kv-grid">${rows.map(([k,v])=>`<div>${esc(k)}</div><strong>${v}</strong>`).join("")}</div>`;}
+function refundRows(rows){return (rows||[]).length?`<table><thead><tr><th>退款号</th><th>方式</th><th>原因</th><th>金额</th><th>状态</th><th>业务处理</th><th>时间</th></tr></thead><tbody>${rows.map(r=>`<tr><td><code>${esc(r.refund_id)}</code></td><td>${esc(r.refund_mode)}</td><td>${esc(r.reason_label||r.reason||"-")}</td><td>${money(r.amount_cents,r.currency)}</td><td>${badge(r.status)}</td><td>${esc((r.business_result||{}).status||"-")}</td><td>${fmtTime(r.created_at)}</td></tr>`).join("")}</tbody></table>`:"<div class='empty-hint'>暂无退款</div>";}
+async function openOrder(id){
+  currentOrderId=id;
+  currentDetail=await api("GET",`/api/v1/payment-provider-config/orders/${encodeURIComponent(id)}`);
+  currentOrder=currentDetail.order||{};
+  const o=currentOrder;
+  const canRefund=["paid","partially_refunded"].includes(String(o.status||""));
+  document.getElementById("refund-open-btn").disabled=!canRefund;
+  const baseRows=[
+    ["订单号",`<code>${esc(o.order_id)}</code>`],["用户",esc(o.user_email)],["商品",esc(o.product_name||o.product_code)],
+    ["订单金额",money(o.amount_cents,o.currency)],["实付金额",money(o.paid_amount_cents||o.amount_cents,o.currency)],
+    ["订单状态",badge(o.status)],["支付渠道",`${esc(o.provider)} / ${esc(o.payment_channel||"-")}`],["支付方式",esc(o.payment_method||"-")],
+    ["结算方式",settlementBadge(o.settlement_mode)],["变更类型",esc(o.change_mode?(CHANGE_MODE_LABELS[o.change_mode]||o.change_mode):"-")]
+  ];
+  if(o.list_price_cents!=null)baseRows.push(["目录原价",money(o.list_price_cents,o.currency)]);
+  if(o.upgrade_credit_cents!=null)baseRows.push(["升级抵扣",money(o.upgrade_credit_cents,o.currency)]);
+  document.getElementById("detail").innerHTML=
+    section("基础信息",kv(baseRows))+
+    section("退款记录",refundRows(currentDetail.refunds))+
+    section("支付尝试",`<pre class="code-block">${esc(JSON.stringify(currentDetail.attempts||[],null,2))}</pre>`)+
+    section("支付事件",`<pre class="code-block">${esc(JSON.stringify(currentDetail.transactions||[],null,2))}</pre>`);
+  document.getElementById("detail-modal").classList.add("show");
+}
+function openRefundPanel(){
+  if(!currentOrderId)return;
+  document.getElementById("refund_mode").value="full";
+  document.getElementById("refund_amount").value="";
+  document.getElementById("refund_reason_code").value="customer_request";
+  document.getElementById("refund_reason_note").value="";
+  document.getElementById("refund_revoke").checked=true;
+  syncRefundMode();
+  document.getElementById("refund-modal").classList.add("show");
+}
+function syncRefundMode(){document.getElementById("refund_amount").disabled=document.getElementById("refund_mode").value!=="partial";}
+async function submitRefund(){
+  if(!currentOrderId)return;
+  const mode=val("refund_mode");
+  const payload={
+    refund_mode:mode,
+    reason_code:val("refund_reason_code")||"other",
+    reason_note:val("refund_reason_note"),
+    revoke_entitlement:document.getElementById("refund_revoke").checked
+  };
+  if(mode==="partial"){
+    const amount=Number(val("refund_amount"));
+    if(!amount||amount<=0){showToast("请填写有效退款金额","error");return;}
+    payload.amount_cents=Math.round(amount*100);
+  }
+  if(!confirm("确认按原支付渠道发起退款？成功后会立即同步订单和套餐权益。"))return;
+  await api("POST",`/api/v1/payment-provider-config/orders/${encodeURIComponent(currentOrderId)}/refund`,payload);
+  closeModal("refund-modal");
+  showToast("退款已提交");
+  await openOrder(currentOrderId);
+  await loadRows(page);
+}
+loadRows(1).catch(e=>showToast(e.message,"error"));
+</script>
+<style>
+.code-block{max-height:260px;overflow:auto;background:rgba(0,0,0,.22);border:1px solid var(--border);border-radius:8px;padding:12px;color:var(--text-muted);font-size:12px}
+.detail-section{margin-top:14px}.kv-grid{display:grid;grid-template-columns:120px 1fr;gap:8px 14px;font-size:13px;color:var(--text-muted)}.kv-grid strong{color:var(--text)}
+.refund-grid{display:grid;gap:10px}.check-line{display:flex;gap:8px;align-items:center;color:var(--text);font-size:14px}.hint-box{margin-top:12px;color:var(--text-muted);font-size:12px;line-height:1.6}.empty-hint{color:var(--text-muted);font-size:13px;padding:10px 0}
+</style>
+{% endblock %}

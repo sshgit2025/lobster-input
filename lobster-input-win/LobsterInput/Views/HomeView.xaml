@@ -1,0 +1,278 @@
+﻿<UserControl x:Class="LobsterInput.Views.HomeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignWidth="600" d:DesignHeight="700"
+             Background="Transparent">
+
+    <UserControl.Resources>
+        <Style x:Key="LatestRecordIconButtonStyle"
+               TargetType="Button"
+               BasedOn="{StaticResource DsIconButtonStyle}">
+            <Setter Property="Width" Value="20"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="Padding" Value="0"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Margin="{StaticResource MainPageHeaderMargin}">
+            <TextBlock x:Name="HomePageTitle"
+                       Style="{DynamicResource DsPageTitleTextStyle}"
+                       VerticalAlignment="Top"
+                       Margin="{StaticResource MainPageTitleTopMargin}" />
+        </Grid>
+
+        <ScrollViewer Grid.Row="1"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled"
+                      Style="{DynamicResource DsScrollViewerStyle}">
+        <StackPanel Margin="{StaticResource MainPageContentMargin}"
+                    Width="{StaticResource MainPageCompactContentWidth}"
+                    HorizontalAlignment="Center">
+
+            <!-- OpenClaw Section -->
+            <Border x:Name="OpenClawCard"
+                    Style="{DynamicResource DsCardStyle}"
+                    Margin="0,0,0,36"
+                    Padding="28">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock x:Name="OpenClawTitle"
+                                       FontSize="15"
+                                       FontWeight="SemiBold"
+                                       FontFamily="{DynamicResource AppFont}"
+                                       Foreground="{DynamicResource DsFgBrush}"
+                                       TextWrapping="Wrap"/>
+                            <TextBlock x:Name="OpenClawDesc"
+                                       FontSize="12"
+                                       FontFamily="{DynamicResource AppFont}"
+                                       Foreground="{DynamicResource DsFgMutedBrush}"
+                                       TextWrapping="Wrap"
+                                       Margin="0,4,0,0"/>
+                        </StackPanel>
+                        <Button x:Name="OpenClawUninstallBtn"
+                                Grid.Column="1"
+                                Content="&#xE74D;"
+                                FontFamily="{DynamicResource IconFont}"
+                                Style="{DynamicResource DsIconDangerHoverButtonStyle}"
+                                Click="OnOpenClawUninstallClick"/>
+                    </Grid>
+                    <StackPanel Orientation="Horizontal"
+                                Margin="0,14,0,0">
+                        <Button x:Name="OpenClawPrimaryBtn"
+                                Style="{DynamicResource DsButtonPrimaryStyle}"
+                                Padding="14,6"
+                                Click="OnOpenClawPrimaryClick"/>
+                        <TextBlock x:Name="OpenClawHint"
+                                   Style="{DynamicResource DsCaptionTextStyle}"
+                                   VerticalAlignment="Center"
+                                   Margin="12,0,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Hotkeys Section -->
+            <TextBlock x:Name="HotkeySectionLabel"
+                       Style="{DynamicResource DsSectionTitleStyle}"
+                       Margin="0,0,0,10"/>
+
+            <Border Style="{DynamicResource DsCardStyle}" Margin="0,0,0,36" Padding="0">
+                <StackPanel>
+                    <Grid Margin="22,14">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="HotkeyTranscribeLabel"
+                                   Style="{DynamicResource DsBodyTextStyle}"
+                                   VerticalAlignment="Center"/>
+                        <ContentControl x:Name="HotkeyTranscribeValue"
+                                        Grid.Column="1"
+                                        HorizontalAlignment="Right"/>
+                    </Grid>
+                    <Rectangle Height="1" Fill="{DynamicResource DsLineBrush}" Margin="16,0"/>
+                    <Grid Margin="22,14">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="HotkeyRewriteLabel"
+                                   Style="{DynamicResource DsBodyTextStyle}"
+                                   VerticalAlignment="Center"/>
+                        <ContentControl x:Name="HotkeyRewriteValue"
+                                        Grid.Column="1"
+                                        HorizontalAlignment="Right"/>
+                    </Grid>
+                    <Rectangle Height="1" Fill="{DynamicResource DsLineBrush}" Margin="16,0"/>
+                    <Grid Margin="22,14">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="HotkeyAgentLabel"
+                                   Style="{DynamicResource DsBodyTextStyle}"
+                                   VerticalAlignment="Center"/>
+                        <ContentControl x:Name="HotkeyAgentValue"
+                                        Grid.Column="1"
+                                        HorizontalAlignment="Right"/>
+                    </Grid>
+                    <Rectangle Height="1" Fill="{DynamicResource DsLineBrush}" Margin="16,0"/>
+                    <Grid Margin="22,14">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="HotkeyScreenshotLabel"
+                                   Style="{DynamicResource DsBodyTextStyle}"
+                                   VerticalAlignment="Center"/>
+                        <ContentControl x:Name="HotkeyScreenshotValue"
+                                        Grid.Column="1"
+                                        HorizontalAlignment="Right"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Latest Recognition Result -->
+            <Grid Margin="0,0,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="LatestSectionLabel"
+                           Style="{DynamicResource DsSectionTitleStyle}"/>
+                <TextBlock x:Name="LatestMetaText"
+                           Grid.Column="1"
+                           Style="{DynamicResource DsCaptionTextStyle}"
+                           Foreground="{DynamicResource DsFgSubtleBrush}"/>
+            </Grid>
+
+            <Border Style="{DynamicResource DsCardStyle}" Margin="0,0,0,20" Padding="22,18">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0"
+                                    Margin="0,0,18,0">
+                            <TextBlock x:Name="TranscriptText"
+                                       Style="{DynamicResource DsCaptionTextStyle}"
+                                       Foreground="{DynamicResource DsFgSubtleBrush}"
+                                       TextWrapping="Wrap"
+                                       LineHeight="20"
+                                       Margin="0,0,0,8"/>
+                            <TextBlock x:Name="ResultText"
+                                       FontSize="13.5"
+                                       FontFamily="{DynamicResource AppFont}"
+                                       Foreground="{DynamicResource DsFgBrush}"
+                                       TextWrapping="Wrap"
+                                       LineHeight="22"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1"
+                                    Orientation="Horizontal"
+                            VerticalAlignment="Top">
+                            <Button x:Name="LatestSummaryCopyBtn"
+                                    Style="{StaticResource LatestRecordIconButtonStyle}"
+                                    FontFamily="{DynamicResource IconFont}"
+                                    Click="OnLatestCopySummaryClick"/>
+                            <Button x:Name="LatestRetryBtn"
+                                    Style="{StaticResource LatestRecordIconButtonStyle}"
+                                    FontFamily="{DynamicResource IconFont}"
+                                    Margin="6,0,0,0"
+                                    Visibility="Collapsed"
+                                    Click="OnLatestRetryClick"/>
+                            <Button x:Name="LatestDetailsToggleBtn"
+                                    Style="{StaticResource LatestRecordIconButtonStyle}"
+                                    FontFamily="{DynamicResource IconFont}"
+                                    Margin="6,0,0,0"
+                                    Visibility="Collapsed"
+                                    Click="OnLatestDetailsToggleClick"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <StackPanel x:Name="LatestDetailsPanel"
+                                Visibility="Collapsed"
+                                Margin="0,16,0,0">
+                        <Border Height="1"
+                                Background="{DynamicResource DsLineBrush}"
+                                Margin="0,0,0,14"/>
+
+                        <Grid Margin="0,0,0,4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock x:Name="TranscriptLabel"
+                                       Style="{DynamicResource DsCaptionTextStyle}"
+                                       Foreground="{DynamicResource DsFgSubtleBrush}"/>
+                            <Button x:Name="TranscriptCopyBtn"
+                                    Grid.Column="1"
+                                    Style="{StaticResource LatestRecordIconButtonStyle}"
+                                    FontFamily="{DynamicResource IconFont}"
+                                    Click="OnLatestCopyTranscriptClick"/>
+                        </Grid>
+                        <TextBlock x:Name="TranscriptDetailText"
+                                   Style="{DynamicResource DsBodyTextStyle}"
+                                   Foreground="{DynamicResource DsFgMutedBrush}"
+                                   TextWrapping="Wrap"
+                                   Margin="0,0,0,12"/>
+
+                        <Grid Margin="0,0,0,4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock x:Name="ResultLabel"
+                                       Style="{DynamicResource DsCaptionTextStyle}"
+                                       Foreground="{DynamicResource DsFgSubtleBrush}"/>
+                            <Button x:Name="ResultCopyBtn"
+                                    Grid.Column="1"
+                                    Style="{StaticResource LatestRecordIconButtonStyle}"
+                                    FontFamily="{DynamicResource IconFont}"
+                                    Click="OnLatestCopyResultClick"/>
+                        </Grid>
+                        <TextBlock x:Name="ResultDetailText"
+                                   Style="{DynamicResource DsBodyTextStyle}"
+                                   TextWrapping="Wrap"/>
+                        <ScrollViewer x:Name="LatestMarkdownScroll"
+                                      VerticalScrollBarVisibility="Auto"
+                                      HorizontalScrollBarVisibility="Disabled"
+                                      Style="{DynamicResource DsScrollViewerStyle}"
+                                      MaxHeight="220"
+                                      Visibility="Collapsed"
+                                      Margin="0,0,0,0">
+                            <RichTextBox x:Name="LatestMarkdownContent"
+                                         IsReadOnly="True"
+                                         Focusable="False"
+                                         IsDocumentEnabled="True"
+                                         Background="Transparent"
+                                         BorderThickness="0"
+                                         Padding="0"
+                                         Foreground="{DynamicResource DsFgBrush}"
+                                         FontFamily="{DynamicResource AppFont}"
+                                         FontSize="13"
+                                         ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"/>
+                        </ScrollViewer>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

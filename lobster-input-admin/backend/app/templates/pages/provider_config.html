@@ -1,0 +1,219 @@
+{% extends "base.html" %}
+{% block title %}Provider 配置 - Lobster Admin{% endblock %}
+{% block body %}
+<div class="layout">
+  {% include "partials/sidebar.html" %}
+  <main class="main">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+      <div class="page-title" style="margin:0">Provider 配置</div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-ghost btn-sm" onclick="openProviderModal()">新增 Provider</button>
+        <button class="btn btn-primary" onclick="saveRuntime()">保存并清缓存</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">业务节点</div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>节点</th><th>分类</th><th>Provider</th><th>启用</th><th>输入</th><th>输出</th></tr></thead>
+        <tbody id="nodeRows"></tbody>
+      </table></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Provider 与号池分组绑定</div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Provider</th><th>分类</th><th>实现</th><th>号池分组</th><th>启用</th><th>操作</th></tr></thead>
+        <tbody id="providerRows"></tbody>
+      </table></div>
+      <div style="font-size:12px;color:var(--text-muted);margin-top:8px">管理端只绑定号池 group_id；同组多 Key 的负载均衡、额度、冷却和错误摘除由号池端负责。</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">号池实时目录</div>
+      <div id="poolCatalogHint" style="font-size:12px;color:var(--text-muted);margin-bottom:10px"></div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>分类</th><th>平台</th><th>分组</th><th>Key</th><th>状态</th></tr></thead>
+        <tbody id="catalogRows"></tbody>
+      </table></div>
+    </div>
+  </main>
+</div>
+
+<div class="modal-overlay" id="providerModal">
+  <div class="modal">
+    <div class="modal-title">Provider 配置</div>
+    <input type="hidden" id="providerOriginalId">
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Provider ID</label><input class="form-input" id="providerId" placeholder="llm_aliyun"></div>
+      <div class="form-group"><label class="form-label">名称</label><input class="form-input" id="providerName"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">分类</label><select class="form-select" id="providerCategory" onchange="renderProviderGroups()"></select></div>
+      <div class="form-group"><label class="form-label">实现</label><input class="form-input" id="providerImplementation" placeholder="aliyun / dashscope_web_search"></div>
+    </div>
+    <div class="form-group"><label class="form-label">号池分组</label><select class="form-select" id="providerGroup"></select></div>
+    <label class="form-checkbox"><input type="checkbox" id="providerEnabled" checked> 启用</label>
+    <div class="form-group"><label class="form-label">附加配置 JSON</label><textarea class="form-input" id="providerConfigJson" rows="5" placeholder='{"search_strategy":"agent"}'></textarea></div>
+    <div class="modal-actions"><button class="btn btn-ghost" onclick="closeModal('providerModal')">取消</button><button class="btn btn-primary" onclick="saveProviderModal()">确定</button></div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+{% endblock %}
+{% block scripts %}
+<script>
+let runtime={providers:{},nodes:{}};
+let catalog={categories:[],platforms:[],groups:[]};
+const CATEGORY_LABELS={asr:"ASR 语音识别",asr_realtime:"实时 ASR",llm_chat:"LLM 文本对话",web_search:"联网搜索",embedding:"向量 Embedding",tts:"音频合成"};
+
+function esc(s){return String(s??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[ch]));}
+function closeModal(id){document.getElementById(id).classList.remove("show");}
+function schemaText(obj){return Object.keys(obj||{}).map(k=>`${k}:${obj[k]}`).join(", ")||"-";}
+function groupById(groupId){return (catalog.groups||[]).find(g=>g.group_id===groupId);}
+function groupKeyText(group){return `${group?.active_key_count||0}/${group?.total_key_count||0} active`;}
+function providerGroupCell(provider){
+  const group=groupById(provider.pool_group_id);
+  if(!group){
+    return `<code>${esc(provider.pool_group_id)}</code><div style="font-size:12px;color:var(--danger)">分组不存在</div>`;
+  }
+  const active=Number(group.active_key_count||0);
+  const ok=group.enabled!==false&&active>0;
+  const badge=ok?'<span class="badge badge-success">可用</span>':`<span class="badge ${group.enabled===false?'badge-warning':'badge-danger'}">${group.enabled===false?'分组停用':'无有效 Key'}</span>`;
+  return `<code>${esc(provider.pool_group_id)}</code><div style="display:flex;gap:6px;align-items:center;margin-top:4px;font-size:12px;color:var(--text-muted)">${badge}<span>${esc(groupKeyText(group))}</span></div>`;
+}
+
+async function loadAll(){
+  runtime=await api("GET","/api/v1/provider-config/runtime");
+  catalog=await api("GET","/api/v1/provider-config/pool-catalog");
+  renderNodes();
+  renderProviders();
+  renderCatalog();
+}
+
+function providerOptions(category, selected){
+  return Object.values(runtime.providers).filter(p=>p.category===category).map(p=>{
+    const group=groupById(p.pool_group_id);
+    const active=Number(group?.active_key_count||0);
+    const suffix=p.enabled===false?" - 已停用":(!group?" - 分组不存在":(group.enabled===false?" - 分组停用":(active<=0?" - 无有效 Key":"")));
+    return `<option value="${p.provider_id}" ${p.provider_id===selected?"selected":""}>${esc(p.name)} (${p.provider_id})${esc(suffix)}</option>`;
+  }).join("");
+}
+
+function renderNodes(){
+  document.getElementById("nodeRows").innerHTML=Object.values(runtime.nodes).map(n=>`<tr>
+    <td><code>${n.node_id}</code><div style="font-size:12px;color:var(--text-muted)">${esc(n.name)}</div></td>
+    <td>${CATEGORY_LABELS[n.category]||n.category}</td>
+    <td><select class="form-select" id="node-provider-${n.node_id}">${providerOptions(n.category,n.provider_id)}</select></td>
+    <td><input type="checkbox" id="node-enabled-${n.node_id}" ${n.enabled!==false?"checked":""}></td>
+    <td style="font-size:12px;color:var(--text-muted)">${esc(schemaText(n.input_schema))}</td>
+    <td style="font-size:12px;color:var(--text-muted)">${esc(schemaText(n.output_schema))}</td>
+  </tr>`).join("");
+}
+
+function renderProviders(){
+  document.getElementById("providerRows").innerHTML=Object.values(runtime.providers).map(p=>`<tr>
+    <td><code>${p.provider_id}</code><div style="font-size:12px;color:var(--text-muted)">${esc(p.name)}</div></td>
+    <td>${CATEGORY_LABELS[p.category]||p.category}</td><td><code>${p.implementation}</code></td>
+    <td>${providerGroupCell(p)}</td>
+    <td>${p.enabled?'<span class="badge badge-success">启用</span>':'<span class="badge badge-info">停用</span>'}</td>
+    <td><button class="btn btn-ghost btn-sm" onclick="editProvider('${p.provider_id}')">编辑</button></td>
+  </tr>`).join("");
+}
+
+function renderCatalog(){
+  if(catalog.warning) document.getElementById("poolCatalogHint").textContent=catalog.warning;
+  document.getElementById("catalogRows").innerHTML=(catalog.groups||[]).map(g=>`<tr>
+    <td>${CATEGORY_LABELS[g.category]||g.category}</td><td>${g.platform_code}</td><td><code>${g.group_id}</code></td>
+    <td>${g.active_key_count||0}/${g.total_key_count||0}</td>
+    <td>${g.enabled?'<span class="badge badge-success">启用</span>':'<span class="badge badge-muted">停用</span>'}</td>
+  </tr>`).join("")||'<tr><td colspan="5" style="text-align:center;color:var(--text-muted)">暂无号池分组</td></tr>';
+}
+
+function providerCategories(){
+  return [...new Set([...(catalog.categories||[]),...Object.values(runtime.providers).map(p=>p.category)])].filter(Boolean).sort();
+}
+
+function renderProviderGroups(){
+  const cat=document.getElementById("providerCategory").value;
+  const selected=document.getElementById("providerGroup").dataset.selected||"";
+  const groups=(catalog.groups||[]).filter(g=>g.category===cat&&g.enabled!==false);
+  document.getElementById("providerGroup").innerHTML=groups.map(g=>`<option value="${g.group_id}" ${g.group_id===selected?"selected":""}>${g.platform_code} — ${g.group_id} (${g.active_key_count||0}/${g.total_key_count||0} active)</option>`).join("");
+}
+
+function openProviderModal(){
+  const cats=providerCategories();
+  document.getElementById("providerOriginalId").value="";
+  document.getElementById("providerId").value="";
+  document.getElementById("providerName").value="";
+  document.getElementById("providerImplementation").value="";
+  document.getElementById("providerConfigJson").value="{}";
+  document.getElementById("providerEnabled").checked=true;
+  document.getElementById("providerCategory").innerHTML=cats.map(c=>`<option value="${c}">${CATEGORY_LABELS[c]||c}</option>`).join("");
+  document.getElementById("providerGroup").dataset.selected="";
+  renderProviderGroups();
+  document.getElementById("providerModal").classList.add("show");
+}
+
+function editProvider(pid){
+  const p=runtime.providers[pid]; if(!p)return;
+  openProviderModal();
+  document.getElementById("providerOriginalId").value=pid;
+  document.getElementById("providerId").value=p.provider_id;
+  document.getElementById("providerName").value=p.name||"";
+  document.getElementById("providerCategory").value=p.category;
+  document.getElementById("providerImplementation").value=p.implementation||"";
+  document.getElementById("providerEnabled").checked=p.enabled!==false;
+  document.getElementById("providerConfigJson").value=JSON.stringify(p.config||{},null,2);
+  document.getElementById("providerGroup").dataset.selected=p.pool_group_id;
+  renderProviderGroups();
+}
+
+function saveProviderModal(){
+  const original=document.getElementById("providerOriginalId").value;
+  const provider_id=document.getElementById("providerId").value.trim().toLowerCase().replace(/\s+/g,"_");
+  if(!provider_id)return showToast("Provider ID 不能为空","error");
+  const implementation=document.getElementById("providerImplementation").value.trim().toLowerCase();
+  const pool_group_id=document.getElementById("providerGroup").value;
+  if(!implementation)return showToast("Provider 实现不能为空","error");
+  if(!pool_group_id)return showToast("请选择号池分组","error");
+  let cfg={};
+  try{cfg=JSON.parse(document.getElementById("providerConfigJson").value||"{}");}catch(e){return showToast("附加配置不是合法 JSON","error");}
+  if(original&&original!==provider_id) delete runtime.providers[original];
+  runtime.providers[provider_id]={
+    provider_id,
+    name:document.getElementById("providerName").value.trim()||provider_id,
+    category:document.getElementById("providerCategory").value,
+    implementation,
+    pool_group_id,
+    enabled:document.getElementById("providerEnabled").checked,
+    config:cfg
+  };
+  closeModal("providerModal");
+  renderNodes();renderProviders();
+}
+
+function readRuntimeFromDom(){
+  Object.values(runtime.nodes).forEach(n=>{
+    const p=document.getElementById(`node-provider-${n.node_id}`);
+    const e=document.getElementById(`node-enabled-${n.node_id}`);
+    if(p)n.provider_id=p.value;
+    if(e)n.enabled=e.checked;
+  });
+  return {providers:runtime.providers,nodes:runtime.nodes};
+}
+
+async function saveRuntime(){
+  try{
+    const saved=await api("POST","/api/v1/provider-config/runtime",readRuntimeFromDom());
+    runtime=saved;
+    showToast("配置已保存，后端缓存已清理","success");
+    renderNodes();renderProviders();
+  }catch(e){
+    showToast(e.message,"error");
+  }
+}
+
+loadAll().catch(e=>showToast(e.message,"error"));
+</script>
+{% endblock %}

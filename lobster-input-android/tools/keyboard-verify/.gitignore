@@ -1,0 +1,4 @@
+__pycache__/
+*.pyc
+custom_dict_v3_generated.txt
+custom_dict_generated.txt

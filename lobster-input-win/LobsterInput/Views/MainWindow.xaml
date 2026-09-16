@@ -1,0 +1,174 @@
+<Window x:Class="LobsterInput.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:LobsterInput.ViewModels"
+        Title=""
+        Icon="pack://application:,,,/LobsterInput;component/Resources/Images/lobster.ico"
+        Style="{StaticResource WindowsChromeWindowStyle}"
+        Width="{StaticResource WindowWidth}"
+        Height="{StaticResource WindowHeight}"
+        MinWidth="{StaticResource WindowWidth}"
+        MinHeight="{StaticResource WindowHeight}"
+        MaxWidth="{StaticResource WindowWidth}"
+        MaxHeight="{StaticResource WindowHeight}"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        PreviewMouseLeftButtonDown="Window_PreviewMouseLeftButtonDown">
+
+    <Window.DataContext>
+        <vm:MainViewModel />
+    </Window.DataContext>
+
+    <Grid Background="{DynamicResource DsBgBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="220" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <ContentControl Grid.Column="0" Style="{StaticResource SidebarShellStyle}">
+            <DockPanel LastChildFill="True">
+                <StackPanel DockPanel.Dock="Top" Margin="18,0,0,24">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="pack://application:,,,/LobsterInput;component/Resources/Images/lobster.png"
+                               Width="28"
+                               Height="28"
+                               RenderOptions.BitmapScalingMode="HighQuality" />
+                        <TextBlock x:Name="AppNameText"
+                                   VerticalAlignment="Center"
+                                   Margin="9,0,0,0"
+                                   FontFamily="{StaticResource AppFont}"
+                                   FontSize="13"
+                                   FontWeight="{StaticResource FontWeightSemiBold}"
+                                   Foreground="{DynamicResource DsFgBrush}" />
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel DockPanel.Dock="Bottom">
+                    <Border Style="{StaticResource DsDividerStyle}" Margin="0,0,0,12" />
+
+                    <Grid Margin="0,0,0,8" MinHeight="42">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <Border x:Name="AccountButton"
+                                Grid.Column="0"
+                                Height="40"
+                                Padding="10,6"
+                                Background="{DynamicResource DsBgHoverBrush}"
+                                CornerRadius="{StaticResource RadiusMd}"
+                                Cursor="Hand"
+                                Focusable="True"
+                                KeyDown="AccountButton_KeyDown"
+                                MouseLeftButtonDown="AccountButton_Click">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="BorderBrush" Value="{DynamicResource DsLineBrush}" />
+                                    <Setter Property="BorderThickness" Value="1" />
+                                    <Style.Triggers>
+                                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                            <Setter Property="BorderBrush" Value="{DynamicResource DsAccentRingBrush}" />
+                                            <Setter Property="BorderThickness" Value="2" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0"
+                                           Text="&#xE77B;"
+                                           FontFamily="{StaticResource IconFont}"
+                                           FontSize="15"
+                                           Foreground="{DynamicResource DsFgMutedBrush}"
+                                           VerticalAlignment="Center"
+                                           Margin="0,0,8,0" />
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock x:Name="AccountEmailText"
+                                               FontFamily="{StaticResource AppFont}"
+                                               FontSize="12"
+                                               Foreground="{DynamicResource DsFgBrush}"
+                                               TextTrimming="CharacterEllipsis" />
+                                    <TextBlock x:Name="AccountPlanText"
+                                               FontFamily="{StaticResource AppFont}"
+                                               FontSize="10"
+                                               Foreground="{DynamicResource DsAccentBrush}"
+                                               TextTrimming="CharacterEllipsis" />
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <Button x:Name="SidebarLanguageButton"
+                                Grid.Column="1"
+                                Style="{StaticResource DsIconButtonStyle}"
+                                Margin="8,0,0,0"
+                                VerticalAlignment="Center"
+                                Click="SidebarLanguageButton_Click">
+                            <TextBlock Text="&#xE774;" FontFamily="{StaticResource IconFont}" FontSize="13" />
+                        </Button>
+
+                        <Button x:Name="BtnAppMenu"
+                                Grid.Column="2"
+                                Style="{StaticResource DsIconButtonStyle}"
+                                Margin="4,0,0,0"
+                                VerticalAlignment="Center"
+                                Click="AppMenuButton_Click">
+                            <TextBlock Text="&#xE712;" FontFamily="{StaticResource IconFont}" FontSize="13" />
+                        </Button>
+                    </Grid>
+                </StackPanel>
+
+                <ScrollViewer Style="{StaticResource DsScrollViewerStyle}">
+                    <StackPanel>
+                        <RadioButton x:Name="NavHome"
+                                     GroupName="NavTabs"
+                                     Style="{StaticResource SidebarNavButton}"
+                                     IsChecked="{Binding IsHomeSelected, Mode=TwoWay}"
+                                     Command="{Binding SwitchTabCommand}"
+                                     CommandParameter="Home">
+                            <TextBlock Text="&#xE80F;" FontFamily="{StaticResource IconFont}" FontSize="16" />
+                        </RadioButton>
+                        <RadioButton x:Name="NavDictionary"
+                                     GroupName="NavTabs"
+                                     Style="{StaticResource SidebarNavButton}"
+                                     IsChecked="{Binding IsDictionarySelected, Mode=TwoWay}"
+                                     Command="{Binding SwitchTabCommand}"
+                                     CommandParameter="Dictionary">
+                            <TextBlock Text="&#xE82D;" FontFamily="{StaticResource IconFont}" FontSize="16" />
+                        </RadioButton>
+                        <RadioButton x:Name="NavPersona"
+                                     GroupName="NavTabs"
+                                     Style="{StaticResource SidebarNavButton}"
+                                     IsChecked="{Binding IsPersonaSelected, Mode=TwoWay}"
+                                     Command="{Binding SwitchTabCommand}"
+                                     CommandParameter="Persona">
+                            <TextBlock Text="&#xE77B;" FontFamily="{StaticResource IconFont}" FontSize="16" />
+                        </RadioButton>
+                        <RadioButton x:Name="NavHistory"
+                                     GroupName="NavTabs"
+                                     Style="{StaticResource SidebarNavButton}"
+                                     IsChecked="{Binding IsHistorySelected, Mode=TwoWay}"
+                                     Command="{Binding SwitchTabCommand}"
+                                     CommandParameter="History">
+                            <TextBlock Text="&#xE81C;" FontFamily="{StaticResource IconFont}" FontSize="16" />
+                        </RadioButton>
+                        <RadioButton x:Name="NavSettings"
+                                     GroupName="NavTabs"
+                                     Style="{StaticResource SidebarNavButton}"
+                                     IsChecked="{Binding IsSettingsSelected, Mode=TwoWay}"
+                                     Command="{Binding SwitchTabCommand}"
+                                     CommandParameter="Settings">
+                            <TextBlock Text="&#xE713;" FontFamily="{StaticResource IconFont}" FontSize="16" />
+                        </RadioButton>
+                    </StackPanel>
+                </ScrollViewer>
+            </DockPanel>
+        </ContentControl>
+
+        <Grid Grid.Column="1" x:Name="ContentHost" Background="{DynamicResource DsBgBrush}" />
+    </Grid>
+</Window>

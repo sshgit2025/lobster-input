@@ -1,0 +1,215 @@
+{% extends "base.html" %}
+{% block title %}内置人设 - Lobster Admin{% endblock %}
+{% block body %}
+<div class="layout">
+  {% include "partials/sidebar.html" %}
+  <main class="main">
+    <div class="page-title">🎭 内置人设</div>
+    <div class="card">
+      <div class="card-title" style="display:flex;justify-content:space-between;align-items:center">
+        公共内置人设
+        <button class="btn btn-primary btn-sm" onclick="openEditor(null)">+ 新增内置人设</button>
+      </div>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:14px">
+        内置人设不计入用户 10 个自定义人设额度。客户端只能启用或取消启用，只展示对应界面语言的标题和描述，不展示提示词内容。
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>中文名称</th>
+              <th>中文描述</th>
+              <th>状态</th>
+              <th>国际化</th>
+              <th>启用模块</th>
+              <th>最后更新</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="modal-overlay" id="persona-modal">
+  <div class="modal modal-form">
+    <div class="modal-title" id="modal-title">新增内置人设</div>
+    <div class="modal-body">
+      <div class="modal-help">
+        标题和描述按客户端界面语言展示。简体中文标题必填，其它语种为空时客户端按后端兜底规则回退。
+      </div>
+      <div id="i18n-fields" class="modal-grid" style="margin-bottom:14px"></div>
+
+      <div class="form-group">
+        <label class="form-label">语音转文字提示词（非空即启用）</label>
+        <textarea id="transcribe_prompt" class="form-input" maxlength="4000" style="height:120px;resize:vertical;font-family:monospace"></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">改写 / 生成提示词（非空即启用）</label>
+        <textarea id="rewrite_prompt" class="form-input" maxlength="4000" style="height:120px;resize:vertical;font-family:monospace"></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Agent 意图识别补充（非空即启用）</label>
+        <textarea id="intent_hint" class="form-input" maxlength="4000" style="height:100px;resize:vertical;font-family:monospace"></textarea>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">取消</button>
+      <button class="btn btn-primary" onclick="savePersona()">保存</button>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let items = [];
+let editingId = null;
+const languages = [
+  ["zh", "简体中文", true],
+  ["zh-Hant", "繁體中文", false],
+  ["yue", "粵語", false],
+  ["en", "English", false],
+  ["ru", "Русский", false],
+  ["ko", "한국어", false],
+];
+
+function esc(s) {
+  return String(s || "").replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function closeModal() {
+  document.getElementById("persona-modal").classList.remove("show");
+}
+
+function moduleText(p) {
+  const out = [];
+  if (p?.transcribe_enabled) out.push("语音转文字");
+  if (p?.rewrite_enabled) out.push("改写/生成");
+  if (p?.intent_enabled) out.push("意图识别");
+  return out.length ? out.join("、") : "未启用";
+}
+
+function ensureI18nFields() {
+  const root = document.getElementById("i18n-fields");
+  if (root.children.length) return;
+  root.innerHTML = languages.map(([code, label, required]) => `
+    <div class="form-group" style="margin:0">
+      <label class="form-label">${label}标题${required ? " *" : ""}</label>
+      <input id="name_${code}" class="form-input" maxlength="60" placeholder="${required ? "例如：会议纪要助手" : "为空则回退"}">
+    </div>
+    <div class="form-group" style="margin:0">
+      <label class="form-label">${label}描述</label>
+      <input id="desc_${code}" class="form-input" maxlength="200" placeholder="客户端列表展示文案，可为空">
+    </div>
+  `).join("");
+}
+
+function i18nCoverage(item) {
+  const names = item.localized_names || {};
+  return languages
+    .filter(([code]) => names[code])
+    .map(([, label]) => label)
+    .join("、") || "未配置";
+}
+
+function openEditor(item) {
+  ensureI18nFields();
+  editingId = item?.id || null;
+  document.getElementById("modal-title").textContent = editingId ? "编辑内置人设" : "新增内置人设";
+  const names = item?.localized_names || {};
+  const descs = item?.localized_descriptions || {};
+  for (const [code] of languages) {
+    document.getElementById(`name_${code}`).value = names[code] || "";
+    document.getElementById(`desc_${code}`).value = descs[code] || "";
+  }
+  const p = item?.prompts || {};
+  for (const key of ["transcribe", "rewrite"]) {
+    document.getElementById(`${key}_prompt`).value = p[`${key}_prompt`] || "";
+  }
+  document.getElementById("intent_hint").value = p.intent_hint || "";
+  document.getElementById("persona-modal").classList.add("show");
+}
+
+async function loadPersonas() {
+  const res = await fetch("{{ base_url }}/api/v1/personas/builtin");
+  const data = await res.json();
+  items = data.personas || [];
+  const tbody = document.getElementById("tbody");
+  tbody.innerHTML = items.map(item => `
+    <tr>
+      <td>${esc(item.name)}</td>
+      <td>${esc(item.description || "")}</td>
+      <td><span class="badge ${item.is_enabled ? "badge-success" : "badge-danger"}">${item.is_enabled ? "已启用" : "已关闭"}</span></td>
+      <td>${esc(i18nCoverage(item))}</td>
+      <td>${esc(moduleText(item.prompts))}</td>
+      <td>${esc(item.updated_at || item.created_at || "")}</td>
+      <td style="display:flex;gap:6px;flex-wrap:wrap">
+        <button class="btn btn-sm ${item.is_enabled ? "btn-ghost" : "btn-primary"}" onclick='togglePersona("${item.id}", ${!item.is_enabled})'>${item.is_enabled ? "关闭" : "启用"}</button>
+        <button class="btn btn-sm btn-ghost" onclick='openEditor(items.find(x=>x.id=="${item.id}"))'>编辑</button>
+        <button class="btn btn-sm btn-danger" onclick='deletePersona("${item.id}")'>删除</button>
+      </td>
+    </tr>
+  `).join("") || '<tr><td colspan="7" style="color:var(--text-muted)">暂无内置人设</td></tr>';
+}
+
+async function savePersona() {
+  const localized_names = {};
+  const localized_descriptions = {};
+  for (const [code] of languages) {
+    const name = document.getElementById(`name_${code}`).value.trim();
+    const desc = document.getElementById(`desc_${code}`).value.trim();
+    if (name) localized_names[code] = name;
+    if (desc) localized_descriptions[code] = desc;
+  }
+  if (!localized_names.zh) return alert("请输入简体中文标题");
+  const body = {
+    localized_names,
+    localized_descriptions,
+    prompts: {
+      transcribe_prompt: document.getElementById("transcribe_prompt").value,
+      transcribe_enabled: true,
+      rewrite_prompt: document.getElementById("rewrite_prompt").value,
+      rewrite_enabled: true,
+      intent_hint: document.getElementById("intent_hint").value,
+      intent_enabled: true,
+    }
+  };
+  const url = editingId ? `{{ base_url }}/api/v1/personas/builtin/${editingId}` : "{{ base_url }}/api/v1/personas/builtin";
+  const res = await fetch(url, {
+    method: editingId ? "PUT" : "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) return alert("保存失败");
+  closeModal();
+  await loadPersonas();
+}
+
+async function togglePersona(id, nextEnabled) {
+  const message = nextEnabled
+    ? "确认启用这个内置人设？启用后各客户端可在刷新人设列表后看到并使用。"
+    : "确认关闭这个内置人设？关闭后各客户端不再展示；已激活该人设的用户会在下次语音请求或刷新列表时自动回退到无激活人设状态。";
+  if (!confirm(message)) return;
+  const res = await fetch(`{{ base_url }}/api/v1/personas/builtin/${id}/enabled`, {
+    method: "PATCH",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({is_enabled: nextEnabled}),
+  });
+  if (!res.ok) return alert(nextEnabled ? "启用失败" : "关闭失败");
+  await loadPersonas();
+}
+
+async function deletePersona(id) {
+  if (!confirm("确认删除这个内置人设？已启用该人设的用户会自动回退到无激活人设。")) return;
+  const res = await fetch(`{{ base_url }}/api/v1/personas/builtin/${id}`, {method: "DELETE"});
+  if (!res.ok) return alert("删除失败");
+  await loadPersonas();
+}
+
+loadPersonas();
+</script>
+{% endblock %}

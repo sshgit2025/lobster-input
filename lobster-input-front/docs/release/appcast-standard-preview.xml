@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
+    <channel>
+        <title>龙虾输入法 Standard Preview Updates</title>
+        <link>https://downloads.example.com/preview/mac/appcast-standard.xml</link>
+        <description>龙虾输入法 standard 内测版更新（preview 内测环境）</description>
+        <language>zh-CN</language>
+        <item>
+            <title>版本 0.3.6 (Build 221)</title>
+            <pubDate>Wed, 15 Jul 2026 03:25:29 -0700</pubDate>
+            <sparkle:version>221</sparkle:version>
+            <sparkle:shortVersionString>0.3.6</sparkle:shortVersionString>
+            <description><![CDATA[
+                <h3>0.3.6 更新内容 (Build 221)</h3>
+                <ul>
+  <li>内测通道迁移：内测版此后通过独立内测通道（preview 环境）更新。</li>
+  <li>新增环境徽章：主界面与设置页显示「内测版」标识。</li>
+</ul>
+            ]]></description>
+            <enclosure
+                url="https://downloads.example.com/preview/mac/voice-input-0.3.6-b221.zip"
+                sparkle:edSignature="Zg4GKA9oek9H1SMEIoIWfm5Q60Fjnn5+HefFo7W5/40rz5ht9/KM5fyYB84Tm82ybTq/zwQrUPK4goxBll8qCw=="
+                length="6047069"
+                type="application/octet-stream"/>
+        </item>
+    </channel>
+</rss>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
+    <channel>
+        <title>龙虾输入法 Standard Testing Updates</title>
+        <link>https://downloads.example.com/appcast-standard-testing.xml</link>
+        <description>龙虾输入法 standard 测试版更新</description>
+        <language>zh-CN</language>
+        <item>
+            <title>版本 0.3.5 (Build 219)</title>
+            <pubDate>Wed, 15 Jul 2026 01:13:59 -0700</pubDate>
+            <sparkle:version>219</sparkle:version>
+            <sparkle:shortVersionString>0.3.5</sparkle:shortVersionString>
+            <description><![CDATA[
+                <h3>0.3.5 内测更新 (Build 219)</h3>
+                <ul>
+  <li>更新语音快捷键默认值：语音输入=单击 Fn，改写=Fn+⇧(Shift)，智能体=Fn+空格</li>
+  <li>已自定义快捷键的用户不受影响，仅新用户与未配置用户生效</li>
+  <li>修复录制 Fn+修饰键组合(如 Fn+⇧)时 Fn 被丢失的问题</li>
+  <li>修复 Fn+⇧ 松开时可能连带触发 Fn 单键功能的问题</li>
+</ul>
+            ]]></description>
+            <enclosure
+                url="https://downloads.example.com/standard/voice-input-0.3.5-b219.zip"
+                sparkle:edSignature="J4X/eWIBwsFkWaM5WYEg/FU7zQBWoYPn6R2HmQjkkVKsa9jEDyV4TPto576Q1vkbwY3GQ/yWWlc47UFRkLFOAg=="
+                length="6045969"
+                type="application/octet-stream"/>
+        </item>
+    </channel>
+</rss>

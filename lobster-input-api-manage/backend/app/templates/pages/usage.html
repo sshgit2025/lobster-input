@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}消费明细 - API Pool Manager{% endblock %}
+{% block body %}
+<div class="layout">
+  {% with active="usage" %}{% include "partials/sidebar.html" %}{% endwith %}
+  <main class="main">
+    <h1 class="page-title">消费明细</h1>
+    <div class="search-bar">
+      <select class="form-select" id="uServiceType"><option value="">全部分类</option></select>
+      <select class="form-select" id="uPlatform"><option value="">全部平台</option></select>
+      <input class="form-input" id="uKeyId" placeholder="API Key ID">
+      <input class="form-input" id="uStartDate" type="date">
+      <input class="form-input" id="uEndDate" type="date">
+      <button class="btn btn-ghost" onclick="loadUsage()">搜索</button>
+    </div>
+    <div class="card">
+      <div class="table-wrap"><table><thead><tr>
+        <th>时间</th><th>分类</th><th>平台</th><th>Key</th><th>名称</th>
+        <th>Token</th><th>秒数</th><th>请求</th>
+        <th>延迟</th><th>操作类型</th><th>结果</th>
+      </tr></thead><tbody id="usageTable"></tbody></table></div>
+      <div class="pagination" id="usagePagination"></div>
+    </div>
+  </main>
+</div>
+<div id="toast-container"></div>
+{% endblock %}
+{% block scripts %}
+<script>
+let uPage=1;
+const uSize=50;
+
+async function loadFilters(){
+  try{
+    const [serviceTypes,platforms]=await Promise.all([api('/api/v1/keys/categories'),api('/api/v1/keys/platforms')]);
+    const ss=document.getElementById('uServiceType');
+    const labels={asr:'asr — 语音识别',asr_realtime:'asr_realtime — 实时 ASR',llm_chat:'llm_chat — LLM 文本对话',web_search:'web_search — 联网搜索',embedding:'embedding — 向量',tts:'tts — 音频合成'};
+    serviceTypes.forEach(st=>{const o=document.createElement('option');o.value=st;o.text=labels[st]||st;ss.appendChild(o);});
+    const ps=document.getElementById('uPlatform');
+    platforms.forEach(p=>{const o=document.createElement('option');o.value=p.code;o.text=`${p.category}/${p.code}`;ps.appendChild(o);});
+  }catch(e){}
+}
+
+async function loadUsage(page){
+  uPage=page||1;
+  const params=new URLSearchParams({
+    category:document.getElementById('uServiceType').value,
+    platform_code:document.getElementById('uPlatform').value,
+    group_id:"",
+    api_key_id:document.getElementById('uKeyId').value,
+    start_date:document.getElementById('uStartDate').value,
+    end_date:document.getElementById('uEndDate').value,
+    page:uPage,page_size:uSize
+  });
+  try{
+    const data=await api(`/api/v1/stats/usage?${params}`);
+    const tbody=document.getElementById('usageTable');
+    tbody.innerHTML=data.items.map(u=>`<tr>
+      <td>${fmtTime(u.created_at)}</td>
+      <td><span class="badge badge-primary">${u.category||'-'}</span></td>
+      <td><span class="badge badge-info">${u.platform_code||'-'}</span></td>
+      <td><span class="key-mask">${u.api_key_hint||u.api_key_id?.slice(-8)||'-'}</span></td>
+      <td style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${u.api_key_name||''}">${u.api_key_name||'<span style="color:var(--text-muted)">-</span>'}</td>
+      <td>${u.tokens_used||0}</td>
+      <td>${(u.seconds_used||0).toFixed(1)}</td>
+      <td>${u.requests_used||0}</td>
+      <td>${u.latency_ms||0}ms</td>
+      <td>${u.operation||'-'}</td>
+      <td>${u.success?'<span class="badge badge-success">成功</span>':'<span class="badge badge-danger">失败</span>'}</td>
+    </tr>`).join('')||'<tr><td colspan="11" style="text-align:center;color:var(--text-muted)">暂无数据</td></tr>';
+    renderPagination('usagePagination',data.total,uPage,uSize,'loadUsage');
+  }catch(err){showToast(err.message,'error');}
+}
+
+function fmtTime(t){if(!t)return'-';const d=new Date(t);return d.toLocaleString('zh-CN',{hour12:false,timeZone:'Asia/Shanghai'});}
+
+loadFilters();
+loadUsage();
+</script>
+{% endblock %}

@@ -1,0 +1,648 @@
+{"id": "brand_0001", "category": "public_brand", "text": "帮我查一下deep sick的最新版本", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep sick"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0002", "category": "public_brand", "text": "我想知道deep sick的API定价", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep sick"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0003", "category": "public_brand", "text": "今天deep sick发布新功能了", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep sick"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0004", "category": "public_brand", "text": "把deep sick的文档链接发我一下", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep sick"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0005", "category": "public_brand", "text": "deep sick的部署教程在哪里", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep sick"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0006", "category": "public_brand", "text": "我们项目准备接入deep sick", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep sick"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0007", "category": "public_brand", "text": "对比一下deep sick和别的方案的优缺点", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep sick"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0008", "category": "public_brand", "text": "升级到deep sick最新版试试看", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep sick"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0009", "category": "public_brand", "text": "看看deep sick的开源仓库", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep sick"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0010", "category": "public_brand", "text": "deep sick的token限制是多少", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep sick"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0011", "category": "public_brand", "text": "用deep sick写个demo验证一下", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep sick"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0012", "category": "public_brand", "text": "deep sick今天是不是服务挂了", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep sick"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0013", "category": "public_brand", "text": "公司内网能不能访问deep sick", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep sick"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0014", "category": "public_brand", "text": "把deep sick集成到我们的后端服务", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep sick"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0015", "category": "public_brand", "text": "deep sick的免费额度已经用完了", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep sick"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0016", "category": "public_brand", "text": "调研一下deep sick的私有化部署方案", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep sick"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0017", "category": "public_brand", "text": "面试的时候被问到deep sick的原理", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep sick"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0018", "category": "public_brand", "text": "给新人培训一下deep sick的基础用法", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep sick"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0019", "category": "public_brand", "text": "线上日志里deep sick的报错变多了", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep sick"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0020", "category": "public_brand", "text": "下个迭代把deep sick的SDK升级一下", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep sick"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0021", "category": "public_brand", "text": "客户问deep sick支不支持国产化环境", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep sick"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0022", "category": "public_brand", "text": "晚上写篇关于deep sick的技术分享", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep sick"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0023", "category": "public_brand", "text": "评估一下迁移到deep sick的成本", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep sick"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0024", "category": "public_brand", "text": "提工单问问deep sick官方的技术支持", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep sick"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0025", "category": "public_brand", "text": "帮我查一下deep seek的最新版本", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep seek"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0026", "category": "public_brand", "text": "我想知道deep seek的API定价", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep seek"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0027", "category": "public_brand", "text": "今天deep seek发布新功能了", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep seek"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0028", "category": "public_brand", "text": "把deep seek的文档链接发我一下", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep seek"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0029", "category": "public_brand", "text": "deep seek的部署教程在哪里", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep seek"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0030", "category": "public_brand", "text": "我们项目准备接入deep seek", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep seek"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0031", "category": "public_brand", "text": "对比一下deep seek和别的方案的优缺点", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep seek"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0032", "category": "public_brand", "text": "升级到deep seek最新版试试看", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep seek"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0033", "category": "public_brand", "text": "看看deep seek的开源仓库", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep seek"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0034", "category": "public_brand", "text": "deep seek的token限制是多少", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep seek"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0035", "category": "public_brand", "text": "用deep seek写个demo验证一下", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep seek"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0036", "category": "public_brand", "text": "deep seek今天是不是服务挂了", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep seek"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0037", "category": "public_brand", "text": "公司内网能不能访问deep seek", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep seek"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0038", "category": "public_brand", "text": "把deep seek集成到我们的后端服务", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep seek"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0039", "category": "public_brand", "text": "deep seek的免费额度已经用完了", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep seek"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0040", "category": "public_brand", "text": "调研一下deep seek的私有化部署方案", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep seek"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0041", "category": "public_brand", "text": "面试的时候被问到deep seek的原理", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep seek"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0042", "category": "public_brand", "text": "给新人培训一下deep seek的基础用法", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep seek"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0043", "category": "public_brand", "text": "线上日志里deep seek的报错变多了", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep seek"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0044", "category": "public_brand", "text": "下个迭代把deep seek的SDK升级一下", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep seek"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0045", "category": "public_brand", "text": "客户问deep seek支不支持国产化环境", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep seek"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0046", "category": "public_brand", "text": "晚上写篇关于deep seek的技术分享", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep seek"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0047", "category": "public_brand", "text": "评估一下迁移到deep seek的成本", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep seek"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0048", "category": "public_brand", "text": "提工单问问deep seek官方的技术支持", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": ["deep seek"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0049", "category": "public_brand", "text": "帮我查一下deepseek的最新版本", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0050", "category": "public_brand", "text": "我想知道deepseek的API定价", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0051", "category": "public_brand", "text": "今天deepseek发布新功能了", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0052", "category": "public_brand", "text": "把deepseek的文档链接发我一下", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0053", "category": "public_brand", "text": "deepseek的部署教程在哪里", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0054", "category": "public_brand", "text": "我们项目准备接入deepseek", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0055", "category": "public_brand", "text": "对比一下deepseek和别的方案的优缺点", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0056", "category": "public_brand", "text": "升级到deepseek最新版试试看", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0057", "category": "public_brand", "text": "看看deepseek的开源仓库", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0058", "category": "public_brand", "text": "deepseek的token限制是多少", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0059", "category": "public_brand", "text": "用deepseek写个demo验证一下", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0060", "category": "public_brand", "text": "deepseek今天是不是服务挂了", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0061", "category": "public_brand", "text": "公司内网能不能访问deepseek", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0062", "category": "public_brand", "text": "把deepseek集成到我们的后端服务", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0063", "category": "public_brand", "text": "deepseek的免费额度已经用完了", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0064", "category": "public_brand", "text": "调研一下deepseek的私有化部署方案", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0065", "category": "public_brand", "text": "面试的时候被问到deepseek的原理", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0066", "category": "public_brand", "text": "给新人培训一下deepseek的基础用法", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0067", "category": "public_brand", "text": "线上日志里deepseek的报错变多了", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0068", "category": "public_brand", "text": "下个迭代把deepseek的SDK升级一下", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0069", "category": "public_brand", "text": "客户问deepseek支不支持国产化环境", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0070", "category": "public_brand", "text": "晚上写篇关于deepseek的技术分享", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0071", "category": "public_brand", "text": "评估一下迁移到deepseek的成本", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0072", "category": "public_brand", "text": "提工单问问deepseek官方的技术支持", "correction_hints": "", "contains": ["DeepSeek"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0073", "category": "public_brand", "text": "帮我查一下chat gpt的最新版本", "correction_hints": "", "contains": ["ChatGPT"], "not_contains": ["chat gpt"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0074", "category": "public_brand", "text": "我想知道chat gpt的API定价", "correction_hints": "", "contains": ["ChatGPT"], "not_contains": ["chat gpt"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0075", "category": "public_brand", "text": "今天chat gpt发布新功能了", "correction_hints": "", "contains": ["ChatGPT"], "not_contains": ["chat gpt"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0076", "category": "public_brand", "text": "把chat gpt的文档链接发我一下", "correction_hints": "", "contains": ["ChatGPT"], "not_contains": ["chat gpt"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0077", "category": "public_brand", "text": "chat gpt的部署教程在哪里", "correction_hints": "", "contains": ["ChatGPT"], "not_contains": ["chat gpt"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0078", "category": "public_brand", "text": "我们项目准备接入chat gpt", "correction_hints": "", "contains": ["ChatGPT"], "not_contains": ["chat gpt"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0079", "category": "public_brand", "text": "对比一下chat gpt和别的方案的优缺点", "correction_hints": "", "contains": ["ChatGPT"], "not_contains": ["chat gpt"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0080", "category": "public_brand", "text": "升级到chat gpt最新版试试看", "correction_hints": "", "contains": ["ChatGPT"], "not_contains": ["chat gpt"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0081", "category": "public_brand", "text": "看看chat gpt的开源仓库", "correction_hints": "", "contains": ["ChatGPT"], "not_contains": ["chat gpt"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0082", "category": "public_brand", "text": "chat gpt的token限制是多少", "correction_hints": "", "contains": ["ChatGPT"], "not_contains": ["chat gpt"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0083", "category": "public_brand", "text": "用chat gpt写个demo验证一下", "correction_hints": "", "contains": ["ChatGPT"], "not_contains": ["chat gpt"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0084", "category": "public_brand", "text": "chat gpt今天是不是服务挂了", "correction_hints": "", "contains": ["ChatGPT"], "not_contains": ["chat gpt"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0085", "category": "public_brand", "text": "公司内网能不能访问chat gpt", "correction_hints": "", "contains": ["ChatGPT"], "not_contains": ["chat gpt"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0086", "category": "public_brand", "text": "把chat gpt集成到我们的后端服务", "correction_hints": "", "contains": ["ChatGPT"], "not_contains": ["chat gpt"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0087", "category": "public_brand", "text": "chat gpt的免费额度已经用完了", "correction_hints": "", "contains": ["ChatGPT"], "not_contains": ["chat gpt"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0088", "category": "public_brand", "text": "调研一下chat gpt的私有化部署方案", "correction_hints": "", "contains": ["ChatGPT"], "not_contains": ["chat gpt"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0089", "category": "public_brand", "text": "面试的时候被问到chat gpt的原理", "correction_hints": "", "contains": ["ChatGPT"], "not_contains": ["chat gpt"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0090", "category": "public_brand", "text": "给新人培训一下chat gpt的基础用法", "correction_hints": "", "contains": ["ChatGPT"], "not_contains": ["chat gpt"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0091", "category": "public_brand", "text": "线上日志里chat gpt的报错变多了", "correction_hints": "", "contains": ["ChatGPT"], "not_contains": ["chat gpt"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0092", "category": "public_brand", "text": "下个迭代把chat gpt的SDK升级一下", "correction_hints": "", "contains": ["ChatGPT"], "not_contains": ["chat gpt"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0093", "category": "public_brand", "text": "客户问chat gpt支不支持国产化环境", "correction_hints": "", "contains": ["ChatGPT"], "not_contains": ["chat gpt"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0094", "category": "public_brand", "text": "晚上写篇关于chat gpt的技术分享", "correction_hints": "", "contains": ["ChatGPT"], "not_contains": ["chat gpt"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0095", "category": "public_brand", "text": "评估一下迁移到chat gpt的成本", "correction_hints": "", "contains": ["ChatGPT"], "not_contains": ["chat gpt"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0096", "category": "public_brand", "text": "提工单问问chat gpt官方的技术支持", "correction_hints": "", "contains": ["ChatGPT"], "not_contains": ["chat gpt"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0097", "category": "public_brand", "text": "帮我查一下open ai的最新版本", "correction_hints": "", "contains": ["OpenAI"], "not_contains": ["open ai"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0098", "category": "public_brand", "text": "我想知道open ai的API定价", "correction_hints": "", "contains": ["OpenAI"], "not_contains": ["open ai"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0099", "category": "public_brand", "text": "今天open ai发布新功能了", "correction_hints": "", "contains": ["OpenAI"], "not_contains": ["open ai"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0100", "category": "public_brand", "text": "把open ai的文档链接发我一下", "correction_hints": "", "contains": ["OpenAI"], "not_contains": ["open ai"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0101", "category": "public_brand", "text": "open ai的部署教程在哪里", "correction_hints": "", "contains": ["OpenAI"], "not_contains": ["open ai"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0102", "category": "public_brand", "text": "我们项目准备接入open ai", "correction_hints": "", "contains": ["OpenAI"], "not_contains": ["open ai"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0103", "category": "public_brand", "text": "对比一下open ai和别的方案的优缺点", "correction_hints": "", "contains": ["OpenAI"], "not_contains": ["open ai"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0104", "category": "public_brand", "text": "升级到open ai最新版试试看", "correction_hints": "", "contains": ["OpenAI"], "not_contains": ["open ai"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0105", "category": "public_brand", "text": "看看open ai的开源仓库", "correction_hints": "", "contains": ["OpenAI"], "not_contains": ["open ai"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0106", "category": "public_brand", "text": "open ai的token限制是多少", "correction_hints": "", "contains": ["OpenAI"], "not_contains": ["open ai"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0107", "category": "public_brand", "text": "用open ai写个demo验证一下", "correction_hints": "", "contains": ["OpenAI"], "not_contains": ["open ai"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0108", "category": "public_brand", "text": "open ai今天是不是服务挂了", "correction_hints": "", "contains": ["OpenAI"], "not_contains": ["open ai"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0109", "category": "public_brand", "text": "公司内网能不能访问open ai", "correction_hints": "", "contains": ["OpenAI"], "not_contains": ["open ai"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0110", "category": "public_brand", "text": "把open ai集成到我们的后端服务", "correction_hints": "", "contains": ["OpenAI"], "not_contains": ["open ai"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0111", "category": "public_brand", "text": "open ai的免费额度已经用完了", "correction_hints": "", "contains": ["OpenAI"], "not_contains": ["open ai"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0112", "category": "public_brand", "text": "调研一下open ai的私有化部署方案", "correction_hints": "", "contains": ["OpenAI"], "not_contains": ["open ai"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0113", "category": "public_brand", "text": "面试的时候被问到open ai的原理", "correction_hints": "", "contains": ["OpenAI"], "not_contains": ["open ai"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0114", "category": "public_brand", "text": "给新人培训一下open ai的基础用法", "correction_hints": "", "contains": ["OpenAI"], "not_contains": ["open ai"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0115", "category": "public_brand", "text": "线上日志里open ai的报错变多了", "correction_hints": "", "contains": ["OpenAI"], "not_contains": ["open ai"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0116", "category": "public_brand", "text": "下个迭代把open ai的SDK升级一下", "correction_hints": "", "contains": ["OpenAI"], "not_contains": ["open ai"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0117", "category": "public_brand", "text": "客户问open ai支不支持国产化环境", "correction_hints": "", "contains": ["OpenAI"], "not_contains": ["open ai"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0118", "category": "public_brand", "text": "晚上写篇关于open ai的技术分享", "correction_hints": "", "contains": ["OpenAI"], "not_contains": ["open ai"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0119", "category": "public_brand", "text": "评估一下迁移到open ai的成本", "correction_hints": "", "contains": ["OpenAI"], "not_contains": ["open ai"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0120", "category": "public_brand", "text": "提工单问问open ai官方的技术支持", "correction_hints": "", "contains": ["OpenAI"], "not_contains": ["open ai"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0121", "category": "public_brand", "text": "帮我查一下git hub的最新版本", "correction_hints": "", "contains": ["GitHub"], "not_contains": ["git hub"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0122", "category": "public_brand", "text": "我想知道git hub的API定价", "correction_hints": "", "contains": ["GitHub"], "not_contains": ["git hub"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0123", "category": "public_brand", "text": "今天git hub发布新功能了", "correction_hints": "", "contains": ["GitHub"], "not_contains": ["git hub"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0124", "category": "public_brand", "text": "把git hub的文档链接发我一下", "correction_hints": "", "contains": ["GitHub"], "not_contains": ["git hub"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0125", "category": "public_brand", "text": "git hub的部署教程在哪里", "correction_hints": "", "contains": ["GitHub"], "not_contains": ["git hub"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0126", "category": "public_brand", "text": "我们项目准备接入git hub", "correction_hints": "", "contains": ["GitHub"], "not_contains": ["git hub"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0127", "category": "public_brand", "text": "对比一下git hub和别的方案的优缺点", "correction_hints": "", "contains": ["GitHub"], "not_contains": ["git hub"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0128", "category": "public_brand", "text": "升级到git hub最新版试试看", "correction_hints": "", "contains": ["GitHub"], "not_contains": ["git hub"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0129", "category": "public_brand", "text": "看看git hub的开源仓库", "correction_hints": "", "contains": ["GitHub"], "not_contains": ["git hub"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0130", "category": "public_brand", "text": "git hub的token限制是多少", "correction_hints": "", "contains": ["GitHub"], "not_contains": ["git hub"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0131", "category": "public_brand", "text": "用git hub写个demo验证一下", "correction_hints": "", "contains": ["GitHub"], "not_contains": ["git hub"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0132", "category": "public_brand", "text": "git hub今天是不是服务挂了", "correction_hints": "", "contains": ["GitHub"], "not_contains": ["git hub"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0133", "category": "public_brand", "text": "公司内网能不能访问git hub", "correction_hints": "", "contains": ["GitHub"], "not_contains": ["git hub"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0134", "category": "public_brand", "text": "把git hub集成到我们的后端服务", "correction_hints": "", "contains": ["GitHub"], "not_contains": ["git hub"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0135", "category": "public_brand", "text": "git hub的免费额度已经用完了", "correction_hints": "", "contains": ["GitHub"], "not_contains": ["git hub"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0136", "category": "public_brand", "text": "调研一下git hub的私有化部署方案", "correction_hints": "", "contains": ["GitHub"], "not_contains": ["git hub"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0137", "category": "public_brand", "text": "面试的时候被问到git hub的原理", "correction_hints": "", "contains": ["GitHub"], "not_contains": ["git hub"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0138", "category": "public_brand", "text": "给新人培训一下git hub的基础用法", "correction_hints": "", "contains": ["GitHub"], "not_contains": ["git hub"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0139", "category": "public_brand", "text": "线上日志里git hub的报错变多了", "correction_hints": "", "contains": ["GitHub"], "not_contains": ["git hub"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0140", "category": "public_brand", "text": "下个迭代把git hub的SDK升级一下", "correction_hints": "", "contains": ["GitHub"], "not_contains": ["git hub"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0141", "category": "public_brand", "text": "客户问git hub支不支持国产化环境", "correction_hints": "", "contains": ["GitHub"], "not_contains": ["git hub"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0142", "category": "public_brand", "text": "晚上写篇关于git hub的技术分享", "correction_hints": "", "contains": ["GitHub"], "not_contains": ["git hub"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0143", "category": "public_brand", "text": "评估一下迁移到git hub的成本", "correction_hints": "", "contains": ["GitHub"], "not_contains": ["git hub"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0144", "category": "public_brand", "text": "提工单问问git hub官方的技术支持", "correction_hints": "", "contains": ["GitHub"], "not_contains": ["git hub"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0145", "category": "public_brand", "text": "帮我查一下gitlab的最新版本", "correction_hints": "", "contains": ["GitLab"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0146", "category": "public_brand", "text": "我想知道gitlab的API定价", "correction_hints": "", "contains": ["GitLab"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0147", "category": "public_brand", "text": "今天gitlab发布新功能了", "correction_hints": "", "contains": ["GitLab"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0148", "category": "public_brand", "text": "把gitlab的文档链接发我一下", "correction_hints": "", "contains": ["GitLab"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0149", "category": "public_brand", "text": "gitlab的部署教程在哪里", "correction_hints": "", "contains": ["GitLab"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0150", "category": "public_brand", "text": "我们项目准备接入gitlab", "correction_hints": "", "contains": ["GitLab"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0151", "category": "public_brand", "text": "对比一下gitlab和别的方案的优缺点", "correction_hints": "", "contains": ["GitLab"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0152", "category": "public_brand", "text": "升级到gitlab最新版试试看", "correction_hints": "", "contains": ["GitLab"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0153", "category": "public_brand", "text": "看看gitlab的开源仓库", "correction_hints": "", "contains": ["GitLab"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0154", "category": "public_brand", "text": "gitlab的token限制是多少", "correction_hints": "", "contains": ["GitLab"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0155", "category": "public_brand", "text": "用gitlab写个demo验证一下", "correction_hints": "", "contains": ["GitLab"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0156", "category": "public_brand", "text": "gitlab今天是不是服务挂了", "correction_hints": "", "contains": ["GitLab"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0157", "category": "public_brand", "text": "公司内网能不能访问gitlab", "correction_hints": "", "contains": ["GitLab"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0158", "category": "public_brand", "text": "把gitlab集成到我们的后端服务", "correction_hints": "", "contains": ["GitLab"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0159", "category": "public_brand", "text": "gitlab的免费额度已经用完了", "correction_hints": "", "contains": ["GitLab"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0160", "category": "public_brand", "text": "调研一下gitlab的私有化部署方案", "correction_hints": "", "contains": ["GitLab"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0161", "category": "public_brand", "text": "面试的时候被问到gitlab的原理", "correction_hints": "", "contains": ["GitLab"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0162", "category": "public_brand", "text": "给新人培训一下gitlab的基础用法", "correction_hints": "", "contains": ["GitLab"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0163", "category": "public_brand", "text": "线上日志里gitlab的报错变多了", "correction_hints": "", "contains": ["GitLab"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0164", "category": "public_brand", "text": "下个迭代把gitlab的SDK升级一下", "correction_hints": "", "contains": ["GitLab"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0165", "category": "public_brand", "text": "客户问gitlab支不支持国产化环境", "correction_hints": "", "contains": ["GitLab"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0166", "category": "public_brand", "text": "晚上写篇关于gitlab的技术分享", "correction_hints": "", "contains": ["GitLab"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0167", "category": "public_brand", "text": "评估一下迁移到gitlab的成本", "correction_hints": "", "contains": ["GitLab"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0168", "category": "public_brand", "text": "提工单问问gitlab官方的技术支持", "correction_hints": "", "contains": ["GitLab"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0169", "category": "public_brand", "text": "帮我查一下java script的最新版本", "correction_hints": "", "contains": ["JavaScript"], "not_contains": ["java script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0170", "category": "public_brand", "text": "我想知道java script的API定价", "correction_hints": "", "contains": ["JavaScript"], "not_contains": ["java script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0171", "category": "public_brand", "text": "今天java script发布新功能了", "correction_hints": "", "contains": ["JavaScript"], "not_contains": ["java script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0172", "category": "public_brand", "text": "把java script的文档链接发我一下", "correction_hints": "", "contains": ["JavaScript"], "not_contains": ["java script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0173", "category": "public_brand", "text": "java script的部署教程在哪里", "correction_hints": "", "contains": ["JavaScript"], "not_contains": ["java script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0174", "category": "public_brand", "text": "我们项目准备接入java script", "correction_hints": "", "contains": ["JavaScript"], "not_contains": ["java script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0175", "category": "public_brand", "text": "对比一下java script和别的方案的优缺点", "correction_hints": "", "contains": ["JavaScript"], "not_contains": ["java script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0176", "category": "public_brand", "text": "升级到java script最新版试试看", "correction_hints": "", "contains": ["JavaScript"], "not_contains": ["java script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0177", "category": "public_brand", "text": "看看java script的开源仓库", "correction_hints": "", "contains": ["JavaScript"], "not_contains": ["java script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0178", "category": "public_brand", "text": "java script的token限制是多少", "correction_hints": "", "contains": ["JavaScript"], "not_contains": ["java script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0179", "category": "public_brand", "text": "用java script写个demo验证一下", "correction_hints": "", "contains": ["JavaScript"], "not_contains": ["java script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0180", "category": "public_brand", "text": "java script今天是不是服务挂了", "correction_hints": "", "contains": ["JavaScript"], "not_contains": ["java script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0181", "category": "public_brand", "text": "公司内网能不能访问java script", "correction_hints": "", "contains": ["JavaScript"], "not_contains": ["java script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0182", "category": "public_brand", "text": "把java script集成到我们的后端服务", "correction_hints": "", "contains": ["JavaScript"], "not_contains": ["java script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0183", "category": "public_brand", "text": "java script的免费额度已经用完了", "correction_hints": "", "contains": ["JavaScript"], "not_contains": ["java script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0184", "category": "public_brand", "text": "调研一下java script的私有化部署方案", "correction_hints": "", "contains": ["JavaScript"], "not_contains": ["java script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0185", "category": "public_brand", "text": "面试的时候被问到java script的原理", "correction_hints": "", "contains": ["JavaScript"], "not_contains": ["java script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0186", "category": "public_brand", "text": "给新人培训一下java script的基础用法", "correction_hints": "", "contains": ["JavaScript"], "not_contains": ["java script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0187", "category": "public_brand", "text": "线上日志里java script的报错变多了", "correction_hints": "", "contains": ["JavaScript"], "not_contains": ["java script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0188", "category": "public_brand", "text": "下个迭代把java script的SDK升级一下", "correction_hints": "", "contains": ["JavaScript"], "not_contains": ["java script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0189", "category": "public_brand", "text": "客户问java script支不支持国产化环境", "correction_hints": "", "contains": ["JavaScript"], "not_contains": ["java script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0190", "category": "public_brand", "text": "晚上写篇关于java script的技术分享", "correction_hints": "", "contains": ["JavaScript"], "not_contains": ["java script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0191", "category": "public_brand", "text": "评估一下迁移到java script的成本", "correction_hints": "", "contains": ["JavaScript"], "not_contains": ["java script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0192", "category": "public_brand", "text": "提工单问问java script官方的技术支持", "correction_hints": "", "contains": ["JavaScript"], "not_contains": ["java script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0193", "category": "public_brand", "text": "帮我查一下type script的最新版本", "correction_hints": "", "contains": ["TypeScript"], "not_contains": ["type script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0194", "category": "public_brand", "text": "我想知道type script的API定价", "correction_hints": "", "contains": ["TypeScript"], "not_contains": ["type script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0195", "category": "public_brand", "text": "今天type script发布新功能了", "correction_hints": "", "contains": ["TypeScript"], "not_contains": ["type script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0196", "category": "public_brand", "text": "把type script的文档链接发我一下", "correction_hints": "", "contains": ["TypeScript"], "not_contains": ["type script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0197", "category": "public_brand", "text": "type script的部署教程在哪里", "correction_hints": "", "contains": ["TypeScript"], "not_contains": ["type script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0198", "category": "public_brand", "text": "我们项目准备接入type script", "correction_hints": "", "contains": ["TypeScript"], "not_contains": ["type script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0199", "category": "public_brand", "text": "对比一下type script和别的方案的优缺点", "correction_hints": "", "contains": ["TypeScript"], "not_contains": ["type script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0200", "category": "public_brand", "text": "升级到type script最新版试试看", "correction_hints": "", "contains": ["TypeScript"], "not_contains": ["type script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0201", "category": "public_brand", "text": "看看type script的开源仓库", "correction_hints": "", "contains": ["TypeScript"], "not_contains": ["type script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0202", "category": "public_brand", "text": "type script的token限制是多少", "correction_hints": "", "contains": ["TypeScript"], "not_contains": ["type script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0203", "category": "public_brand", "text": "用type script写个demo验证一下", "correction_hints": "", "contains": ["TypeScript"], "not_contains": ["type script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0204", "category": "public_brand", "text": "type script今天是不是服务挂了", "correction_hints": "", "contains": ["TypeScript"], "not_contains": ["type script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0205", "category": "public_brand", "text": "公司内网能不能访问type script", "correction_hints": "", "contains": ["TypeScript"], "not_contains": ["type script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0206", "category": "public_brand", "text": "把type script集成到我们的后端服务", "correction_hints": "", "contains": ["TypeScript"], "not_contains": ["type script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0207", "category": "public_brand", "text": "type script的免费额度已经用完了", "correction_hints": "", "contains": ["TypeScript"], "not_contains": ["type script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0208", "category": "public_brand", "text": "调研一下type script的私有化部署方案", "correction_hints": "", "contains": ["TypeScript"], "not_contains": ["type script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0209", "category": "public_brand", "text": "面试的时候被问到type script的原理", "correction_hints": "", "contains": ["TypeScript"], "not_contains": ["type script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0210", "category": "public_brand", "text": "给新人培训一下type script的基础用法", "correction_hints": "", "contains": ["TypeScript"], "not_contains": ["type script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0211", "category": "public_brand", "text": "线上日志里type script的报错变多了", "correction_hints": "", "contains": ["TypeScript"], "not_contains": ["type script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0212", "category": "public_brand", "text": "下个迭代把type script的SDK升级一下", "correction_hints": "", "contains": ["TypeScript"], "not_contains": ["type script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0213", "category": "public_brand", "text": "客户问type script支不支持国产化环境", "correction_hints": "", "contains": ["TypeScript"], "not_contains": ["type script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0214", "category": "public_brand", "text": "晚上写篇关于type script的技术分享", "correction_hints": "", "contains": ["TypeScript"], "not_contains": ["type script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0215", "category": "public_brand", "text": "评估一下迁移到type script的成本", "correction_hints": "", "contains": ["TypeScript"], "not_contains": ["type script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0216", "category": "public_brand", "text": "提工单问问type script官方的技术支持", "correction_hints": "", "contains": ["TypeScript"], "not_contains": ["type script"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0217", "category": "public_brand", "text": "帮我查一下web socket的最新版本", "correction_hints": "", "contains": ["WebSocket"], "not_contains": ["web socket"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0218", "category": "public_brand", "text": "我想知道web socket的API定价", "correction_hints": "", "contains": ["WebSocket"], "not_contains": ["web socket"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0219", "category": "public_brand", "text": "今天web socket发布新功能了", "correction_hints": "", "contains": ["WebSocket"], "not_contains": ["web socket"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0220", "category": "public_brand", "text": "把web socket的文档链接发我一下", "correction_hints": "", "contains": ["WebSocket"], "not_contains": ["web socket"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0221", "category": "public_brand", "text": "web socket的部署教程在哪里", "correction_hints": "", "contains": ["WebSocket"], "not_contains": ["web socket"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0222", "category": "public_brand", "text": "我们项目准备接入web socket", "correction_hints": "", "contains": ["WebSocket"], "not_contains": ["web socket"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0223", "category": "public_brand", "text": "对比一下web socket和别的方案的优缺点", "correction_hints": "", "contains": ["WebSocket"], "not_contains": ["web socket"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0224", "category": "public_brand", "text": "升级到web socket最新版试试看", "correction_hints": "", "contains": ["WebSocket"], "not_contains": ["web socket"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0225", "category": "public_brand", "text": "看看web socket的开源仓库", "correction_hints": "", "contains": ["WebSocket"], "not_contains": ["web socket"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0226", "category": "public_brand", "text": "web socket的token限制是多少", "correction_hints": "", "contains": ["WebSocket"], "not_contains": ["web socket"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0227", "category": "public_brand", "text": "用web socket写个demo验证一下", "correction_hints": "", "contains": ["WebSocket"], "not_contains": ["web socket"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0228", "category": "public_brand", "text": "web socket今天是不是服务挂了", "correction_hints": "", "contains": ["WebSocket"], "not_contains": ["web socket"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0229", "category": "public_brand", "text": "公司内网能不能访问web socket", "correction_hints": "", "contains": ["WebSocket"], "not_contains": ["web socket"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0230", "category": "public_brand", "text": "把web socket集成到我们的后端服务", "correction_hints": "", "contains": ["WebSocket"], "not_contains": ["web socket"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0231", "category": "public_brand", "text": "web socket的免费额度已经用完了", "correction_hints": "", "contains": ["WebSocket"], "not_contains": ["web socket"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0232", "category": "public_brand", "text": "调研一下web socket的私有化部署方案", "correction_hints": "", "contains": ["WebSocket"], "not_contains": ["web socket"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0233", "category": "public_brand", "text": "面试的时候被问到web socket的原理", "correction_hints": "", "contains": ["WebSocket"], "not_contains": ["web socket"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0234", "category": "public_brand", "text": "给新人培训一下web socket的基础用法", "correction_hints": "", "contains": ["WebSocket"], "not_contains": ["web socket"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0235", "category": "public_brand", "text": "线上日志里web socket的报错变多了", "correction_hints": "", "contains": ["WebSocket"], "not_contains": ["web socket"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0236", "category": "public_brand", "text": "下个迭代把web socket的SDK升级一下", "correction_hints": "", "contains": ["WebSocket"], "not_contains": ["web socket"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0237", "category": "public_brand", "text": "客户问web socket支不支持国产化环境", "correction_hints": "", "contains": ["WebSocket"], "not_contains": ["web socket"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0238", "category": "public_brand", "text": "晚上写篇关于web socket的技术分享", "correction_hints": "", "contains": ["WebSocket"], "not_contains": ["web socket"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0239", "category": "public_brand", "text": "评估一下迁移到web socket的成本", "correction_hints": "", "contains": ["WebSocket"], "not_contains": ["web socket"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0240", "category": "public_brand", "text": "提工单问问web socket官方的技术支持", "correction_hints": "", "contains": ["WebSocket"], "not_contains": ["web socket"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0241", "category": "public_brand", "text": "帮我查一下fast api的最新版本", "correction_hints": "", "contains": ["FastAPI"], "not_contains": ["fast api"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0242", "category": "public_brand", "text": "我想知道fast api的API定价", "correction_hints": "", "contains": ["FastAPI"], "not_contains": ["fast api"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0243", "category": "public_brand", "text": "今天fast api发布新功能了", "correction_hints": "", "contains": ["FastAPI"], "not_contains": ["fast api"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0244", "category": "public_brand", "text": "把fast api的文档链接发我一下", "correction_hints": "", "contains": ["FastAPI"], "not_contains": ["fast api"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0245", "category": "public_brand", "text": "fast api的部署教程在哪里", "correction_hints": "", "contains": ["FastAPI"], "not_contains": ["fast api"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0246", "category": "public_brand", "text": "我们项目准备接入fast api", "correction_hints": "", "contains": ["FastAPI"], "not_contains": ["fast api"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0247", "category": "public_brand", "text": "对比一下fast api和别的方案的优缺点", "correction_hints": "", "contains": ["FastAPI"], "not_contains": ["fast api"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0248", "category": "public_brand", "text": "升级到fast api最新版试试看", "correction_hints": "", "contains": ["FastAPI"], "not_contains": ["fast api"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0249", "category": "public_brand", "text": "看看fast api的开源仓库", "correction_hints": "", "contains": ["FastAPI"], "not_contains": ["fast api"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0250", "category": "public_brand", "text": "fast api的token限制是多少", "correction_hints": "", "contains": ["FastAPI"], "not_contains": ["fast api"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0251", "category": "public_brand", "text": "用fast api写个demo验证一下", "correction_hints": "", "contains": ["FastAPI"], "not_contains": ["fast api"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0252", "category": "public_brand", "text": "fast api今天是不是服务挂了", "correction_hints": "", "contains": ["FastAPI"], "not_contains": ["fast api"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0253", "category": "public_brand", "text": "公司内网能不能访问fast api", "correction_hints": "", "contains": ["FastAPI"], "not_contains": ["fast api"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0254", "category": "public_brand", "text": "把fast api集成到我们的后端服务", "correction_hints": "", "contains": ["FastAPI"], "not_contains": ["fast api"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0255", "category": "public_brand", "text": "fast api的免费额度已经用完了", "correction_hints": "", "contains": ["FastAPI"], "not_contains": ["fast api"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0256", "category": "public_brand", "text": "调研一下fast api的私有化部署方案", "correction_hints": "", "contains": ["FastAPI"], "not_contains": ["fast api"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0257", "category": "public_brand", "text": "面试的时候被问到fast api的原理", "correction_hints": "", "contains": ["FastAPI"], "not_contains": ["fast api"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0258", "category": "public_brand", "text": "给新人培训一下fast api的基础用法", "correction_hints": "", "contains": ["FastAPI"], "not_contains": ["fast api"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0259", "category": "public_brand", "text": "线上日志里fast api的报错变多了", "correction_hints": "", "contains": ["FastAPI"], "not_contains": ["fast api"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0260", "category": "public_brand", "text": "下个迭代把fast api的SDK升级一下", "correction_hints": "", "contains": ["FastAPI"], "not_contains": ["fast api"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0261", "category": "public_brand", "text": "客户问fast api支不支持国产化环境", "correction_hints": "", "contains": ["FastAPI"], "not_contains": ["fast api"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0262", "category": "public_brand", "text": "晚上写篇关于fast api的技术分享", "correction_hints": "", "contains": ["FastAPI"], "not_contains": ["fast api"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0263", "category": "public_brand", "text": "评估一下迁移到fast api的成本", "correction_hints": "", "contains": ["FastAPI"], "not_contains": ["fast api"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0264", "category": "public_brand", "text": "提工单问问fast api官方的技术支持", "correction_hints": "", "contains": ["FastAPI"], "not_contains": ["fast api"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0265", "category": "public_brand", "text": "帮我查一下mongo db的最新版本", "correction_hints": "", "contains": ["MongoDB"], "not_contains": ["mongo db"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0266", "category": "public_brand", "text": "我想知道mongo db的API定价", "correction_hints": "", "contains": ["MongoDB"], "not_contains": ["mongo db"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0267", "category": "public_brand", "text": "今天mongo db发布新功能了", "correction_hints": "", "contains": ["MongoDB"], "not_contains": ["mongo db"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0268", "category": "public_brand", "text": "把mongo db的文档链接发我一下", "correction_hints": "", "contains": ["MongoDB"], "not_contains": ["mongo db"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0269", "category": "public_brand", "text": "mongo db的部署教程在哪里", "correction_hints": "", "contains": ["MongoDB"], "not_contains": ["mongo db"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0270", "category": "public_brand", "text": "我们项目准备接入mongo db", "correction_hints": "", "contains": ["MongoDB"], "not_contains": ["mongo db"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0271", "category": "public_brand", "text": "对比一下mongo db和别的方案的优缺点", "correction_hints": "", "contains": ["MongoDB"], "not_contains": ["mongo db"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0272", "category": "public_brand", "text": "升级到mongo db最新版试试看", "correction_hints": "", "contains": ["MongoDB"], "not_contains": ["mongo db"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0273", "category": "public_brand", "text": "看看mongo db的开源仓库", "correction_hints": "", "contains": ["MongoDB"], "not_contains": ["mongo db"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0274", "category": "public_brand", "text": "mongo db的token限制是多少", "correction_hints": "", "contains": ["MongoDB"], "not_contains": ["mongo db"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0275", "category": "public_brand", "text": "用mongo db写个demo验证一下", "correction_hints": "", "contains": ["MongoDB"], "not_contains": ["mongo db"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0276", "category": "public_brand", "text": "mongo db今天是不是服务挂了", "correction_hints": "", "contains": ["MongoDB"], "not_contains": ["mongo db"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0277", "category": "public_brand", "text": "公司内网能不能访问mongo db", "correction_hints": "", "contains": ["MongoDB"], "not_contains": ["mongo db"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0278", "category": "public_brand", "text": "把mongo db集成到我们的后端服务", "correction_hints": "", "contains": ["MongoDB"], "not_contains": ["mongo db"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0279", "category": "public_brand", "text": "mongo db的免费额度已经用完了", "correction_hints": "", "contains": ["MongoDB"], "not_contains": ["mongo db"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0280", "category": "public_brand", "text": "调研一下mongo db的私有化部署方案", "correction_hints": "", "contains": ["MongoDB"], "not_contains": ["mongo db"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0281", "category": "public_brand", "text": "面试的时候被问到mongo db的原理", "correction_hints": "", "contains": ["MongoDB"], "not_contains": ["mongo db"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0282", "category": "public_brand", "text": "给新人培训一下mongo db的基础用法", "correction_hints": "", "contains": ["MongoDB"], "not_contains": ["mongo db"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0283", "category": "public_brand", "text": "线上日志里mongo db的报错变多了", "correction_hints": "", "contains": ["MongoDB"], "not_contains": ["mongo db"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0284", "category": "public_brand", "text": "下个迭代把mongo db的SDK升级一下", "correction_hints": "", "contains": ["MongoDB"], "not_contains": ["mongo db"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0285", "category": "public_brand", "text": "客户问mongo db支不支持国产化环境", "correction_hints": "", "contains": ["MongoDB"], "not_contains": ["mongo db"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0286", "category": "public_brand", "text": "晚上写篇关于mongo db的技术分享", "correction_hints": "", "contains": ["MongoDB"], "not_contains": ["mongo db"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0287", "category": "public_brand", "text": "评估一下迁移到mongo db的成本", "correction_hints": "", "contains": ["MongoDB"], "not_contains": ["mongo db"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0288", "category": "public_brand", "text": "提工单问问mongo db官方的技术支持", "correction_hints": "", "contains": ["MongoDB"], "not_contains": ["mongo db"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0289", "category": "public_brand", "text": "帮我查一下my sql的最新版本", "correction_hints": "", "contains": ["MySQL"], "not_contains": ["my sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0290", "category": "public_brand", "text": "我想知道my sql的API定价", "correction_hints": "", "contains": ["MySQL"], "not_contains": ["my sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0291", "category": "public_brand", "text": "今天my sql发布新功能了", "correction_hints": "", "contains": ["MySQL"], "not_contains": ["my sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0292", "category": "public_brand", "text": "把my sql的文档链接发我一下", "correction_hints": "", "contains": ["MySQL"], "not_contains": ["my sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0293", "category": "public_brand", "text": "my sql的部署教程在哪里", "correction_hints": "", "contains": ["MySQL"], "not_contains": ["my sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0294", "category": "public_brand", "text": "我们项目准备接入my sql", "correction_hints": "", "contains": ["MySQL"], "not_contains": ["my sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0295", "category": "public_brand", "text": "对比一下my sql和别的方案的优缺点", "correction_hints": "", "contains": ["MySQL"], "not_contains": ["my sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0296", "category": "public_brand", "text": "升级到my sql最新版试试看", "correction_hints": "", "contains": ["MySQL"], "not_contains": ["my sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0297", "category": "public_brand", "text": "看看my sql的开源仓库", "correction_hints": "", "contains": ["MySQL"], "not_contains": ["my sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0298", "category": "public_brand", "text": "my sql的token限制是多少", "correction_hints": "", "contains": ["MySQL"], "not_contains": ["my sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0299", "category": "public_brand", "text": "用my sql写个demo验证一下", "correction_hints": "", "contains": ["MySQL"], "not_contains": ["my sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0300", "category": "public_brand", "text": "my sql今天是不是服务挂了", "correction_hints": "", "contains": ["MySQL"], "not_contains": ["my sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0301", "category": "public_brand", "text": "公司内网能不能访问my sql", "correction_hints": "", "contains": ["MySQL"], "not_contains": ["my sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0302", "category": "public_brand", "text": "把my sql集成到我们的后端服务", "correction_hints": "", "contains": ["MySQL"], "not_contains": ["my sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0303", "category": "public_brand", "text": "my sql的免费额度已经用完了", "correction_hints": "", "contains": ["MySQL"], "not_contains": ["my sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0304", "category": "public_brand", "text": "调研一下my sql的私有化部署方案", "correction_hints": "", "contains": ["MySQL"], "not_contains": ["my sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0305", "category": "public_brand", "text": "面试的时候被问到my sql的原理", "correction_hints": "", "contains": ["MySQL"], "not_contains": ["my sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0306", "category": "public_brand", "text": "给新人培训一下my sql的基础用法", "correction_hints": "", "contains": ["MySQL"], "not_contains": ["my sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0307", "category": "public_brand", "text": "线上日志里my sql的报错变多了", "correction_hints": "", "contains": ["MySQL"], "not_contains": ["my sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0308", "category": "public_brand", "text": "下个迭代把my sql的SDK升级一下", "correction_hints": "", "contains": ["MySQL"], "not_contains": ["my sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0309", "category": "public_brand", "text": "客户问my sql支不支持国产化环境", "correction_hints": "", "contains": ["MySQL"], "not_contains": ["my sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0310", "category": "public_brand", "text": "晚上写篇关于my sql的技术分享", "correction_hints": "", "contains": ["MySQL"], "not_contains": ["my sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0311", "category": "public_brand", "text": "评估一下迁移到my sql的成本", "correction_hints": "", "contains": ["MySQL"], "not_contains": ["my sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0312", "category": "public_brand", "text": "提工单问问my sql官方的技术支持", "correction_hints": "", "contains": ["MySQL"], "not_contains": ["my sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0313", "category": "public_brand", "text": "帮我查一下postgre sql的最新版本", "correction_hints": "", "contains": ["PostgreSQL"], "not_contains": ["postgre sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0314", "category": "public_brand", "text": "我想知道postgre sql的API定价", "correction_hints": "", "contains": ["PostgreSQL"], "not_contains": ["postgre sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0315", "category": "public_brand", "text": "今天postgre sql发布新功能了", "correction_hints": "", "contains": ["PostgreSQL"], "not_contains": ["postgre sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0316", "category": "public_brand", "text": "把postgre sql的文档链接发我一下", "correction_hints": "", "contains": ["PostgreSQL"], "not_contains": ["postgre sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0317", "category": "public_brand", "text": "postgre sql的部署教程在哪里", "correction_hints": "", "contains": ["PostgreSQL"], "not_contains": ["postgre sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0318", "category": "public_brand", "text": "我们项目准备接入postgre sql", "correction_hints": "", "contains": ["PostgreSQL"], "not_contains": ["postgre sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0319", "category": "public_brand", "text": "对比一下postgre sql和别的方案的优缺点", "correction_hints": "", "contains": ["PostgreSQL"], "not_contains": ["postgre sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0320", "category": "public_brand", "text": "升级到postgre sql最新版试试看", "correction_hints": "", "contains": ["PostgreSQL"], "not_contains": ["postgre sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0321", "category": "public_brand", "text": "看看postgre sql的开源仓库", "correction_hints": "", "contains": ["PostgreSQL"], "not_contains": ["postgre sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0322", "category": "public_brand", "text": "postgre sql的token限制是多少", "correction_hints": "", "contains": ["PostgreSQL"], "not_contains": ["postgre sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0323", "category": "public_brand", "text": "用postgre sql写个demo验证一下", "correction_hints": "", "contains": ["PostgreSQL"], "not_contains": ["postgre sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0324", "category": "public_brand", "text": "postgre sql今天是不是服务挂了", "correction_hints": "", "contains": ["PostgreSQL"], "not_contains": ["postgre sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0325", "category": "public_brand", "text": "公司内网能不能访问postgre sql", "correction_hints": "", "contains": ["PostgreSQL"], "not_contains": ["postgre sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0326", "category": "public_brand", "text": "把postgre sql集成到我们的后端服务", "correction_hints": "", "contains": ["PostgreSQL"], "not_contains": ["postgre sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0327", "category": "public_brand", "text": "postgre sql的免费额度已经用完了", "correction_hints": "", "contains": ["PostgreSQL"], "not_contains": ["postgre sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0328", "category": "public_brand", "text": "调研一下postgre sql的私有化部署方案", "correction_hints": "", "contains": ["PostgreSQL"], "not_contains": ["postgre sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0329", "category": "public_brand", "text": "面试的时候被问到postgre sql的原理", "correction_hints": "", "contains": ["PostgreSQL"], "not_contains": ["postgre sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0330", "category": "public_brand", "text": "给新人培训一下postgre sql的基础用法", "correction_hints": "", "contains": ["PostgreSQL"], "not_contains": ["postgre sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0331", "category": "public_brand", "text": "线上日志里postgre sql的报错变多了", "correction_hints": "", "contains": ["PostgreSQL"], "not_contains": ["postgre sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0332", "category": "public_brand", "text": "下个迭代把postgre sql的SDK升级一下", "correction_hints": "", "contains": ["PostgreSQL"], "not_contains": ["postgre sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0333", "category": "public_brand", "text": "客户问postgre sql支不支持国产化环境", "correction_hints": "", "contains": ["PostgreSQL"], "not_contains": ["postgre sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0334", "category": "public_brand", "text": "晚上写篇关于postgre sql的技术分享", "correction_hints": "", "contains": ["PostgreSQL"], "not_contains": ["postgre sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0335", "category": "public_brand", "text": "评估一下迁移到postgre sql的成本", "correction_hints": "", "contains": ["PostgreSQL"], "not_contains": ["postgre sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0336", "category": "public_brand", "text": "提工单问问postgre sql官方的技术支持", "correction_hints": "", "contains": ["PostgreSQL"], "not_contains": ["postgre sql"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0337", "category": "public_brand", "text": "帮我查一下redis的最新版本", "correction_hints": "", "contains": ["Redis"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0338", "category": "public_brand", "text": "我想知道redis的API定价", "correction_hints": "", "contains": ["Redis"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0339", "category": "public_brand", "text": "今天redis发布新功能了", "correction_hints": "", "contains": ["Redis"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0340", "category": "public_brand", "text": "把redis的文档链接发我一下", "correction_hints": "", "contains": ["Redis"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0341", "category": "public_brand", "text": "redis的部署教程在哪里", "correction_hints": "", "contains": ["Redis"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0342", "category": "public_brand", "text": "我们项目准备接入redis", "correction_hints": "", "contains": ["Redis"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0343", "category": "public_brand", "text": "对比一下redis和别的方案的优缺点", "correction_hints": "", "contains": ["Redis"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0344", "category": "public_brand", "text": "升级到redis最新版试试看", "correction_hints": "", "contains": ["Redis"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0345", "category": "public_brand", "text": "看看redis的开源仓库", "correction_hints": "", "contains": ["Redis"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0346", "category": "public_brand", "text": "redis的token限制是多少", "correction_hints": "", "contains": ["Redis"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0347", "category": "public_brand", "text": "用redis写个demo验证一下", "correction_hints": "", "contains": ["Redis"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0348", "category": "public_brand", "text": "redis今天是不是服务挂了", "correction_hints": "", "contains": ["Redis"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0349", "category": "public_brand", "text": "公司内网能不能访问redis", "correction_hints": "", "contains": ["Redis"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0350", "category": "public_brand", "text": "把redis集成到我们的后端服务", "correction_hints": "", "contains": ["Redis"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0351", "category": "public_brand", "text": "redis的免费额度已经用完了", "correction_hints": "", "contains": ["Redis"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0352", "category": "public_brand", "text": "调研一下redis的私有化部署方案", "correction_hints": "", "contains": ["Redis"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0353", "category": "public_brand", "text": "面试的时候被问到redis的原理", "correction_hints": "", "contains": ["Redis"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0354", "category": "public_brand", "text": "给新人培训一下redis的基础用法", "correction_hints": "", "contains": ["Redis"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0355", "category": "public_brand", "text": "线上日志里redis的报错变多了", "correction_hints": "", "contains": ["Redis"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0356", "category": "public_brand", "text": "下个迭代把redis的SDK升级一下", "correction_hints": "", "contains": ["Redis"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0357", "category": "public_brand", "text": "客户问redis支不支持国产化环境", "correction_hints": "", "contains": ["Redis"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0358", "category": "public_brand", "text": "晚上写篇关于redis的技术分享", "correction_hints": "", "contains": ["Redis"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0359", "category": "public_brand", "text": "评估一下迁移到redis的成本", "correction_hints": "", "contains": ["Redis"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0360", "category": "public_brand", "text": "提工单问问redis官方的技术支持", "correction_hints": "", "contains": ["Redis"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0361", "category": "public_brand", "text": "帮我查一下docker的最新版本", "correction_hints": "", "contains": ["Docker"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0362", "category": "public_brand", "text": "我想知道docker的API定价", "correction_hints": "", "contains": ["Docker"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0363", "category": "public_brand", "text": "今天docker发布新功能了", "correction_hints": "", "contains": ["Docker"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0364", "category": "public_brand", "text": "把docker的文档链接发我一下", "correction_hints": "", "contains": ["Docker"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0365", "category": "public_brand", "text": "docker的部署教程在哪里", "correction_hints": "", "contains": ["Docker"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0366", "category": "public_brand", "text": "我们项目准备接入docker", "correction_hints": "", "contains": ["Docker"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0367", "category": "public_brand", "text": "对比一下docker和别的方案的优缺点", "correction_hints": "", "contains": ["Docker"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0368", "category": "public_brand", "text": "升级到docker最新版试试看", "correction_hints": "", "contains": ["Docker"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0369", "category": "public_brand", "text": "看看docker的开源仓库", "correction_hints": "", "contains": ["Docker"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0370", "category": "public_brand", "text": "docker的token限制是多少", "correction_hints": "", "contains": ["Docker"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0371", "category": "public_brand", "text": "用docker写个demo验证一下", "correction_hints": "", "contains": ["Docker"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0372", "category": "public_brand", "text": "docker今天是不是服务挂了", "correction_hints": "", "contains": ["Docker"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0373", "category": "public_brand", "text": "公司内网能不能访问docker", "correction_hints": "", "contains": ["Docker"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0374", "category": "public_brand", "text": "把docker集成到我们的后端服务", "correction_hints": "", "contains": ["Docker"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0375", "category": "public_brand", "text": "docker的免费额度已经用完了", "correction_hints": "", "contains": ["Docker"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0376", "category": "public_brand", "text": "调研一下docker的私有化部署方案", "correction_hints": "", "contains": ["Docker"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0377", "category": "public_brand", "text": "面试的时候被问到docker的原理", "correction_hints": "", "contains": ["Docker"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0378", "category": "public_brand", "text": "给新人培训一下docker的基础用法", "correction_hints": "", "contains": ["Docker"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0379", "category": "public_brand", "text": "线上日志里docker的报错变多了", "correction_hints": "", "contains": ["Docker"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0380", "category": "public_brand", "text": "下个迭代把docker的SDK升级一下", "correction_hints": "", "contains": ["Docker"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0381", "category": "public_brand", "text": "客户问docker支不支持国产化环境", "correction_hints": "", "contains": ["Docker"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0382", "category": "public_brand", "text": "晚上写篇关于docker的技术分享", "correction_hints": "", "contains": ["Docker"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0383", "category": "public_brand", "text": "评估一下迁移到docker的成本", "correction_hints": "", "contains": ["Docker"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0384", "category": "public_brand", "text": "提工单问问docker官方的技术支持", "correction_hints": "", "contains": ["Docker"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0385", "category": "public_brand", "text": "帮我查一下kubernetes的最新版本", "correction_hints": "", "contains": ["Kubernetes"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0386", "category": "public_brand", "text": "我想知道kubernetes的API定价", "correction_hints": "", "contains": ["Kubernetes"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0387", "category": "public_brand", "text": "今天kubernetes发布新功能了", "correction_hints": "", "contains": ["Kubernetes"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0388", "category": "public_brand", "text": "把kubernetes的文档链接发我一下", "correction_hints": "", "contains": ["Kubernetes"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0389", "category": "public_brand", "text": "kubernetes的部署教程在哪里", "correction_hints": "", "contains": ["Kubernetes"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0390", "category": "public_brand", "text": "我们项目准备接入kubernetes", "correction_hints": "", "contains": ["Kubernetes"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0391", "category": "public_brand", "text": "对比一下kubernetes和别的方案的优缺点", "correction_hints": "", "contains": ["Kubernetes"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0392", "category": "public_brand", "text": "升级到kubernetes最新版试试看", "correction_hints": "", "contains": ["Kubernetes"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0393", "category": "public_brand", "text": "看看kubernetes的开源仓库", "correction_hints": "", "contains": ["Kubernetes"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0394", "category": "public_brand", "text": "kubernetes的token限制是多少", "correction_hints": "", "contains": ["Kubernetes"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0395", "category": "public_brand", "text": "用kubernetes写个demo验证一下", "correction_hints": "", "contains": ["Kubernetes"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0396", "category": "public_brand", "text": "kubernetes今天是不是服务挂了", "correction_hints": "", "contains": ["Kubernetes"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0397", "category": "public_brand", "text": "公司内网能不能访问kubernetes", "correction_hints": "", "contains": ["Kubernetes"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0398", "category": "public_brand", "text": "把kubernetes集成到我们的后端服务", "correction_hints": "", "contains": ["Kubernetes"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0399", "category": "public_brand", "text": "kubernetes的免费额度已经用完了", "correction_hints": "", "contains": ["Kubernetes"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0400", "category": "public_brand", "text": "调研一下kubernetes的私有化部署方案", "correction_hints": "", "contains": ["Kubernetes"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0401", "category": "public_brand", "text": "面试的时候被问到kubernetes的原理", "correction_hints": "", "contains": ["Kubernetes"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0402", "category": "public_brand", "text": "给新人培训一下kubernetes的基础用法", "correction_hints": "", "contains": ["Kubernetes"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0403", "category": "public_brand", "text": "线上日志里kubernetes的报错变多了", "correction_hints": "", "contains": ["Kubernetes"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0404", "category": "public_brand", "text": "下个迭代把kubernetes的SDK升级一下", "correction_hints": "", "contains": ["Kubernetes"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0405", "category": "public_brand", "text": "客户问kubernetes支不支持国产化环境", "correction_hints": "", "contains": ["Kubernetes"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0406", "category": "public_brand", "text": "晚上写篇关于kubernetes的技术分享", "correction_hints": "", "contains": ["Kubernetes"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0407", "category": "public_brand", "text": "评估一下迁移到kubernetes的成本", "correction_hints": "", "contains": ["Kubernetes"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0408", "category": "public_brand", "text": "提工单问问kubernetes官方的技术支持", "correction_hints": "", "contains": ["Kubernetes"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0409", "category": "public_brand", "text": "帮我查一下qwen的最新版本", "correction_hints": "", "contains": ["Qwen"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0410", "category": "public_brand", "text": "我想知道qwen的API定价", "correction_hints": "", "contains": ["Qwen"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0411", "category": "public_brand", "text": "今天qwen发布新功能了", "correction_hints": "", "contains": ["Qwen"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0412", "category": "public_brand", "text": "把qwen的文档链接发我一下", "correction_hints": "", "contains": ["Qwen"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0413", "category": "public_brand", "text": "qwen的部署教程在哪里", "correction_hints": "", "contains": ["Qwen"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0414", "category": "public_brand", "text": "我们项目准备接入qwen", "correction_hints": "", "contains": ["Qwen"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0415", "category": "public_brand", "text": "对比一下qwen和别的方案的优缺点", "correction_hints": "", "contains": ["Qwen"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0416", "category": "public_brand", "text": "升级到qwen最新版试试看", "correction_hints": "", "contains": ["Qwen"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0417", "category": "public_brand", "text": "看看qwen的开源仓库", "correction_hints": "", "contains": ["Qwen"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0418", "category": "public_brand", "text": "qwen的token限制是多少", "correction_hints": "", "contains": ["Qwen"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0419", "category": "public_brand", "text": "用qwen写个demo验证一下", "correction_hints": "", "contains": ["Qwen"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0420", "category": "public_brand", "text": "qwen今天是不是服务挂了", "correction_hints": "", "contains": ["Qwen"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0421", "category": "public_brand", "text": "公司内网能不能访问qwen", "correction_hints": "", "contains": ["Qwen"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0422", "category": "public_brand", "text": "把qwen集成到我们的后端服务", "correction_hints": "", "contains": ["Qwen"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0423", "category": "public_brand", "text": "qwen的免费额度已经用完了", "correction_hints": "", "contains": ["Qwen"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0424", "category": "public_brand", "text": "调研一下qwen的私有化部署方案", "correction_hints": "", "contains": ["Qwen"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0425", "category": "public_brand", "text": "面试的时候被问到qwen的原理", "correction_hints": "", "contains": ["Qwen"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0426", "category": "public_brand", "text": "给新人培训一下qwen的基础用法", "correction_hints": "", "contains": ["Qwen"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0427", "category": "public_brand", "text": "线上日志里qwen的报错变多了", "correction_hints": "", "contains": ["Qwen"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0428", "category": "public_brand", "text": "下个迭代把qwen的SDK升级一下", "correction_hints": "", "contains": ["Qwen"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0429", "category": "public_brand", "text": "客户问qwen支不支持国产化环境", "correction_hints": "", "contains": ["Qwen"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0430", "category": "public_brand", "text": "晚上写篇关于qwen的技术分享", "correction_hints": "", "contains": ["Qwen"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0431", "category": "public_brand", "text": "评估一下迁移到qwen的成本", "correction_hints": "", "contains": ["Qwen"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0432", "category": "public_brand", "text": "提工单问问qwen官方的技术支持", "correction_hints": "", "contains": ["Qwen"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0433", "category": "public_brand", "text": "帮我查一下hugging face的最新版本", "correction_hints": "", "contains": ["Hugging Face"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0434", "category": "public_brand", "text": "我想知道hugging face的API定价", "correction_hints": "", "contains": ["Hugging Face"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0435", "category": "public_brand", "text": "今天hugging face发布新功能了", "correction_hints": "", "contains": ["Hugging Face"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0436", "category": "public_brand", "text": "把hugging face的文档链接发我一下", "correction_hints": "", "contains": ["Hugging Face"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0437", "category": "public_brand", "text": "hugging face的部署教程在哪里", "correction_hints": "", "contains": ["Hugging Face"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0438", "category": "public_brand", "text": "我们项目准备接入hugging face", "correction_hints": "", "contains": ["Hugging Face"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0439", "category": "public_brand", "text": "对比一下hugging face和别的方案的优缺点", "correction_hints": "", "contains": ["Hugging Face"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0440", "category": "public_brand", "text": "升级到hugging face最新版试试看", "correction_hints": "", "contains": ["Hugging Face"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0441", "category": "public_brand", "text": "看看hugging face的开源仓库", "correction_hints": "", "contains": ["Hugging Face"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0442", "category": "public_brand", "text": "hugging face的token限制是多少", "correction_hints": "", "contains": ["Hugging Face"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0443", "category": "public_brand", "text": "用hugging face写个demo验证一下", "correction_hints": "", "contains": ["Hugging Face"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0444", "category": "public_brand", "text": "hugging face今天是不是服务挂了", "correction_hints": "", "contains": ["Hugging Face"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0445", "category": "public_brand", "text": "公司内网能不能访问hugging face", "correction_hints": "", "contains": ["Hugging Face"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0446", "category": "public_brand", "text": "把hugging face集成到我们的后端服务", "correction_hints": "", "contains": ["Hugging Face"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0447", "category": "public_brand", "text": "hugging face的免费额度已经用完了", "correction_hints": "", "contains": ["Hugging Face"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0448", "category": "public_brand", "text": "调研一下hugging face的私有化部署方案", "correction_hints": "", "contains": ["Hugging Face"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0449", "category": "public_brand", "text": "面试的时候被问到hugging face的原理", "correction_hints": "", "contains": ["Hugging Face"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0450", "category": "public_brand", "text": "给新人培训一下hugging face的基础用法", "correction_hints": "", "contains": ["Hugging Face"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0451", "category": "public_brand", "text": "线上日志里hugging face的报错变多了", "correction_hints": "", "contains": ["Hugging Face"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0452", "category": "public_brand", "text": "下个迭代把hugging face的SDK升级一下", "correction_hints": "", "contains": ["Hugging Face"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0453", "category": "public_brand", "text": "客户问hugging face支不支持国产化环境", "correction_hints": "", "contains": ["Hugging Face"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0454", "category": "public_brand", "text": "晚上写篇关于hugging face的技术分享", "correction_hints": "", "contains": ["Hugging Face"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0455", "category": "public_brand", "text": "评估一下迁移到hugging face的成本", "correction_hints": "", "contains": ["Hugging Face"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0456", "category": "public_brand", "text": "提工单问问hugging face官方的技术支持", "correction_hints": "", "contains": ["Hugging Face"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0457", "category": "public_brand", "text": "帮我查一下cloud flare的最新版本", "correction_hints": "", "contains": ["Cloudflare"], "not_contains": ["cloud flare"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0458", "category": "public_brand", "text": "我想知道cloud flare的API定价", "correction_hints": "", "contains": ["Cloudflare"], "not_contains": ["cloud flare"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0459", "category": "public_brand", "text": "今天cloud flare发布新功能了", "correction_hints": "", "contains": ["Cloudflare"], "not_contains": ["cloud flare"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0460", "category": "public_brand", "text": "把cloud flare的文档链接发我一下", "correction_hints": "", "contains": ["Cloudflare"], "not_contains": ["cloud flare"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0461", "category": "public_brand", "text": "cloud flare的部署教程在哪里", "correction_hints": "", "contains": ["Cloudflare"], "not_contains": ["cloud flare"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0462", "category": "public_brand", "text": "我们项目准备接入cloud flare", "correction_hints": "", "contains": ["Cloudflare"], "not_contains": ["cloud flare"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0463", "category": "public_brand", "text": "对比一下cloud flare和别的方案的优缺点", "correction_hints": "", "contains": ["Cloudflare"], "not_contains": ["cloud flare"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0464", "category": "public_brand", "text": "升级到cloud flare最新版试试看", "correction_hints": "", "contains": ["Cloudflare"], "not_contains": ["cloud flare"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0465", "category": "public_brand", "text": "看看cloud flare的开源仓库", "correction_hints": "", "contains": ["Cloudflare"], "not_contains": ["cloud flare"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0466", "category": "public_brand", "text": "cloud flare的token限制是多少", "correction_hints": "", "contains": ["Cloudflare"], "not_contains": ["cloud flare"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0467", "category": "public_brand", "text": "用cloud flare写个demo验证一下", "correction_hints": "", "contains": ["Cloudflare"], "not_contains": ["cloud flare"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0468", "category": "public_brand", "text": "cloud flare今天是不是服务挂了", "correction_hints": "", "contains": ["Cloudflare"], "not_contains": ["cloud flare"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0469", "category": "public_brand", "text": "公司内网能不能访问cloud flare", "correction_hints": "", "contains": ["Cloudflare"], "not_contains": ["cloud flare"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0470", "category": "public_brand", "text": "把cloud flare集成到我们的后端服务", "correction_hints": "", "contains": ["Cloudflare"], "not_contains": ["cloud flare"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0471", "category": "public_brand", "text": "cloud flare的免费额度已经用完了", "correction_hints": "", "contains": ["Cloudflare"], "not_contains": ["cloud flare"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0472", "category": "public_brand", "text": "调研一下cloud flare的私有化部署方案", "correction_hints": "", "contains": ["Cloudflare"], "not_contains": ["cloud flare"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0473", "category": "public_brand", "text": "面试的时候被问到cloud flare的原理", "correction_hints": "", "contains": ["Cloudflare"], "not_contains": ["cloud flare"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0474", "category": "public_brand", "text": "给新人培训一下cloud flare的基础用法", "correction_hints": "", "contains": ["Cloudflare"], "not_contains": ["cloud flare"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0475", "category": "public_brand", "text": "线上日志里cloud flare的报错变多了", "correction_hints": "", "contains": ["Cloudflare"], "not_contains": ["cloud flare"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0476", "category": "public_brand", "text": "下个迭代把cloud flare的SDK升级一下", "correction_hints": "", "contains": ["Cloudflare"], "not_contains": ["cloud flare"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0477", "category": "public_brand", "text": "客户问cloud flare支不支持国产化环境", "correction_hints": "", "contains": ["Cloudflare"], "not_contains": ["cloud flare"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0478", "category": "public_brand", "text": "晚上写篇关于cloud flare的技术分享", "correction_hints": "", "contains": ["Cloudflare"], "not_contains": ["cloud flare"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0479", "category": "public_brand", "text": "评估一下迁移到cloud flare的成本", "correction_hints": "", "contains": ["Cloudflare"], "not_contains": ["cloud flare"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0480", "category": "public_brand", "text": "提工单问问cloud flare官方的技术支持", "correction_hints": "", "contains": ["Cloudflare"], "not_contains": ["cloud flare"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0481", "category": "public_brand", "text": "帮我查一下tensor flow的最新版本", "correction_hints": "", "contains": ["TensorFlow"], "not_contains": ["tensor flow"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0482", "category": "public_brand", "text": "我想知道tensor flow的API定价", "correction_hints": "", "contains": ["TensorFlow"], "not_contains": ["tensor flow"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0483", "category": "public_brand", "text": "今天tensor flow发布新功能了", "correction_hints": "", "contains": ["TensorFlow"], "not_contains": ["tensor flow"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0484", "category": "public_brand", "text": "把tensor flow的文档链接发我一下", "correction_hints": "", "contains": ["TensorFlow"], "not_contains": ["tensor flow"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0485", "category": "public_brand", "text": "tensor flow的部署教程在哪里", "correction_hints": "", "contains": ["TensorFlow"], "not_contains": ["tensor flow"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0486", "category": "public_brand", "text": "我们项目准备接入tensor flow", "correction_hints": "", "contains": ["TensorFlow"], "not_contains": ["tensor flow"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0487", "category": "public_brand", "text": "对比一下tensor flow和别的方案的优缺点", "correction_hints": "", "contains": ["TensorFlow"], "not_contains": ["tensor flow"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0488", "category": "public_brand", "text": "升级到tensor flow最新版试试看", "correction_hints": "", "contains": ["TensorFlow"], "not_contains": ["tensor flow"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0489", "category": "public_brand", "text": "看看tensor flow的开源仓库", "correction_hints": "", "contains": ["TensorFlow"], "not_contains": ["tensor flow"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0490", "category": "public_brand", "text": "tensor flow的token限制是多少", "correction_hints": "", "contains": ["TensorFlow"], "not_contains": ["tensor flow"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0491", "category": "public_brand", "text": "用tensor flow写个demo验证一下", "correction_hints": "", "contains": ["TensorFlow"], "not_contains": ["tensor flow"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0492", "category": "public_brand", "text": "tensor flow今天是不是服务挂了", "correction_hints": "", "contains": ["TensorFlow"], "not_contains": ["tensor flow"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0493", "category": "public_brand", "text": "公司内网能不能访问tensor flow", "correction_hints": "", "contains": ["TensorFlow"], "not_contains": ["tensor flow"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0494", "category": "public_brand", "text": "把tensor flow集成到我们的后端服务", "correction_hints": "", "contains": ["TensorFlow"], "not_contains": ["tensor flow"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0495", "category": "public_brand", "text": "tensor flow的免费额度已经用完了", "correction_hints": "", "contains": ["TensorFlow"], "not_contains": ["tensor flow"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0496", "category": "public_brand", "text": "调研一下tensor flow的私有化部署方案", "correction_hints": "", "contains": ["TensorFlow"], "not_contains": ["tensor flow"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0497", "category": "public_brand", "text": "面试的时候被问到tensor flow的原理", "correction_hints": "", "contains": ["TensorFlow"], "not_contains": ["tensor flow"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0498", "category": "public_brand", "text": "给新人培训一下tensor flow的基础用法", "correction_hints": "", "contains": ["TensorFlow"], "not_contains": ["tensor flow"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0499", "category": "public_brand", "text": "线上日志里tensor flow的报错变多了", "correction_hints": "", "contains": ["TensorFlow"], "not_contains": ["tensor flow"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0500", "category": "public_brand", "text": "下个迭代把tensor flow的SDK升级一下", "correction_hints": "", "contains": ["TensorFlow"], "not_contains": ["tensor flow"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0501", "category": "public_brand", "text": "客户问tensor flow支不支持国产化环境", "correction_hints": "", "contains": ["TensorFlow"], "not_contains": ["tensor flow"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0502", "category": "public_brand", "text": "晚上写篇关于tensor flow的技术分享", "correction_hints": "", "contains": ["TensorFlow"], "not_contains": ["tensor flow"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0503", "category": "public_brand", "text": "评估一下迁移到tensor flow的成本", "correction_hints": "", "contains": ["TensorFlow"], "not_contains": ["tensor flow"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0504", "category": "public_brand", "text": "提工单问问tensor flow官方的技术支持", "correction_hints": "", "contains": ["TensorFlow"], "not_contains": ["tensor flow"], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0505", "category": "public_brand", "text": "帮我查一下pycharm的最新版本", "correction_hints": "", "contains": ["PyCharm"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0506", "category": "public_brand", "text": "我想知道pycharm的API定价", "correction_hints": "", "contains": ["PyCharm"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0507", "category": "public_brand", "text": "今天pycharm发布新功能了", "correction_hints": "", "contains": ["PyCharm"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0508", "category": "public_brand", "text": "把pycharm的文档链接发我一下", "correction_hints": "", "contains": ["PyCharm"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0509", "category": "public_brand", "text": "pycharm的部署教程在哪里", "correction_hints": "", "contains": ["PyCharm"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0510", "category": "public_brand", "text": "我们项目准备接入pycharm", "correction_hints": "", "contains": ["PyCharm"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0511", "category": "public_brand", "text": "对比一下pycharm和别的方案的优缺点", "correction_hints": "", "contains": ["PyCharm"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0512", "category": "public_brand", "text": "升级到pycharm最新版试试看", "correction_hints": "", "contains": ["PyCharm"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0513", "category": "public_brand", "text": "看看pycharm的开源仓库", "correction_hints": "", "contains": ["PyCharm"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0514", "category": "public_brand", "text": "pycharm的token限制是多少", "correction_hints": "", "contains": ["PyCharm"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0515", "category": "public_brand", "text": "用pycharm写个demo验证一下", "correction_hints": "", "contains": ["PyCharm"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0516", "category": "public_brand", "text": "pycharm今天是不是服务挂了", "correction_hints": "", "contains": ["PyCharm"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0517", "category": "public_brand", "text": "公司内网能不能访问pycharm", "correction_hints": "", "contains": ["PyCharm"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0518", "category": "public_brand", "text": "把pycharm集成到我们的后端服务", "correction_hints": "", "contains": ["PyCharm"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0519", "category": "public_brand", "text": "pycharm的免费额度已经用完了", "correction_hints": "", "contains": ["PyCharm"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0520", "category": "public_brand", "text": "调研一下pycharm的私有化部署方案", "correction_hints": "", "contains": ["PyCharm"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0521", "category": "public_brand", "text": "面试的时候被问到pycharm的原理", "correction_hints": "", "contains": ["PyCharm"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0522", "category": "public_brand", "text": "给新人培训一下pycharm的基础用法", "correction_hints": "", "contains": ["PyCharm"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0523", "category": "public_brand", "text": "线上日志里pycharm的报错变多了", "correction_hints": "", "contains": ["PyCharm"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0524", "category": "public_brand", "text": "下个迭代把pycharm的SDK升级一下", "correction_hints": "", "contains": ["PyCharm"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0525", "category": "public_brand", "text": "客户问pycharm支不支持国产化环境", "correction_hints": "", "contains": ["PyCharm"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0526", "category": "public_brand", "text": "晚上写篇关于pycharm的技术分享", "correction_hints": "", "contains": ["PyCharm"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0527", "category": "public_brand", "text": "评估一下迁移到pycharm的成本", "correction_hints": "", "contains": ["PyCharm"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0528", "category": "public_brand", "text": "提工单问问pycharm官方的技术支持", "correction_hints": "", "contains": ["PyCharm"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0529", "category": "public_brand_case", "text": "帮我查一下redis的最新版本", "correction_hints": "", "contains": ["Redis"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0530", "category": "public_brand_case", "text": "我想知道redis的API定价", "correction_hints": "", "contains": ["Redis"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0531", "category": "public_brand_case", "text": "今天redis发布新功能了", "correction_hints": "", "contains": ["Redis"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0532", "category": "public_brand_case", "text": "把redis的文档链接发我一下", "correction_hints": "", "contains": ["Redis"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0533", "category": "public_brand_case", "text": "redis的部署教程在哪里", "correction_hints": "", "contains": ["Redis"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0534", "category": "public_brand_case", "text": "我们项目准备接入redis", "correction_hints": "", "contains": ["Redis"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0535", "category": "public_brand_case", "text": "对比一下redis和别的方案的优缺点", "correction_hints": "", "contains": ["Redis"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0536", "category": "public_brand_case", "text": "升级到redis最新版试试看", "correction_hints": "", "contains": ["Redis"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0537", "category": "public_brand_case", "text": "看看redis的开源仓库", "correction_hints": "", "contains": ["Redis"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0538", "category": "public_brand_case", "text": "redis的token限制是多少", "correction_hints": "", "contains": ["Redis"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0539", "category": "public_brand_case", "text": "帮我查一下docker的最新版本", "correction_hints": "", "contains": ["Docker"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0540", "category": "public_brand_case", "text": "我想知道docker的API定价", "correction_hints": "", "contains": ["Docker"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0541", "category": "public_brand_case", "text": "今天docker发布新功能了", "correction_hints": "", "contains": ["Docker"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0542", "category": "public_brand_case", "text": "把docker的文档链接发我一下", "correction_hints": "", "contains": ["Docker"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0543", "category": "public_brand_case", "text": "docker的部署教程在哪里", "correction_hints": "", "contains": ["Docker"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0544", "category": "public_brand_case", "text": "我们项目准备接入docker", "correction_hints": "", "contains": ["Docker"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0545", "category": "public_brand_case", "text": "对比一下docker和别的方案的优缺点", "correction_hints": "", "contains": ["Docker"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0546", "category": "public_brand_case", "text": "升级到docker最新版试试看", "correction_hints": "", "contains": ["Docker"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0547", "category": "public_brand_case", "text": "看看docker的开源仓库", "correction_hints": "", "contains": ["Docker"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0548", "category": "public_brand_case", "text": "docker的token限制是多少", "correction_hints": "", "contains": ["Docker"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0549", "category": "public_brand_case", "text": "帮我查一下kubernetes的最新版本", "correction_hints": "", "contains": ["Kubernetes"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0550", "category": "public_brand_case", "text": "我想知道kubernetes的API定价", "correction_hints": "", "contains": ["Kubernetes"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0551", "category": "public_brand_case", "text": "今天kubernetes发布新功能了", "correction_hints": "", "contains": ["Kubernetes"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0552", "category": "public_brand_case", "text": "把kubernetes的文档链接发我一下", "correction_hints": "", "contains": ["Kubernetes"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0553", "category": "public_brand_case", "text": "kubernetes的部署教程在哪里", "correction_hints": "", "contains": ["Kubernetes"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0554", "category": "public_brand_case", "text": "我们项目准备接入kubernetes", "correction_hints": "", "contains": ["Kubernetes"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0555", "category": "public_brand_case", "text": "对比一下kubernetes和别的方案的优缺点", "correction_hints": "", "contains": ["Kubernetes"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0556", "category": "public_brand_case", "text": "升级到kubernetes最新版试试看", "correction_hints": "", "contains": ["Kubernetes"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0557", "category": "public_brand_case", "text": "看看kubernetes的开源仓库", "correction_hints": "", "contains": ["Kubernetes"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0558", "category": "public_brand_case", "text": "kubernetes的token限制是多少", "correction_hints": "", "contains": ["Kubernetes"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0559", "category": "public_brand_case", "text": "帮我查一下qwen的最新版本", "correction_hints": "", "contains": ["Qwen"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0560", "category": "public_brand_case", "text": "我想知道qwen的API定价", "correction_hints": "", "contains": ["Qwen"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0561", "category": "public_brand_case", "text": "今天qwen发布新功能了", "correction_hints": "", "contains": ["Qwen"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0562", "category": "public_brand_case", "text": "把qwen的文档链接发我一下", "correction_hints": "", "contains": ["Qwen"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0563", "category": "public_brand_case", "text": "qwen的部署教程在哪里", "correction_hints": "", "contains": ["Qwen"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0564", "category": "public_brand_case", "text": "我们项目准备接入qwen", "correction_hints": "", "contains": ["Qwen"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0565", "category": "public_brand_case", "text": "对比一下qwen和别的方案的优缺点", "correction_hints": "", "contains": ["Qwen"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0566", "category": "public_brand_case", "text": "升级到qwen最新版试试看", "correction_hints": "", "contains": ["Qwen"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0567", "category": "public_brand_case", "text": "看看qwen的开源仓库", "correction_hints": "", "contains": ["Qwen"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0568", "category": "public_brand_case", "text": "qwen的token限制是多少", "correction_hints": "", "contains": ["Qwen"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0569", "category": "public_brand_case", "text": "帮我查一下gitlab的最新版本", "correction_hints": "", "contains": ["GitLab"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0570", "category": "public_brand_case", "text": "我想知道gitlab的API定价", "correction_hints": "", "contains": ["GitLab"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0571", "category": "public_brand_case", "text": "今天gitlab发布新功能了", "correction_hints": "", "contains": ["GitLab"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0572", "category": "public_brand_case", "text": "把gitlab的文档链接发我一下", "correction_hints": "", "contains": ["GitLab"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0573", "category": "public_brand_case", "text": "gitlab的部署教程在哪里", "correction_hints": "", "contains": ["GitLab"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0574", "category": "public_brand_case", "text": "我们项目准备接入gitlab", "correction_hints": "", "contains": ["GitLab"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0575", "category": "public_brand_case", "text": "对比一下gitlab和别的方案的优缺点", "correction_hints": "", "contains": ["GitLab"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0576", "category": "public_brand_case", "text": "升级到gitlab最新版试试看", "correction_hints": "", "contains": ["GitLab"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0577", "category": "public_brand_case", "text": "看看gitlab的开源仓库", "correction_hints": "", "contains": ["GitLab"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0578", "category": "public_brand_case", "text": "gitlab的token限制是多少", "correction_hints": "", "contains": ["GitLab"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0579", "category": "public_brand_case", "text": "帮我查一下pycharm的最新版本", "correction_hints": "", "contains": ["PyCharm"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0580", "category": "public_brand_case", "text": "我想知道pycharm的API定价", "correction_hints": "", "contains": ["PyCharm"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0581", "category": "public_brand_case", "text": "今天pycharm发布新功能了", "correction_hints": "", "contains": ["PyCharm"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0582", "category": "public_brand_case", "text": "把pycharm的文档链接发我一下", "correction_hints": "", "contains": ["PyCharm"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0583", "category": "public_brand_case", "text": "pycharm的部署教程在哪里", "correction_hints": "", "contains": ["PyCharm"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0584", "category": "public_brand_case", "text": "我们项目准备接入pycharm", "correction_hints": "", "contains": ["PyCharm"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0585", "category": "public_brand_case", "text": "对比一下pycharm和别的方案的优缺点", "correction_hints": "", "contains": ["PyCharm"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0586", "category": "public_brand_case", "text": "升级到pycharm最新版试试看", "correction_hints": "", "contains": ["PyCharm"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0587", "category": "public_brand_case", "text": "看看pycharm的开源仓库", "correction_hints": "", "contains": ["PyCharm"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "brand_0588", "category": "public_brand_case", "text": "pycharm的token限制是多少", "correction_hints": "", "contains": ["PyCharm"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "version_0589", "category": "public_version", "text": "最新版本是gpt五吗", "correction_hints": "", "contains": ["GPT-5"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "version_0590", "category": "public_version", "text": "我们现在用的是gpt五", "correction_hints": "", "contains": ["GPT-5"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "version_0591", "category": "public_version", "text": "下个月升级到gpt五", "correction_hints": "", "contains": ["GPT-5"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "version_0592", "category": "public_version", "text": "gpt五的效果比之前好", "correction_hints": "", "contains": ["GPT-5"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "version_0593", "category": "public_version", "text": "文档里写的支持gpt五", "correction_hints": "", "contains": ["GPT-5"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "version_0594", "category": "public_version", "text": "帮我确认一下是不是gpt五", "correction_hints": "", "contains": ["GPT-5"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "version_0595", "category": "public_version", "text": "最新版本是gpt四吗", "correction_hints": "", "contains": ["GPT-4"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "version_0596", "category": "public_version", "text": "我们现在用的是gpt四", "correction_hints": "", "contains": ["GPT-4"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "version_0597", "category": "public_version", "text": "下个月升级到gpt四", "correction_hints": "", "contains": ["GPT-4"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "version_0598", "category": "public_version", "text": "gpt四的效果比之前好", "correction_hints": "", "contains": ["GPT-4"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "version_0599", "category": "public_version", "text": "文档里写的支持gpt四", "correction_hints": "", "contains": ["GPT-4"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "version_0600", "category": "public_version", "text": "帮我确认一下是不是gpt四", "correction_hints": "", "contains": ["GPT-4"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "version_0601", "category": "public_version", "text": "最新版本是V三吗", "correction_hints": "", "contains": ["V3"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "version_0602", "category": "public_version", "text": "我们现在用的是V三", "correction_hints": "", "contains": ["V3"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "version_0603", "category": "public_version", "text": "下个月升级到V三", "correction_hints": "", "contains": ["V3"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "version_0604", "category": "public_version", "text": "V三的效果比之前好", "correction_hints": "", "contains": ["V3"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "version_0605", "category": "public_version", "text": "文档里写的支持V三", "correction_hints": "", "contains": ["V3"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "version_0606", "category": "public_version", "text": "帮我确认一下是不是V三", "correction_hints": "", "contains": ["V3"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "version_0607", "category": "public_version", "text": "最新版本是V四吗", "correction_hints": "", "contains": ["V4"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "version_0608", "category": "public_version", "text": "我们现在用的是V四", "correction_hints": "", "contains": ["V4"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "version_0609", "category": "public_version", "text": "下个月升级到V四", "correction_hints": "", "contains": ["V4"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "version_0610", "category": "public_version", "text": "V四的效果比之前好", "correction_hints": "", "contains": ["V4"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "version_0611", "category": "public_version", "text": "文档里写的支持V四", "correction_hints": "", "contains": ["V4"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "version_0612", "category": "public_version", "text": "帮我确认一下是不是V四", "correction_hints": "", "contains": ["V4"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "version_0613", "category": "public_version", "text": "最新版本是V五吗", "correction_hints": "", "contains": ["V5"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "version_0614", "category": "public_version", "text": "我们现在用的是V五", "correction_hints": "", "contains": ["V5"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "version_0615", "category": "public_version", "text": "下个月升级到V五", "correction_hints": "", "contains": ["V5"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "version_0616", "category": "public_version", "text": "V五的效果比之前好", "correction_hints": "", "contains": ["V5"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "version_0617", "category": "public_version", "text": "文档里写的支持V五", "correction_hints": "", "contains": ["V5"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "version_0618", "category": "public_version", "text": "帮我确认一下是不是V五", "correction_hints": "", "contains": ["V5"], "not_contains": [], "regex": [], "not_regex": [], "note": ""}
+{"id": "literal_0619", "category": "public_literal_keep", "text": "deep sick的意思是一种很严重的疾病", "correction_hints": "", "contains": ["deep sick"], "not_contains": ["DeepSeek", "我想说的是"], "regex": [], "not_regex": [], "note": ""}
+{"id": "literal_0620", "category": "public_literal_keep", "text": "我想说的是deep sick的意思是一种很严重的疾病", "correction_hints": "", "contains": ["deep sick"], "not_contains": ["DeepSeek", "我想说的是"], "regex": [], "not_regex": [], "note": ""}
+{"id": "literal_0621", "category": "public_literal_keep", "text": "嗯deep sick的意思是一种很严重的疾病", "correction_hints": "", "contains": ["deep sick"], "not_contains": ["DeepSeek", "我想说的是"], "regex": [], "not_regex": [], "note": ""}
+{"id": "literal_0622", "category": "public_literal_keep", "text": "这个词组deep sick直译过来就是病得很重", "correction_hints": "", "contains": ["deep sick"], "not_contains": ["DeepSeek", "我想说的是"], "regex": [], "not_regex": [], "note": ""}
+{"id": "literal_0623", "category": "public_literal_keep", "text": "我想说的是这个词组deep sick直译过来就是病得很重", "correction_hints": "", "contains": ["deep sick"], "not_contains": ["DeepSeek", "我想说的是"], "regex": [], "not_regex": [], "note": ""}
+{"id": "literal_0624", "category": "public_literal_keep", "text": "嗯这个词组deep sick直译过来就是病得很重", "correction_hints": "", "contains": ["deep sick"], "not_contains": ["DeepSeek", "我想说的是"], "regex": [], "not_regex": [], "note": ""}
+{"id": "literal_0625", "category": "public_literal_keep", "text": "英语里说deep sick表示病入膏肓", "correction_hints": "", "contains": ["deep sick"], "not_contains": ["DeepSeek", "我想说的是"], "regex": [], "not_regex": [], "note": ""}
+{"id": "literal_0626", "category": "public_literal_keep", "text": "我想说的是英语里说deep sick表示病入膏肓", "correction_hints": "", "contains": ["deep sick"], "not_contains": ["DeepSeek", "我想说的是"], "regex": [], "not_regex": [], "note": ""}
+{"id": "literal_0627", "category": "public_literal_keep", "text": "嗯英语里说deep sick表示病入膏肓", "correction_hints": "", "contains": ["deep sick"], "not_contains": ["DeepSeek", "我想说的是"], "regex": [], "not_regex": [], "note": ""}
+{"id": "literal_0628", "category": "public_literal_keep", "text": "他在作文里用了deep sick这个表达来形容重病", "correction_hints": "", "contains": ["deep sick"], "not_contains": ["DeepSeek", "我想说的是"], "regex": [], "not_regex": [], "note": ""}
+{"id": "literal_0629", "category": "public_literal_keep", "text": "我想说的是他在作文里用了deep sick这个表达来形容重病", "correction_hints": "", "contains": ["deep sick"], "not_contains": ["DeepSeek", "我想说的是"], "regex": [], "not_regex": [], "note": ""}
+{"id": "literal_0630", "category": "public_literal_keep", "text": "嗯他在作文里用了deep sick这个表达来形容重病", "correction_hints": "", "contains": ["deep sick"], "not_contains": ["DeepSeek", "我想说的是"], "regex": [], "not_regex": [], "note": ""}
+{"id": "literal_0631", "category": "public_literal_keep", "text": "老师说deep sick不是地道的英文表达", "correction_hints": "", "contains": ["deep sick"], "not_contains": ["DeepSeek", "我想说的是"], "regex": [], "not_regex": [], "note": ""}
+{"id": "literal_0632", "category": "public_literal_keep", "text": "我想说的是老师说deep sick不是地道的英文表达", "correction_hints": "", "contains": ["deep sick"], "not_contains": ["DeepSeek", "我想说的是"], "regex": [], "not_regex": [], "note": ""}
+{"id": "literal_0633", "category": "public_literal_keep", "text": "嗯老师说deep sick不是地道的英文表达", "correction_hints": "", "contains": ["deep sick"], "not_contains": ["DeepSeek", "我想说的是"], "regex": [], "not_regex": [], "note": ""}
+{"id": "literal_0634", "category": "public_literal_keep", "text": "我需要三个方案不是3.0版本", "correction_hints": "", "contains": ["三个方案", "3.0版本"], "not_contains": ["我想说的是"], "regex": [], "not_regex": [], "note": ""}
+{"id": "literal_0635", "category": "public_literal_keep", "text": "我想说的是我需要三个方案不是3.0版本", "correction_hints": "", "contains": ["三个方案", "3.0版本"], "not_contains": ["我想说的是"], "regex": [], "not_regex": [], "note": ""}
+{"id": "literal_0636", "category": "public_literal_keep", "text": "嗯我需要三个方案不是3.0版本", "correction_hints": "", "contains": ["三个方案", "3.0版本"], "not_contains": ["我想说的是"], "regex": [], "not_regex": [], "note": ""}
+{"id": "literal_0637", "category": "public_literal_keep", "text": "我们家的路由器牌子就叫小米不要改", "correction_hints": "", "contains": ["小米"], "not_contains": ["我想说的是"], "regex": [], "not_regex": [], "note": ""}
+{"id": "literal_0638", "category": "public_literal_keep", "text": "我想说的是我们家的路由器牌子就叫小米不要改", "correction_hints": "", "contains": ["小米"], "not_contains": ["我想说的是"], "regex": [], "not_regex": [], "note": ""}
+{"id": "literal_0639", "category": "public_literal_keep", "text": "嗯我们家的路由器牌子就叫小米不要改", "correction_hints": "", "contains": ["小米"], "not_contains": ["我想说的是"], "regex": [], "not_regex": [], "note": ""}
+{"id": "literal_0640", "category": "public_literal_keep", "text": "苹果今天打折五块钱一斤", "correction_hints": "", "contains": ["苹果"], "not_contains": ["Apple", "我想说的是"], "regex": [], "not_regex": [], "note": ""}
+{"id": "literal_0641", "category": "public_literal_keep", "text": "我想说的是苹果今天打折五块钱一斤", "correction_hints": "", "contains": ["苹果"], "not_contains": ["Apple", "我想说的是"], "regex": [], "not_regex": [], "note": ""}
+{"id": "literal_0642", "category": "public_literal_keep", "text": "嗯苹果今天打折五块钱一斤", "correction_hints": "", "contains": ["苹果"], "not_contains": ["Apple", "我想说的是"], "regex": [], "not_regex": [], "note": ""}
+{"id": "literal_0643", "category": "public_literal_keep", "text": "他姓马不是马云的那个马戏团", "correction_hints": "", "contains": ["姓马"], "not_contains": ["我想说的是"], "regex": [], "not_regex": [], "note": ""}
+{"id": "literal_0644", "category": "public_literal_keep", "text": "我想说的是他姓马不是马云的那个马戏团", "correction_hints": "", "contains": ["姓马"], "not_contains": ["我想说的是"], "regex": [], "not_regex": [], "note": ""}
+{"id": "literal_0645", "category": "public_literal_keep", "text": "嗯他姓马不是马云的那个马戏团", "correction_hints": "", "contains": ["姓马"], "not_contains": ["我想说的是"], "regex": [], "not_regex": [], "note": ""}
+{"id": "literal_0646", "category": "public_literal_keep", "text": "这道菜叫开水白菜不是白开水", "correction_hints": "", "contains": ["开水白菜"], "not_contains": ["我想说的是"], "regex": [], "not_regex": [], "note": ""}
+{"id": "literal_0647", "category": "public_literal_keep", "text": "我想说的是这道菜叫开水白菜不是白开水", "correction_hints": "", "contains": ["开水白菜"], "not_contains": ["我想说的是"], "regex": [], "not_regex": [], "note": ""}
+{"id": "literal_0648", "category": "public_literal_keep", "text": "嗯这道菜叫开水白菜不是白开水", "correction_hints": "", "contains": ["开水白菜"], "not_contains": ["我想说的是"], "regex": [], "not_regex": [], "note": ""}

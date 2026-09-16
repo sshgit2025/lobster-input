@@ -1,0 +1,89 @@
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <span class="logo-icon">🦞</span>
+    <span class="logo-text">Lobster Admin</span>
+  </div>
+  <nav class="sidebar-nav">
+    <details class="nav-section" {% if active in ['dashboard','stats'] %}open{% endif %}>
+      <summary class="nav-section-title">总览</summary>
+      <a href="{{ base_url }}/dashboard" class="nav-item {% if active=='dashboard' %}active{% endif %}">
+        <span class="nav-icon">📊</span><span>仪表盘</span>
+      </a>
+      <a href="{{ base_url }}/stats" class="nav-item {% if active=='stats' %}active{% endif %}">
+        <span class="nav-icon">📈</span><span>用量统计</span>
+      </a>
+    </details>
+
+    <details class="nav-section" {% if active in ['users','invites','rewards','feedback'] %}open{% endif %}>
+      <summary class="nav-section-title">用户运营</summary>
+      <a href="{{ base_url }}/users" class="nav-item {% if active=='users' %}active{% endif %}">
+        <span class="nav-icon">👥</span><span>用户管理</span>
+      </a>
+      <a href="{{ base_url }}/invites" class="nav-item {% if active=='invites' %}active{% endif %}">
+        <span class="nav-icon">🎫</span><span>邀请码管理</span>
+      </a>
+      <a href="{{ base_url }}/rewards" class="nav-item {% if active=='rewards' %}active{% endif %}">
+        <span class="nav-icon">🎁</span><span>积分奖励明细</span>
+      </a>
+      <a href="{{ base_url }}/feedback" class="nav-item {% if active=='feedback' %}active{% endif %}">
+        <span class="nav-icon">💬</span><span>反馈意见</span>
+      </a>
+    </details>
+
+    <details class="nav-section" {% if active in ['plan_accounts','ledger','payment_providers','payment_orders','payment_transactions','payment_refunds'] %}open{% endif %}>
+      <summary class="nav-section-title">套餐计费</summary>
+      <a href="{{ base_url }}/plan-accounts" class="nav-item {% if active=='plan_accounts' %}active{% endif %}">
+        <span class="nav-icon">🧾</span><span>套餐账号</span>
+      </a>
+      <a href="{{ base_url }}/ledger" class="nav-item {% if active=='ledger' %}active{% endif %}">
+        <span class="nav-icon">💳</span><span>积分账本</span>
+      </a>
+      <a href="{{ base_url }}/payment-providers" class="nav-item {% if active=='payment_providers' %}active{% endif %}">
+        <span class="nav-icon">🏦</span><span>支付配置</span>
+      </a>
+      <a href="{{ base_url }}/payment-orders" class="nav-item {% if active=='payment_orders' %}active{% endif %}">
+        <span class="nav-icon">📦</span><span>支付订单</span>
+      </a>
+      <a href="{{ base_url }}/payment-transactions" class="nav-item {% if active=='payment_transactions' %}active{% endif %}">
+        <span class="nav-icon">🔁</span><span>交易流水</span>
+      </a>
+      <a href="{{ base_url }}/payment-refunds" class="nav-item {% if active=='payment_refunds' %}active{% endif %}">
+        <span class="nav-icon">↩️</span><span>退款管理</span>
+      </a>
+    </details>
+
+    <details class="nav-section" {% if active in ['logs','alerts','security'] %}open{% endif %}>
+      <summary class="nav-section-title">系统运维</summary>
+      <a href="{{ base_url }}/logs" class="nav-item {% if active=='logs' %}active{% endif %}">
+        <span class="nav-icon">📋</span><span>客户端日志</span>
+      </a>
+      <a href="{{ base_url }}/alerts" class="nav-item {% if active=='alerts' %}active{% endif %}" id="nav-alerts">
+        <span class="nav-icon">🚨</span><span>告警管理</span>
+        <span id="nav-alert-badge"></span>
+      </a>
+      <a href="{{ base_url }}/security" class="nav-item {% if active=='security' %}active{% endif %}">
+        <span class="nav-icon">🛡️</span><span>安全风控</span>
+      </a>
+    </details>
+
+    <details class="nav-section" {% if active in ['provider_config','user_dict','personas','agreements'] %}open{% endif %}>
+      <summary class="nav-section-title">内容配置</summary>
+      <a href="{{ base_url }}/provider-config" class="nav-item {% if active=='provider_config' %}active{% endif %}">
+        <span class="nav-icon">🔌</span><span>Provider 配置</span>
+      </a>
+      <a href="{{ base_url }}/user-dict" class="nav-item {% if active=='user_dict' %}active{% endif %}">
+        <span class="nav-icon">📖</span><span>用户词典</span>
+      </a>
+      <a href="{{ base_url }}/personas" class="nav-item {% if active=='personas' %}active{% endif %}">
+        <span class="nav-icon">🎭</span><span>内置人设</span>
+      </a>
+      <a href="{{ base_url }}/agreements" class="nav-item {% if active=='agreements' %}active{% endif %}">
+        <span class="nav-icon">📜</span><span>协议管理</span>
+      </a>
+    </details>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="{{ base_url }}/account" class="admin-name {% if active=='account' %}active{% endif %}">🔐 {{ username }}</a>
+    <button class="btn-logout" onclick="logout()">退出</button>
+  </div>
+</aside>

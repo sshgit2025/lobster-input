@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block title %}仪表盘 - Lobster Admin{% endblock %}
+{% block body %}
+<div class="layout">
+  {% include "partials/sidebar.html" %}
+  <main class="main">
+    <div class="page-title">📊 仪表盘</div>
+    <div class="stat-grid" id="stat-grid">
+      <div class="stat-card"><div class="stat-label">总用户数</div><div class="stat-value primary" id="s-users">-</div></div>
+      <div class="stat-card"><div class="stat-label">活跃用户</div><div class="stat-value success" id="s-active">-</div></div>
+      <div class="stat-card"><div class="stat-label">总请求数</div><div class="stat-value info" id="s-requests">-</div></div>
+      <div class="stat-card"><div class="stat-label">总 Token 数</div><div class="stat-value warning" id="s-tokens">-</div></div>
+      <div class="stat-card"><div class="stat-label">邀请码总量</div><div class="stat-value" id="s-invites">-</div></div>
+      <div class="stat-card"><div class="stat-label">已用邀请码</div><div class="stat-value" id="s-invites-used">-</div></div>
+    </div>
+    <div class="chart-grid">
+      <div class="card">
+        <div class="card-title">近30天注册趋势</div>
+        <div class="chart-wrap"><canvas id="chart-reg"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title">近30天请求趋势</div>
+        <div class="chart-wrap"><canvas id="chart-req"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title">套餐分布</div>
+        <div class="chart-wrap"><canvas id="chart-plan"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title">平台调用分布</div>
+        <div class="chart-wrap"><canvas id="chart-platform"></canvas></div>
+      </div>
+    </div>
+  </main>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+const COLORS = ["#e85d2f","#3b82f6","#22c55e","#f59e0b","#8b5cf6","#ec4899","#14b8a6"];
+function mkChart(id, type, labels, data, label) {
+  const ctx = document.getElementById(id);
+  if (!ctx) return;
+  return new Chart(ctx, {
+    type,
+    data: {
+      labels,
+      datasets: [{
+        label: label || "",
+        data,
+        backgroundColor: type === "line" ? "rgba(232,93,47,.15)" : COLORS,
+        borderColor: type === "line" ? "#e85d2f" : COLORS,
+        borderWidth: type === "line" ? 2 : 1,
+        fill: type === "line",
+        tension: 0.4,
+        pointRadius: 3,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: type !== "line", labels: { color: "#8892a4", boxWidth: 12 } } },
+      scales: type === "line" ? {
+        x: { ticks: { color: "#8892a4", maxTicksLimit: 8 }, grid: { color: "#2a2d3e" } },
+        y: { ticks: { color: "#8892a4" }, grid: { color: "#2a2d3e" } }
+      } : {}
+    }
+  });
+}
+
+async function loadDashboard() {
+  try {
+    const [userStats, activeStats, usageSummary, inviteStats, regData, reqData, planData, platformData] = await Promise.all([
+      api("GET", "/api/v1/users?page_size=1"),
+      api("GET", "/api/v1/users?is_active=true&page_size=1"),
+      api("GET", "/api/v1/stats/summary"),
+      api("GET", "/api/v1/invites/stats"),
+      api("GET", "/api/v1/users/stats/daily-registrations?days=30"),
+      api("GET", "/api/v1/stats/daily?days=30"),
+      api("GET", "/api/v1/users/stats/plan-distribution"),
+      api("GET", "/api/v1/stats/platform-distribution"),
+    ]);
+    document.getElementById("s-users").textContent = fmtNum(userStats.total);
+    document.getElementById("s-active").textContent = fmtNum(activeStats.total);
+    document.getElementById("s-requests").textContent = fmtNum(usageSummary.total_requests);
+    document.getElementById("s-tokens").textContent = fmtNum((usageSummary.total_input_tokens || 0) + (usageSummary.total_output_tokens || 0));
+    document.getElementById("s-invites").textContent = fmtNum(inviteStats.total);
+    document.getElementById("s-invites-used").textContent = fmtNum(inviteStats.used);
+
+    const regSorted = regData.sort((a,b) => a.date > b.date ? 1 : -1);
+    mkChart("chart-reg", "line", regSorted.map(d=>d.date), regSorted.map(d=>d.count), "注册数");
+
+    const reqSorted = reqData.sort((a,b) => a.date > b.date ? 1 : -1);
+    mkChart("chart-req", "line", reqSorted.map(d=>d.date), reqSorted.map(d=>d.request_count), "请求数");
+
+    mkChart("chart-plan", "doughnut", planData.map(d=>d.plan_code), planData.map(d=>d.count));
+    mkChart("chart-platform", "doughnut", platformData.map(d=>d.platform), platformData.map(d=>d.count));
+  } catch(e) {
+    console.error(e);
+  }
+}
+loadDashboard();
+</script>
+{% endblock %}

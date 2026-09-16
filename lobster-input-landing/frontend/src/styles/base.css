@@ -1,0 +1,54 @@
+/* 全局基础样式：复位、字体、纸张噪点、栅格容器、通用 section 原语。
+   逐字迁移自原 index.html 内联 <style>，保证视觉像素级一致。*/
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--paper);color:var(--ink);}
+html{scroll-behavior:smooth;}
+body{
+  font-family:"Geist","Noto Serif SC",system-ui,-apple-system,sans-serif;
+  font-feature-settings:"ss01","cv11";
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+#app{position:relative;z-index:2;}
+.serif{font-family:"Newsreader","Noto Serif SC",Georgia,serif;font-weight:400;}
+.mono{font-family:"Geist Mono",ui-monospace,monospace;}
+.han{font-family:"Noto Serif SC","Newsreader",serif;}
+a{color:inherit;text-decoration:none;}
+em, i, cite{font-style:normal;}
+
+/* Tiny paper texture via repeating SVG noise */
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.094 0 0 0 0 0.075 0 0 0 0 0.067 0 0 0 0.035 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  mix-blend-mode:multiply;opacity:0.45;
+}
+
+/* ───── grain layout helpers ───── */
+.wrap{max-width:1320px;margin:0 auto;padding:0 56px;position:relative;z-index:2;}
+.row{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;}
+.rule{border:0;border-top:1px solid var(--rule-2);margin:0;}
+.rule-thick{border:0;border-top:2px solid var(--ink);margin:0;}
+.tick{display:inline-block;width:8px;height:8px;background:var(--lobster);border-radius:50%;vertical-align:middle;}
+.square{display:inline-block;width:9px;height:9px;background:var(--ink);vertical-align:middle;}
+
+/* ───── SECTION primitives ───── */
+section{padding:72px 0;position:relative;}
+.section-tag{
+  display:flex;align-items:center;gap:14px;
+  font-family:"Geist Mono",monospace;font-size:11.5px;text-transform:uppercase;letter-spacing:0.16em;color:var(--ink-3);
+  margin-bottom:28px;
+}
+.section-tag .num{color:var(--lobster);}
+h2.section-title{
+  font-family:"Noto Serif SC",serif;font-weight:500;
+  font-size:clamp(30px,3.6vw,52px);line-height:1.12;letter-spacing:-0.02em;
+  margin:0 0 18px;max-width:22ch;
+}
+h2.section-title .italic{color:var(--lobster);font-weight:500;}
+.section-lede{
+  font-family:"Noto Serif SC",serif;font-weight:300;font-size:15.5px;line-height:1.7;
+  color:var(--ink-2);
+}
+
+/* 通用可见性与无障碍 */
+[hidden]{display:none !important;}

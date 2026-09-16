@@ -1,0 +1,775 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		720BE7492F697D20000FE3F9 /* LobsterKeyboard.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 720BE7412F697D20000FE3F9 /* LobsterKeyboard.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		720BE7472F697D20000FE3F9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 720BE7072F697B94000FE3F9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 720BE7402F697D20000FE3F9;
+			remoteInfo = LobsterKeyboard;
+		};
+		720BE71F2F697B9A000FE3F9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 720BE7072F697B94000FE3F9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 720BE70E2F697B94000FE3F9;
+			remoteInfo = "lobster-input-ios";
+		};
+		720BE7292F697B9A000FE3F9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 720BE7072F697B94000FE3F9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 720BE70E2F697B94000FE3F9;
+			remoteInfo = "lobster-input-ios";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		720BE70F2F697B94000FE3F9 /* lobster-input-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "lobster-input-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		720BE71E2F697B9A000FE3F9 /* lobster-input-iosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "lobster-input-iosTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		720BE7282F697B9A000FE3F9 /* lobster-input-iosUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "lobster-input-iosUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		720BE7412F697D20000FE3F9 /* LobsterKeyboard.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = LobsterKeyboard.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		720BE74D2F697D20000FE3F9 /* Exceptions for "lobster-input-ios" folder in "lobster-input-ios" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+				"lobster-input-ios.entitlements",
+			);
+			target = 720BE70E2F697B94000FE3F9 /* lobster-input-ios */;
+		};
+		720BE74E2F697D20000FE3F9 /* Exceptions for "LobsterKeyboard" folder in "LobsterKeyboard" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+				LobsterKeyboard.entitlements,
+			);
+			target = 720BE7402F697D20000FE3F9 /* LobsterKeyboard */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		720BE7422F697D20000FE3F9 /* LobsterKeyboard */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				720BE74E2F697D20000FE3F9 /* Exceptions for "LobsterKeyboard" folder in "LobsterKeyboard" target */,
+			);
+			path = LobsterKeyboard;
+			sourceTree = "<group>";
+		};
+		720BE7502F697D20000FE3F9 /* Shared */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		720BE7112F697B94000FE3F9 /* lobster-input-ios */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				720BE74D2F697D20000FE3F9 /* Exceptions for "lobster-input-ios" folder in "lobster-input-ios" target */,
+			);
+			path = "lobster-input-ios";
+			sourceTree = "<group>";
+		};
+		720BE7212F697B9A000FE3F9 /* lobster-input-iosTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "lobster-input-iosTests";
+			sourceTree = "<group>";
+		};
+		720BE72B2F697B9A000FE3F9 /* lobster-input-iosUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "lobster-input-iosUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		720BE70C2F697B94000FE3F9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		720BE71B2F697B9A000FE3F9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		720BE7252F697B9A000FE3F9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		720BE7442F697D20000FE3F9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		720BE7062F697B94000FE3F9 = {
+			isa = PBXGroup;
+			children = (
+				720BE7502F697D20000FE3F9 /* Shared */,
+				720BE7112F697B94000FE3F9 /* lobster-input-ios */,
+				720BE7422F697D20000FE3F9 /* LobsterKeyboard */,
+				720BE7212F697B9A000FE3F9 /* lobster-input-iosTests */,
+				720BE72B2F697B9A000FE3F9 /* lobster-input-iosUITests */,
+				720BE7102F697B94000FE3F9 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		720BE7102F697B94000FE3F9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				720BE70F2F697B94000FE3F9 /* lobster-input-ios.app */,
+				720BE7412F697D20000FE3F9 /* LobsterKeyboard.appex */,
+				720BE71E2F697B9A000FE3F9 /* lobster-input-iosTests.xctest */,
+				720BE7282F697B9A000FE3F9 /* lobster-input-iosUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		720BE70E2F697B94000FE3F9 /* lobster-input-ios */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 720BE7322F697B9A000FE3F9 /* Build configuration list for PBXNativeTarget "lobster-input-ios" */;
+			buildPhases = (
+				720BE70B2F697B94000FE3F9 /* Sources */,
+				720BE70C2F697B94000FE3F9 /* Frameworks */,
+				720BE70D2F697B94000FE3F9 /* Resources */,
+				720BE7482F697D20000FE3F9 /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				720BE7462F697D20000FE3F9 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				720BE7502F697D20000FE3F9 /* Shared */,
+				720BE7112F697B94000FE3F9 /* lobster-input-ios */,
+			);
+			name = "lobster-input-ios";
+			packageProductDependencies = (
+			);
+			productName = "lobster-input-ios";
+			productReference = 720BE70F2F697B94000FE3F9 /* lobster-input-ios.app */;
+			productType = "com.apple.product-type.application";
+		};
+		720BE7402F697D20000FE3F9 /* LobsterKeyboard */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 720BE74A2F697D20000FE3F9 /* Build configuration list for PBXNativeTarget "LobsterKeyboard" */;
+			buildPhases = (
+				720BE7432F697D20000FE3F9 /* Sources */,
+				720BE7442F697D20000FE3F9 /* Frameworks */,
+				720BE7452F697D20000FE3F9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				720BE7502F697D20000FE3F9 /* Shared */,
+				720BE7422F697D20000FE3F9 /* LobsterKeyboard */,
+			);
+			name = LobsterKeyboard;
+			packageProductDependencies = (
+			);
+			productName = LobsterKeyboard;
+			productReference = 720BE7412F697D20000FE3F9 /* LobsterKeyboard.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		720BE71D2F697B9A000FE3F9 /* lobster-input-iosTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 720BE7352F697B9A000FE3F9 /* Build configuration list for PBXNativeTarget "lobster-input-iosTests" */;
+			buildPhases = (
+				720BE71A2F697B9A000FE3F9 /* Sources */,
+				720BE71B2F697B9A000FE3F9 /* Frameworks */,
+				720BE71C2F697B9A000FE3F9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				720BE7202F697B9A000FE3F9 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				720BE7212F697B9A000FE3F9 /* lobster-input-iosTests */,
+			);
+			name = "lobster-input-iosTests";
+			packageProductDependencies = (
+			);
+			productName = "lobster-input-iosTests";
+			productReference = 720BE71E2F697B9A000FE3F9 /* lobster-input-iosTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		720BE7272F697B9A000FE3F9 /* lobster-input-iosUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 720BE7382F697B9A000FE3F9 /* Build configuration list for PBXNativeTarget "lobster-input-iosUITests" */;
+			buildPhases = (
+				720BE7242F697B9A000FE3F9 /* Sources */,
+				720BE7252F697B9A000FE3F9 /* Frameworks */,
+				720BE7262F697B9A000FE3F9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				720BE72A2F697B9A000FE3F9 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				720BE72B2F697B9A000FE3F9 /* lobster-input-iosUITests */,
+			);
+			name = "lobster-input-iosUITests";
+			packageProductDependencies = (
+			);
+			productName = "lobster-input-iosUITests";
+			productReference = 720BE7282F697B9A000FE3F9 /* lobster-input-iosUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		720BE7072F697B94000FE3F9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2620;
+				LastUpgradeCheck = 2620;
+				TargetAttributes = {
+					720BE70E2F697B94000FE3F9 = {
+						CreatedOnToolsVersion = 26.2;
+					};
+					720BE7402F697D20000FE3F9 = {
+						CreatedOnToolsVersion = 26.2;
+					};
+					720BE71D2F697B9A000FE3F9 = {
+						CreatedOnToolsVersion = 26.2;
+						TestTargetID = 720BE70E2F697B94000FE3F9;
+					};
+					720BE7272F697B9A000FE3F9 = {
+						CreatedOnToolsVersion = 26.2;
+						TestTargetID = 720BE70E2F697B94000FE3F9;
+					};
+				};
+			};
+			buildConfigurationList = 720BE70A2F697B94000FE3F9 /* Build configuration list for PBXProject "lobster-input-ios" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				"zh-Hans",
+				"zh-Hant",
+				"zh-HK",
+				ru,
+				ko,
+			);
+			mainGroup = 720BE7062F697B94000FE3F9;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 720BE7102F697B94000FE3F9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				720BE70E2F697B94000FE3F9 /* lobster-input-ios */,
+				720BE7402F697D20000FE3F9 /* LobsterKeyboard */,
+				720BE71D2F697B9A000FE3F9 /* lobster-input-iosTests */,
+				720BE7272F697B9A000FE3F9 /* lobster-input-iosUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		720BE70D2F697B94000FE3F9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		720BE71C2F697B9A000FE3F9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		720BE7262F697B9A000FE3F9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		720BE7452F697D20000FE3F9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		720BE7482F697D20000FE3F9 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				720BE7492F697D20000FE3F9 /* LobsterKeyboard.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		720BE70B2F697B94000FE3F9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		720BE71A2F697B9A000FE3F9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		720BE7242F697B9A000FE3F9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		720BE7432F697D20000FE3F9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		720BE7462F697D20000FE3F9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 720BE7402F697D20000FE3F9 /* LobsterKeyboard */;
+			targetProxy = 720BE7472F697D20000FE3F9 /* PBXContainerItemProxy */;
+		};
+		720BE7202F697B9A000FE3F9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 720BE70E2F697B94000FE3F9 /* lobster-input-ios */;
+			targetProxy = 720BE71F2F697B9A000FE3F9 /* PBXContainerItemProxy */;
+		};
+		720BE72A2F697B9A000FE3F9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 720BE70E2F697B94000FE3F9 /* lobster-input-ios */;
+			targetProxy = 720BE7292F697B9A000FE3F9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		720BE7302F697B9A000FE3F9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		720BE7312F697B9A000FE3F9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		720BE7332F697B9A000FE3F9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_ENTITLEMENTS = "lobster-input-ios/lobster-input-ios.entitlements";
+				CURRENT_PROJECT_VERSION = 8;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "lobster-input-ios/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "ssh2026.lobster-input-ios";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		720BE7342F697B9A000FE3F9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_ENTITLEMENTS = "lobster-input-ios/lobster-input-ios.entitlements";
+				CURRENT_PROJECT_VERSION = 8;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "lobster-input-ios/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "ssh2026.lobster-input-ios";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		720BE7362F697B9A000FE3F9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 8;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "ssh2026.lobster-input-iosTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/lobster-input-ios.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/lobster-input-ios";
+			};
+			name = Debug;
+		};
+		720BE7372F697B9A000FE3F9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 8;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "ssh2026.lobster-input-iosTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/lobster-input-ios.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/lobster-input-ios";
+			};
+			name = Release;
+		};
+		720BE7392F697B9A000FE3F9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 8;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "ssh2026.lobster-input-iosUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "lobster-input-ios";
+			};
+			name = Debug;
+		};
+		720BE73A2F697B9A000FE3F9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 8;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "ssh2026.lobster-input-iosUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "lobster-input-ios";
+			};
+			name = Release;
+		};
+		720BE74B2F697D20000FE3F9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = LobsterKeyboard/LobsterKeyboard.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 8;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = LobsterKeyboard/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "ssh2026.lobster-input-ios.LobsterKeyboard";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		720BE74C2F697D20000FE3F9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = LobsterKeyboard/LobsterKeyboard.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 8;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = LobsterKeyboard/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "ssh2026.lobster-input-ios.LobsterKeyboard";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		720BE70A2F697B94000FE3F9 /* Build configuration list for PBXProject "lobster-input-ios" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				720BE7302F697B9A000FE3F9 /* Debug */,
+				720BE7312F697B9A000FE3F9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		720BE7322F697B9A000FE3F9 /* Build configuration list for PBXNativeTarget "lobster-input-ios" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				720BE7332F697B9A000FE3F9 /* Debug */,
+				720BE7342F697B9A000FE3F9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		720BE7352F697B9A000FE3F9 /* Build configuration list for PBXNativeTarget "lobster-input-iosTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				720BE7362F697B9A000FE3F9 /* Debug */,
+				720BE7372F697B9A000FE3F9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		720BE7382F697B9A000FE3F9 /* Build configuration list for PBXNativeTarget "lobster-input-iosUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				720BE7392F697B9A000FE3F9 /* Debug */,
+				720BE73A2F697B9A000FE3F9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		720BE74A2F697D20000FE3F9 /* Build configuration list for PBXNativeTarget "LobsterKeyboard" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				720BE74B2F697D20000FE3F9 /* Debug */,
+				720BE74C2F697D20000FE3F9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 720BE7072F697B94000FE3F9 /* Project object */;
+}

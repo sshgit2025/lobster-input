@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}仪表盘 - API Pool Manager{% endblock %}
+{% block body %}
+<div class="layout">
+  {% with active="dashboard" %}{% include "partials/sidebar.html" %}{% endwith %}
+  <main class="main">
+    <h1 class="page-title">仪表盘</h1>
+    <div class="stat-grid" id="statsGrid"></div>
+    <div class="chart-grid">
+      <div class="card"><div class="card-title">Provider 分类 Key 分布</div><div class="chart-wrap"><canvas id="categoryChart"></canvas></div></div>
+      <div class="card"><div class="card-title">平台 Key 分布</div><div class="chart-wrap"><canvas id="platformChart"></canvas></div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">各 Provider 分类统计</div>
+      <div class="table-wrap"><table><thead><tr><th>分类</th><th>总Key数</th><th>活跃</th><th>总请求</th></tr></thead><tbody id="categoryTable"></tbody></table></div>
+    </div>
+  </main>
+</div>
+<div id="toast-container"></div>
+{% endblock %}
+{% block scripts %}
+<script>
+async function loadDashboard(){
+  try{
+    const [dash,categories,platforms]=await Promise.all([
+      api('/api/v1/stats/dashboard'),
+      api('/api/v1/stats/categories'),
+      api('/api/v1/stats/platforms'),
+    ]);
+    document.getElementById('statsGrid').innerHTML=`
+      <div class="stat-card"><div class="stat-label">总 Key 数</div><div class="stat-value primary">${dash.total_keys}</div></div>
+      <div class="stat-card"><div class="stat-label">活跃</div><div class="stat-value success">${dash.active_keys}</div></div>
+      <div class="stat-card"><div class="stat-label">耗尽</div><div class="stat-value warning">${dash.exhausted_keys}</div></div>
+      <div class="stat-card"><div class="stat-label">异常</div><div class="stat-value danger">${dash.error_keys}</div></div>
+      <div class="stat-card"><div class="stat-label">冷却中</div><div class="stat-value info">${dash.cooldown_keys}</div></div>
+      <div class="stat-card"><div class="stat-label">已禁用</div><div class="stat-value">${dash.disabled_keys}</div></div>
+      <div class="stat-card"><div class="stat-label">已过期</div><div class="stat-value">${dash.expired_keys}</div></div>
+      <div class="stat-card"><div class="stat-label">消费记录</div><div class="stat-value info">${dash.total_usage_records}</div></div>
+    `;
+    const colors=['#6366f1','#22c55e','#f59e0b','#ef4444','#3b82f6','#8b5cf6','#ec4899','#14b8a6'];
+    const categoryLabels={asr:'ASR 语音识别',asr_realtime:'实时 ASR',llm_chat:'LLM 文本对话',web_search:'联网搜索',embedding:'向量 Embedding',tts:'音频合成'};
+    if(categories.length){
+      new Chart(document.getElementById('categoryChart'),{type:'doughnut',data:{labels:categories.map(s=>categoryLabels[s._id]||s._id),datasets:[{data:categories.map(s=>s.total_keys),backgroundColor:colors}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{color:'#8892a4'}}}}});
+    }
+    if(platforms.length){
+      new Chart(document.getElementById('platformChart'),{type:'doughnut',data:{labels:platforms.map(p=>`${p._id.category}/${p._id.platform_code}`),datasets:[{data:platforms.map(p=>p.total_keys),backgroundColor:colors}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{color:'#8892a4'}}}}});
+    }
+    let rows='';
+    categories.forEach(s=>{rows+=`<tr><td><span class="badge badge-primary">${s._id}</span></td><td>${s.total_keys}</td><td>${s.active_keys}</td><td>${s.total_requests}</td></tr>`;});
+    document.getElementById('categoryTable').innerHTML=rows||'<tr><td colspan="4" style="text-align:center;color:var(--text-muted)">暂无数据</td></tr>';
+  }catch(err){showToast(err.message,'error');}
+}
+loadDashboard();
+</script>
+{% endblock %}

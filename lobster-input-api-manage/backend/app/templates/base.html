@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}API Pool Manager{% endblock %}</title>
+<link rel="stylesheet" href="{{ base_url }}/static/css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+{% block body %}{% endblock %}
+<script>window.__BASE_URL__ = "{{ base_url }}";</script>
+<script src="{{ base_url }}/static/js/main.js"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

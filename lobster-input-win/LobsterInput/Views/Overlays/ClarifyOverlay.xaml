@@ -1,0 +1,75 @@
+<Window x:Class="LobsterInput.Views.Overlays.ClarifyOverlay"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        Topmost="True"
+        ShowInTaskbar="False"
+        ShowActivated="False"
+        IsHitTestVisible="False"
+        SizeToContent="Height"
+        Width="154"
+        ResizeMode="NoResize"
+        x:Name="OverlayWindow">
+
+    <Window.Resources>
+        <Storyboard x:Key="FadeIn">
+            <DoubleAnimation Storyboard.TargetName="RootCard"
+                             Storyboard.TargetProperty="Opacity"
+                             From="0" To="1" Duration="0:0:0.25" />
+        </Storyboard>
+
+        <Storyboard x:Key="FadeOut">
+            <DoubleAnimation Storyboard.TargetName="RootCard"
+                             Storyboard.TargetProperty="Opacity"
+                             From="1" To="0" Duration="0:0:0.25" />
+        </Storyboard>
+    </Window.Resources>
+
+    <Border x:Name="RootCard" Opacity="0"
+            CornerRadius="{DynamicResource CardCorner}"
+            Background="{DynamicResource BgPanelBrush}"
+            BorderBrush="{DynamicResource NeonYellowBrush}"
+            BorderThickness="1"
+            Padding="14,12">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0"
+                    Width="28" Height="28"
+                    CornerRadius="14"
+                    BorderBrush="{DynamicResource NeonYellowBrush}"
+                    BorderThickness="1"
+                    Margin="0,0,10,0"
+                    VerticalAlignment="Top">
+                <TextBlock Text="?"
+                           FontSize="16"
+                           FontWeight="Bold"
+                           Foreground="{DynamicResource NeonYellowBrush}"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center" />
+            </Border>
+
+            <StackPanel Grid.Column="1">
+                <TextBlock x:Name="TitleText"
+                           Text=""
+                           FontFamily="{DynamicResource AppFont}"
+                           FontSize="13" FontWeight="Bold"
+                           Foreground="{DynamicResource NeonYellowBrush}"
+                           Margin="0,0,0,6" />
+
+                <TextBlock x:Name="QuestionText"
+                           Text=""
+                           TextWrapping="Wrap"
+                           FontFamily="{DynamicResource AppFont}"
+                           FontSize="12"
+                           Foreground="{DynamicResource TextDimBrush}"
+                           MaxHeight="88" />
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>

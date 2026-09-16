@@ -1,0 +1,17 @@
+/* 设计令牌（与原官网 index.html / legal.css 的 :root 完全一致，是品牌视觉的唯一来源）。*/
+:root{
+  --paper:#f4efe7;
+  --paper-2:#ece4d2;
+  --paper-3:#e1d6bf;
+  --ink:#181311;
+  --ink-2:#3b322b;
+  --ink-3:#7a6e62;
+  --rule:#1813111a;
+  --rule-2:#18131133;
+  --lobster:#c2381f;
+  --lobster-dark:#962412;
+  --lobster-deep:#5b1a0d;
+  --lobster-tint:#f0c9b8;
+  --teal:#1f3a3a;
+  --cream:#faf6ee;
+}

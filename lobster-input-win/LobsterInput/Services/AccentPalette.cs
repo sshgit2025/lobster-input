@@ -1,0 +1,144 @@
+using System.Windows.Media;
+
+namespace LobsterInput.Services;
+
+public readonly record struct NeutralPalette(
+    Color Bg,
+    Color BgElev,
+    Color BgSunken,
+    Color BgHover,
+    Color BgActive,
+    Color Line,
+    Color LineStrong,
+    Color Fg,
+    Color FgMuted,
+    Color FgSubtle,
+    Color FgFaint);
+
+public readonly record struct StatePalette(
+    Color Success,
+    Color Warning,
+    Color Danger,
+    Color Info);
+
+public readonly record struct ShadowSpec(Color Color, double Opacity, double BlurRadius, double ShadowDepth);
+
+public readonly record struct ShadowPalette(
+    ShadowSpec Small,
+    ShadowSpec Medium,
+    ShadowSpec Large);
+
+public readonly record struct AccentPalette(
+    Color Accent,
+    Color AccentSoft,
+    Color AccentFg,
+    Color AccentRing)
+{
+    public static AccentPalette For(AppTheme theme, AppAccent accent) => (theme, accent) switch
+    {
+        (AppTheme.Light, AppAccent.Mono) => new(Rgb(0x18, 0x18, 0x1B), Rgba(0x18, 0x18, 0x1B, 0.06), Rgb(0xFF, 0xFF, 0xFF), Rgba(0x18, 0x18, 0x1B, 0.18)),
+        (AppTheme.Light, AppAccent.Sand) => new(Rgb(0x9C, 0x7D, 0x5B), Rgba(0x9C, 0x7D, 0x5B, 0.10), Rgb(0xFF, 0xFF, 0xFF), Rgba(0x9C, 0x7D, 0x5B, 0.22)),
+        (AppTheme.Light, AppAccent.Blue) => new(Rgb(0x25, 0x63, 0xEB), Rgba(0x25, 0x63, 0xEB, 0.08), Rgb(0xFF, 0xFF, 0xFF), Rgba(0x25, 0x63, 0xEB, 0.25)),
+        (AppTheme.Light, AppAccent.Orange) => new(Rgb(0xEA, 0x58, 0x0C), Rgba(0xEA, 0x58, 0x0C, 0.08), Rgb(0xFF, 0xFF, 0xFF), Rgba(0xEA, 0x58, 0x0C, 0.25)),
+        (AppTheme.Light, AppAccent.Red) => new(Rgb(0xDC, 0x26, 0x26), Rgba(0xDC, 0x26, 0x26, 0.08), Rgb(0xFF, 0xFF, 0xFF), Rgba(0xDC, 0x26, 0x26, 0.25)),
+        (AppTheme.Light, AppAccent.Green) => new(Rgb(0x15, 0x80, 0x3D), Rgba(0x15, 0x80, 0x3D, 0.08), Rgb(0xFF, 0xFF, 0xFF), Rgba(0x15, 0x80, 0x3D, 0.25)),
+        (AppTheme.Light, AppAccent.Purple) => new(Rgb(0x7C, 0x3A, 0xED), Rgba(0x7C, 0x3A, 0xED, 0.08), Rgb(0xFF, 0xFF, 0xFF), Rgba(0x7C, 0x3A, 0xED, 0.25)),
+
+        (AppTheme.Dark, AppAccent.Mono) => new(Rgb(0xFA, 0xFA, 0xFA), Rgba(0xFA, 0xFA, 0xFA, 0.08), Rgb(0x0E, 0x0E, 0x10), Rgba(0xFA, 0xFA, 0xFA, 0.20)),
+        (AppTheme.Dark, AppAccent.Sand) => new(Rgb(0xD4, 0xBA, 0x94), Rgba(0xD4, 0xBA, 0x94, 0.12), Rgb(0x1A, 0x14, 0x0D), Rgba(0xD4, 0xBA, 0x94, 0.28)),
+        (AppTheme.Dark, AppAccent.Blue) => new(Rgb(0x3B, 0x82, 0xF6), Rgba(0x3B, 0x82, 0xF6, 0.14), Rgb(0x0E, 0x0E, 0x10), Rgba(0x3B, 0x82, 0xF6, 0.30)),
+        (AppTheme.Dark, AppAccent.Orange) => new(Rgb(0xFB, 0x92, 0x3C), Rgba(0xFB, 0x92, 0x3C, 0.14), Rgb(0x0E, 0x0E, 0x10), Rgba(0xFB, 0x92, 0x3C, 0.30)),
+        (AppTheme.Dark, AppAccent.Red) => new(Rgb(0xF8, 0x71, 0x71), Rgba(0xF8, 0x71, 0x71, 0.14), Rgb(0x0E, 0x0E, 0x10), Rgba(0xF8, 0x71, 0x71, 0.30)),
+        (AppTheme.Dark, AppAccent.Green) => new(Rgb(0x4A, 0xDE, 0x80), Rgba(0x4A, 0xDE, 0x80, 0.14), Rgb(0x0E, 0x0E, 0x10), Rgba(0x4A, 0xDE, 0x80, 0.30)),
+        (AppTheme.Dark, AppAccent.Purple) => new(Rgb(0xA7, 0x8B, 0xFA), Rgba(0xA7, 0x8B, 0xFA, 0.14), Rgb(0x0E, 0x0E, 0x10), Rgba(0xA7, 0x8B, 0xFA, 0.30)),
+
+        _ => For(AppTheme.Light, AppAccent.Sand)
+    };
+
+    public static NeutralPalette NeutralFor(AppTheme theme, AppAccent accent)
+    {
+        var sandOverride = SandNeutralOverride(theme, accent);
+        if (sandOverride.HasValue)
+            return sandOverride.Value;
+
+        return theme == AppTheme.Dark
+            ? new NeutralPalette(
+                Rgb(0x0E, 0x0E, 0x10),
+                Rgb(0x16, 0x16, 0x18),
+                Rgb(0x0A, 0x0A, 0x0C),
+                Rgba(0xFF, 0xFF, 0xFF, 0.05),
+                Rgba(0xFF, 0xFF, 0xFF, 0.08),
+                Rgba(0xFF, 0xFF, 0xFF, 0.07),
+                Rgba(0xFF, 0xFF, 0xFF, 0.14),
+                Rgb(0xF4, 0xF4, 0xF5),
+                Rgb(0xA1, 0xA1, 0xAA),
+                Rgb(0x71, 0x71, 0x7A),
+                Rgb(0x3F, 0x3F, 0x46))
+            : new NeutralPalette(
+                Rgb(0xF7, 0xF7, 0xF5),
+                Rgb(0xFF, 0xFF, 0xFF),
+                Rgb(0xF1, 0xF1, 0xEF),
+                Rgba(0x00, 0x00, 0x00, 0.04),
+                Rgba(0x00, 0x00, 0x00, 0.06),
+                Rgba(0x00, 0x00, 0x00, 0.08),
+                Rgba(0x00, 0x00, 0x00, 0.14),
+                Rgb(0x18, 0x18, 0x1B),
+                Rgb(0x52, 0x52, 0x5B),
+                Rgb(0xA1, 0xA1, 0xAA),
+                Rgb(0xD4, 0xD4, 0xD8));
+    }
+
+    public static NeutralPalette? SandNeutralOverride(AppTheme theme, AppAccent accent)
+    {
+        if (accent != AppAccent.Sand)
+            return null;
+
+        return theme == AppTheme.Dark
+            ? new NeutralPalette(
+                Rgb(0x14, 0x11, 0x0D),
+                Rgb(0x1C, 0x18, 0x14),
+                Rgb(0x10, 0x0D, 0x0A),
+                Rgba(0xD4, 0xBA, 0x94, 0.06),
+                Rgba(0xD4, 0xBA, 0x94, 0.10),
+                Rgba(0xD4, 0xBA, 0x94, 0.08),
+                Rgba(0xD4, 0xBA, 0x94, 0.16),
+                Rgb(0xF1, 0xEB, 0xE0),
+                Rgb(0xA8, 0x9C, 0x87),
+                Rgb(0x78, 0x6C, 0x58),
+                Rgb(0x3D, 0x35, 0x28))
+            : new NeutralPalette(
+                Rgb(0xF4, 0xEF, 0xE7),
+                Rgb(0xFB, 0xF8, 0xF2),
+                Rgb(0xEC, 0xE5, 0xD8),
+                Rgba(0x5C, 0x44, 0x28, 0.05),
+                Rgba(0x5C, 0x44, 0x28, 0.08),
+                Rgba(0x5C, 0x44, 0x28, 0.10),
+                Rgba(0x5C, 0x44, 0x28, 0.18),
+                Rgb(0x2C, 0x26, 0x20),
+                Rgb(0x6B, 0x5F, 0x50),
+                Rgb(0xA8, 0x9C, 0x87),
+                Rgb(0xD8, 0xCF, 0xBE));
+    }
+
+    public static StatePalette StateFor(AppTheme theme) => theme == AppTheme.Dark
+        ? new StatePalette(Rgb(0x22, 0xC5, 0x5E), Rgb(0xF5, 0x9E, 0x0B), Rgb(0xEF, 0x44, 0x44), Rgb(0x3B, 0x82, 0xF6))
+        : new StatePalette(Rgb(0x16, 0xA3, 0x4A), Rgb(0xD9, 0x77, 0x06), Rgb(0xDC, 0x26, 0x26), Rgb(0x25, 0x63, 0xEB));
+
+    public static ShadowPalette ShadowsFor(AppTheme theme) => theme == AppTheme.Dark
+        ? new ShadowPalette(
+            new ShadowSpec(Rgb(0x00, 0x00, 0x00), 0.40, 2, 1),
+            new ShadowSpec(Rgb(0x00, 0x00, 0x00), 0.40, 16, 4),
+            new ShadowSpec(Rgb(0x00, 0x00, 0x00), 0.60, 48, 24))
+        : new ShadowPalette(
+            new ShadowSpec(Rgb(0x00, 0x00, 0x00), 0.04, 2, 1),
+            new ShadowSpec(Rgb(0x00, 0x00, 0x00), 0.06, 16, 4),
+            new ShadowSpec(Rgb(0x00, 0x00, 0x00), 0.18, 48, 24));
+
+    private static Color Rgb(byte r, byte g, byte b) => Color.FromRgb(r, g, b);
+
+    private static Color Rgba(byte r, byte g, byte b, double alpha)
+    {
+        var a = (byte)Math.Round(alpha * 255, MidpointRounding.AwayFromZero);
+        return Color.FromArgb(a, r, g, b);
+    }
+}
