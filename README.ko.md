@@ -12,15 +12,20 @@ Lobster Input은 여러 플랫폼을 지원하는 음성 입력 및 중국어 �
 
 이 저장소는 자체 호스팅과 개발을 위한 것입니다. 배포 주소는 `example.com` 같은 예시 도메인과 `192.0.2.0/24` 문서용 IP 주소로 대체되어 있습니다. 실행 전에 실제 사용할 주소로 변경해야 합니다. 운영 인프라, 계정, 데이터베이스 내용 및 외부 API 사용 크레딧은 제공하지 않습니다.
 
+## 관리자 콘솔
+
+[![관리자 콘솔](docs/images/admin/01-dashboard.png)](docs/admin-showcase.ko.md)
+
+**[관리자 페이지 25개 전체 보기 →](docs/admin-showcase.ko.md)**
+
 ## 개발자 및 연락처
 
 **shaohua.sun, yaqiong.xu, xun.li**가 공동으로 개발하고 오픈 소스로 공개했습니다.
 
-| 개발자 | 이메일 |
-| --- | --- |
-| shaohua.sun | [shaohua.sun.main@gmail.com](mailto:shaohua.sun.main@gmail.com) |
-| yaqiong.xu | [simpleeve007@gmail.com](mailto:simpleeve007@gmail.com) |
-| xun.li | [Haiyi.Thai@gmail.com](mailto:Haiyi.Thai@gmail.com) |
+| shaohua.sun | yaqiong.xu | xun.li |
+| :---: | :---: | :---: |
+| <img src="docs/images/authors/shaohua-sun.png" width="104" alt="shaohua.sun"> | <img src="docs/images/authors/yaqiong-xu.png" width="104" alt="yaqiong.xu"> | <img src="docs/images/authors/xun-li.png" width="104" alt="xun.li"> |
+| [shaohua.sun.main@gmail.com](mailto:shaohua.sun.main@gmail.com) | [simpleeve007@gmail.com](mailto:simpleeve007@gmail.com) | [Haiyi.Thai@gmail.com](mailto:Haiyi.Thai@gmail.com) |
 
 **QQ 커뮤니티 그룹: 925395991**. 그룹이나 이메일을 통해 의견과 협업 제안을 보내 주세요. 재현 가능한 버그와 기능 제안은 GitHub Issue로 등록할 수 있습니다. 보안 문제는 [보안 정책](SECURITY.md)에 따라 비공개로 알려 주세요.
 

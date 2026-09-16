@@ -12,15 +12,20 @@
 
 本仓库供自行部署和开发使用。云端地址已经替换成 `example.com` 等示例域名，服务器地址使用 `192.0.2.0/24` 文档网段；这些地址不可直接用于运行。仓库不提供运营环境、账号、数据库内容或第三方 API 额度。
 
+## 管理端展示
+
+[![管理端展示](docs/images/admin/01-dashboard.png)](docs/admin-showcase.zh-CN.md)
+
+**[查看全部 25 个管理页面 →](docs/admin-showcase.zh-CN.md)**
+
 ## 作者与联系
 
 由 **shaohua.sun、yaqiong.xu、xun.li** 共同开发并开源。
 
-| 作者 | 联系邮箱 |
-| --- | --- |
-| shaohua.sun | [shaohua.sun.main@gmail.com](mailto:shaohua.sun.main@gmail.com) |
-| yaqiong.xu | [simpleeve007@gmail.com](mailto:simpleeve007@gmail.com) |
-| xun.li | [Haiyi.Thai@gmail.com](mailto:Haiyi.Thai@gmail.com) |
+| shaohua.sun | yaqiong.xu | xun.li |
+| :---: | :---: | :---: |
+| <img src="docs/images/authors/shaohua-sun.png" width="104" alt="shaohua.sun"> | <img src="docs/images/authors/yaqiong-xu.png" width="104" alt="yaqiong.xu"> | <img src="docs/images/authors/xun-li.png" width="104" alt="xun.li"> |
+| [shaohua.sun.main@gmail.com](mailto:shaohua.sun.main@gmail.com) | [simpleeve007@gmail.com](mailto:simpleeve007@gmail.com) | [Haiyi.Thai@gmail.com](mailto:Haiyi.Thai@gmail.com) |
 
 **QQ 交流群：925395991**。欢迎加群或通过邮箱交流使用体验、问题反馈与合作建议。可复现的问题和功能建议也欢迎提交 GitHub Issue；安全问题请按 [安全策略](SECURITY.md) 私下联系。
 

@@ -12,15 +12,20 @@ Features include speech recognition, text processing, user dictionaries, input h
 
 This repository is intended for self-hosting and development. Deployment addresses have been replaced with domains such as `example.com` and documentation IPs in `192.0.2.0/24`. Replace these placeholders before running the services. Production infrastructure, accounts, database contents, and third-party API credits are not included.
 
+## Admin Console
+
+[![Admin Console](docs/images/admin/01-dashboard.png)](docs/admin-showcase.md)
+
+**[Explore all 25 admin pages →](docs/admin-showcase.md)**
+
 ## Authors and contact
 
 Created and open-sourced by **shaohua.sun, yaqiong.xu, and xun.li**.
 
-| Author | Email |
-| --- | --- |
-| shaohua.sun | [shaohua.sun.main@gmail.com](mailto:shaohua.sun.main@gmail.com) |
-| yaqiong.xu | [simpleeve007@gmail.com](mailto:simpleeve007@gmail.com) |
-| xun.li | [Haiyi.Thai@gmail.com](mailto:Haiyi.Thai@gmail.com) |
+| shaohua.sun | yaqiong.xu | xun.li |
+| :---: | :---: | :---: |
+| <img src="docs/images/authors/shaohua-sun.png" width="104" alt="shaohua.sun"> | <img src="docs/images/authors/yaqiong-xu.png" width="104" alt="yaqiong.xu"> | <img src="docs/images/authors/xun-li.png" width="104" alt="xun.li"> |
+| [shaohua.sun.main@gmail.com](mailto:shaohua.sun.main@gmail.com) | [simpleeve007@gmail.com](mailto:simpleeve007@gmail.com) | [Haiyi.Thai@gmail.com](mailto:Haiyi.Thai@gmail.com) |
 
 **QQ community group: 925395991**. Join the group or contact us by email for feedback and collaboration. Use GitHub Issues for reproducible bugs and feature requests. Report security issues privately as described in [SECURITY.md](SECURITY.md).
 

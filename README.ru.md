@@ -12,15 +12,20 @@ Lobster Input — кроссплатформенный проект голосо
 
 Репозиторий предназначен для самостоятельного развёртывания и разработки. Адреса инфраструктуры заменены доменами вроде `example.com` и IP-адресами из диапазона `192.0.2.0/24`, предназначенного для документации. Перед запуском замените их своими адресами. Рабочая инфраструктура, учётные записи, содержимое баз данных и кредиты сторонних API не предоставляются.
 
+## Панель управления
+
+[![Панель управления](docs/images/admin/01-dashboard.png)](docs/admin-showcase.ru.md)
+
+**[Все 25 страниц панели управления →](docs/admin-showcase.ru.md)**
+
 ## Авторы и контакты
 
 Проект совместно разработали и опубликовали с открытым исходным кодом **shaohua.sun, yaqiong.xu и xun.li**.
 
-| Автор | Электронная почта |
-| --- | --- |
-| shaohua.sun | [shaohua.sun.main@gmail.com](mailto:shaohua.sun.main@gmail.com) |
-| yaqiong.xu | [simpleeve007@gmail.com](mailto:simpleeve007@gmail.com) |
-| xun.li | [Haiyi.Thai@gmail.com](mailto:Haiyi.Thai@gmail.com) |
+| shaohua.sun | yaqiong.xu | xun.li |
+| :---: | :---: | :---: |
+| <img src="docs/images/authors/shaohua-sun.png" width="104" alt="shaohua.sun"> | <img src="docs/images/authors/yaqiong-xu.png" width="104" alt="yaqiong.xu"> | <img src="docs/images/authors/xun-li.png" width="104" alt="xun.li"> |
+| [shaohua.sun.main@gmail.com](mailto:shaohua.sun.main@gmail.com) | [simpleeve007@gmail.com](mailto:simpleeve007@gmail.com) | [Haiyi.Thai@gmail.com](mailto:Haiyi.Thai@gmail.com) |
 
 **Группа в QQ: 925395991**. Присоединяйтесь к группе или пишите нам по электронной почте, чтобы поделиться отзывом или предложить сотрудничество. Воспроизводимые ошибки и предложения функций можно оформить в GitHub Issues. Об уязвимостях сообщайте приватно в соответствии с [политикой безопасности](SECURITY.md).
 
