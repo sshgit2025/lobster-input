@@ -20,12 +20,12 @@
 
 ## 作者与联系
 
-由 **shaohua.sun、yaqiong.xu、xun.li** 共同开发并开源。
+由 **shaohua.sun、yaqiong.xu** 共同开发并开源。
 
-| shaohua.sun | yaqiong.xu | xun.li |
-| :---: | :---: | :---: |
-| <img src="docs/images/authors/shaohua-sun.png" width="104" alt="shaohua.sun"> | <img src="docs/images/authors/yaqiong-xu.png" width="104" alt="yaqiong.xu"> | <img src="docs/images/authors/xun-li.png" width="104" alt="xun.li"> |
-| [shaohua.sun.main@gmail.com](mailto:shaohua.sun.main@gmail.com) | [simpleeve007@gmail.com](mailto:simpleeve007@gmail.com) | [Haiyi.Thai@gmail.com](mailto:Haiyi.Thai@gmail.com) |
+| shaohua.sun | yaqiong.xu |
+| :---: | :---: |
+| <img src="docs/images/authors/shaohua-sun.png" width="104" alt="shaohua.sun"> | <img src="docs/images/authors/yaqiong-xu.png" width="104" alt="yaqiong.xu"> |
+| [shaohua.sun.main@gmail.com](mailto:shaohua.sun.main@gmail.com) | [simpleeve007@gmail.com](mailto:simpleeve007@gmail.com) |
 
 **QQ 交流群：925395991**。欢迎加群或通过邮箱交流使用体验、问题反馈与合作建议。可复现的问题和功能建议也欢迎提交 GitHub Issue；安全问题请按 [安全策略](SECURITY.md) 私下联系。
 

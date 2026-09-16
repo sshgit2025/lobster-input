@@ -20,12 +20,12 @@ Lobster Input은 여러 플랫폼을 지원하는 음성 입력 및 중국어 �
 
 ## 개발자 및 연락처
 
-**shaohua.sun, yaqiong.xu, xun.li**가 공동으로 개발하고 오픈 소스로 공개했습니다.
+**shaohua.sun, yaqiong.xu**가 공동으로 개발하고 오픈 소스로 공개했습니다.
 
-| shaohua.sun | yaqiong.xu | xun.li |
-| :---: | :---: | :---: |
-| <img src="docs/images/authors/shaohua-sun.png" width="104" alt="shaohua.sun"> | <img src="docs/images/authors/yaqiong-xu.png" width="104" alt="yaqiong.xu"> | <img src="docs/images/authors/xun-li.png" width="104" alt="xun.li"> |
-| [shaohua.sun.main@gmail.com](mailto:shaohua.sun.main@gmail.com) | [simpleeve007@gmail.com](mailto:simpleeve007@gmail.com) | [Haiyi.Thai@gmail.com](mailto:Haiyi.Thai@gmail.com) |
+| shaohua.sun | yaqiong.xu |
+| :---: | :---: |
+| <img src="docs/images/authors/shaohua-sun.png" width="104" alt="shaohua.sun"> | <img src="docs/images/authors/yaqiong-xu.png" width="104" alt="yaqiong.xu"> |
+| [shaohua.sun.main@gmail.com](mailto:shaohua.sun.main@gmail.com) | [simpleeve007@gmail.com](mailto:simpleeve007@gmail.com) |
 
 **QQ 커뮤니티 그룹: 925395991**. 그룹이나 이메일을 통해 의견과 협업 제안을 보내 주세요. 재현 가능한 버그와 기능 제안은 GitHub Issue로 등록할 수 있습니다. 보안 문제는 [보안 정책](SECURITY.md)에 따라 비공개로 알려 주세요.
 

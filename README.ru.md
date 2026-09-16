@@ -20,12 +20,12 @@ Lobster Input — кроссплатформенный проект голосо
 
 ## Авторы и контакты
 
-Проект совместно разработали и опубликовали с открытым исходным кодом **shaohua.sun, yaqiong.xu и xun.li**.
+Проект совместно разработали и опубликовали с открытым исходным кодом **shaohua.sun и yaqiong.xu**.
 
-| shaohua.sun | yaqiong.xu | xun.li |
-| :---: | :---: | :---: |
-| <img src="docs/images/authors/shaohua-sun.png" width="104" alt="shaohua.sun"> | <img src="docs/images/authors/yaqiong-xu.png" width="104" alt="yaqiong.xu"> | <img src="docs/images/authors/xun-li.png" width="104" alt="xun.li"> |
-| [shaohua.sun.main@gmail.com](mailto:shaohua.sun.main@gmail.com) | [simpleeve007@gmail.com](mailto:simpleeve007@gmail.com) | [Haiyi.Thai@gmail.com](mailto:Haiyi.Thai@gmail.com) |
+| shaohua.sun | yaqiong.xu |
+| :---: | :---: |
+| <img src="docs/images/authors/shaohua-sun.png" width="104" alt="shaohua.sun"> | <img src="docs/images/authors/yaqiong-xu.png" width="104" alt="yaqiong.xu"> |
+| [shaohua.sun.main@gmail.com](mailto:shaohua.sun.main@gmail.com) | [simpleeve007@gmail.com](mailto:simpleeve007@gmail.com) |
 
 **Группа в QQ: 925395991**. Присоединяйтесь к группе или пишите нам по электронной почте, чтобы поделиться отзывом или предложить сотрудничество. Воспроизводимые ошибки и предложения функций можно оформить в GitHub Issues. Об уязвимостях сообщайте приватно в соответствии с [политикой безопасности](SECURITY.md).
 

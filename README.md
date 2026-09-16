@@ -20,12 +20,12 @@ This repository is intended for self-hosting and development. Deployment address
 
 ## Authors and contact
 
-Created and open-sourced by **shaohua.sun, yaqiong.xu, and xun.li**.
+Created and open-sourced by **shaohua.sun and yaqiong.xu**.
 
-| shaohua.sun | yaqiong.xu | xun.li |
-| :---: | :---: | :---: |
-| <img src="docs/images/authors/shaohua-sun.png" width="104" alt="shaohua.sun"> | <img src="docs/images/authors/yaqiong-xu.png" width="104" alt="yaqiong.xu"> | <img src="docs/images/authors/xun-li.png" width="104" alt="xun.li"> |
-| [shaohua.sun.main@gmail.com](mailto:shaohua.sun.main@gmail.com) | [simpleeve007@gmail.com](mailto:simpleeve007@gmail.com) | [Haiyi.Thai@gmail.com](mailto:Haiyi.Thai@gmail.com) |
+| shaohua.sun | yaqiong.xu |
+| :---: | :---: |
+| <img src="docs/images/authors/shaohua-sun.png" width="104" alt="shaohua.sun"> | <img src="docs/images/authors/yaqiong-xu.png" width="104" alt="yaqiong.xu"> |
+| [shaohua.sun.main@gmail.com](mailto:shaohua.sun.main@gmail.com) | [simpleeve007@gmail.com](mailto:simpleeve007@gmail.com) |
 
 **QQ community group: 925395991**. Join the group or contact us by email for feedback and collaboration. Use GitHub Issues for reproducible bugs and feature requests. Report security issues privately as described in [SECURITY.md](SECURITY.md).
 
